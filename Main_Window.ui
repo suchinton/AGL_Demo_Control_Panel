@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>913</width>
-    <height>664</height>
+    <width>1130</width>
+    <height>671</height>
    </rect>
   </property>
   <property name="palette">
@@ -458,6 +458,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/Images/Images/logo_agl.png</normaloff>:/Images/Images/logo_agl.png</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
@@ -485,6 +489,10 @@
 	text-align: left;
 	padding: 5px 10px;
 	border-radius: 10px;
+}
+
+#leftMenuSubContainer QPushButton:pressed {
+    background-color: rgb(80, 97, 95); /* Customize the pressed state background color */
 }
 
 #headerContainer{
@@ -636,7 +644,7 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
-              <widget class="QPushButton" name="configureButton">
+              <widget class="QPushButton" name="settingsBtn">
                <property name="text">
                 <string>Configure</string>
                </property>
@@ -733,7 +741,7 @@
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="assets/res.qrc">:/Images/Images/logo_agl.png</pixmap>
+                <pixmap>:/Images/Images/logo_agl.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -783,7 +791,7 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="pushButton_2">
+              <widget class="QPushButton" name="minimizeBtn">
                <property name="text">
                 <string/>
                </property>
@@ -794,7 +802,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_3">
+              <widget class="QPushButton" name="resizeBtn">
                <property name="text">
                 <string/>
                </property>
@@ -805,7 +813,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="closeBtn">
                <property name="text">
                 <string/>
                </property>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>831</width>
-    <height>546</height>
+    <width>697</width>
+    <height>743</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,18 +65,24 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>799</width>
-           <height>473</height>
+           <width>644</width>
+           <height>830</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QFrame" name="frame_3">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>200</height>
+             </size>
             </property>
             <property name="maximumSize">
              <size>
@@ -91,39 +97,82 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="0" column="0">
-              <widget class="QLCDNumber" name="lcdNumber"/>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLCDNumber" name="lcdNumber_2"/>
-             </item>
-             <item row="1" column="0">
-              <widget class="QSlider" name="horizontalSlider">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QSlider" name="horizontalSlider_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
+             <item row="4" column="0" alignment="Qt::AlignHCenter">
               <widget class="QLabel" name="label_4">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string>Speed (Kmph)</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string>TextLabel</string>
+             <item row="0" column="1" rowspan="5">
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
                </property>
               </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QSlider" name="Speed_slider">
+               <property name="maximum">
+                <number>240</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QSlider" name="RPM_slider">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2" alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="label_5">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Engine RPM</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" rowspan="3">
+              <widget class="QFrame" name="frame_7">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QLCDNumber" name="Speed_monitor">
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="digitCount">
+                   <number>3</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="0" column="2" rowspan="3">
+              <widget class="QLCDNumber" name="RPM_monitor"/>
              </item>
             </layout>
            </widget>
@@ -135,6 +184,12 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>200</height>
+             </size>
             </property>
             <property name="maximumSize">
              <size>
@@ -149,13 +204,54 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="1">
-              <widget class="QDial" name="dial"/>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_3">
+             <item row="1" column="1">
+              <widget class="QPushButton" name="rightIndicatorBtn">
                <property name="text">
-                <string>TextLabel</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../assets/Images/right.png</normaloff>../assets/Images/right.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QPushButton" name="leftIndicatorBtn">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../assets/Images/left.png</normaloff>../assets/Images/left.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="2" alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="label_3">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Indicators</string>
+               </property>
+               <property name="scaledContents">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -165,10 +261,16 @@
           <item>
            <widget class="QFrame" name="frame_5">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>200</height>
+             </size>
             </property>
             <property name="maximumSize">
              <size>
@@ -183,8 +285,17 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="0">
-              <widget class="QLCDNumber" name="lcdNumber_3"/>
+             <item row="0" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="label_7">
+               <property name="font">
+                <font>
+                 <italic>true</italic>
+                </font>
+               </property>
+               <property name="text">
+                <string>Place Holder Widget 1</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -192,10 +303,16 @@
           <item>
            <widget class="QFrame" name="frame_6">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>200</height>
+             </size>
             </property>
             <property name="maximumSize">
              <size>
@@ -210,8 +327,17 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_4">
-             <item row="0" column="0">
-              <widget class="QLCDNumber" name="lcdNumber_4"/>
+             <item row="0" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="label_8">
+               <property name="font">
+                <font>
+                 <italic>true</italic>
+                </font>
+               </property>
+               <property name="text">
+                <string>Place Holder Widget 2</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

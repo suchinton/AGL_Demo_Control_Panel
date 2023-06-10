@@ -288,11 +288,4 @@
     <file>feather/zoom-in.svg</file>
     <file>feather/zoom-out.svg</file>
   </qresource>
-  <qresource prefix="Images">
-    <file>Images/logo_agl.png</file>
-  </qresource>
-  <qresource prefix="Misc">
-    <file>Misc_icons/dashboard-2-fill.svg</file>
-    <file>Misc_icons/speed-up-fill.svg</file>
-  </qresource>
 </RCC>
