@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1130</width>
-    <height>671</height>
+    <width>994</width>
+    <height>571</height>
    </rect>
   </property>
   <property name="palette">
@@ -459,7 +459,7 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="assets/res.qrc">
     <normaloff>:/Images/Images/logo_agl.png</normaloff>:/Images/Images/logo_agl.png</iconset>
   </property>
   <property name="autoFillBackground">
@@ -500,10 +500,6 @@
 	background-color: rgb(48, 59, 59);
 } 
 
-#mainContainer QStackedWidget{
-	border-radius: 10px;
-	background-color: rgb(48, 59, 59);
-}
 </string>
   </property>
   <property name="documentMode">
@@ -689,6 +685,15 @@
        </property>
        <item alignment="Qt::AlignTop">
         <widget class="QWidget" name="headerContainer" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="tabletTracking">
+          <bool>true</bool>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <property name="spacing">
            <number>0</number>
@@ -729,8 +734,20 @@
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item>
+             <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
               <widget class="QLabel" name="aglLogo">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>90</width>
@@ -741,7 +758,7 @@
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap>:/Images/Images/logo_agl.png</pixmap>
+                <pixmap resource="assets/res.qrc">:/Images/Images/logo_agl.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -859,11 +876,12 @@
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>0</number>
+                <number>3</number>
                </property>
                <widget class="ICWidget" name="ICPage"/>
                <widget class="HVACWidget" name="HVACPage"/>
                <widget class="QWidget" name="newPage"/>
+               <widget class="settings" name="settingsPage"/>
               </widget>
              </item>
             </layout>
@@ -889,6 +907,12 @@
    <class>HVACWidget</class>
    <extends>QWidget</extends>
    <header>Widgets/HVACPage</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>settings</class>
+   <extends>QWidget</extends>
+   <header>Widgets/settings</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

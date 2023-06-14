@@ -288,4 +288,9 @@
     <file>feather/zoom-in.svg</file>
     <file>feather/zoom-out.svg</file>
   </qresource>
+  <qresource prefix="Images">
+    <file>Images/left.png</file>
+    <file>Images/logo_agl.png</file>
+    <file>Images/right.png</file>
+  </qresource>
 </RCC>

@@ -1,13 +1,16 @@
 import kuksa_client as kuksa
-
+import threading
 
 class KuksaClientSingleton:
     __instance = None
+    __lock = threading.Lock()
 
     @staticmethod
     def get_instance():
         if KuksaClientSingleton.__instance is None:
-            KuksaClientSingleton()
+            with KuksaClientSingleton.__lock:
+                if KuksaClientSingleton.__instance is None:
+                    KuksaClientSingleton.__instance = KuksaClientSingleton()
         return KuksaClientSingleton.__instance
 
     def __init__(self):
@@ -18,7 +21,7 @@ class KuksaClientSingleton:
                 "ip": '10.10.10.203',
                 "port": "8090",
                 'protocol': 'ws',
-                'insecure': False,
+                'insecure': True,
             }
 
             self.token = "/home/suchinton/.local/lib/python3.10/site-packages/kuksa_certificates/jwt/super-admin.json.token"
@@ -27,25 +30,29 @@ class KuksaClientSingleton:
                 self.client = kuksa.KuksaClientThread\
                     (self.default_Config)
                 self.client.authorize(self.token)
-                self.client.start()
+                #self.client.start()
             except Exception as e:
                 print(e)
+                
 
             KuksaClientSingleton.__instance = self
 
-    def get_client(self):
-        return self.client, self.default_Config, self.token
-    
-    def get_status(self):
-        return self.client.checkConnection()
-
     def reconnect_client(self, new_Config, new_Token):
         self.client.stop()
-        print(self.client.checkConnection())
         self.client = kuksa.KuksaClientThread(new_Config)
         self.client.authorize(new_Token)
-        self.client.start()
+
+    def get_client(self):
         return self.client
+    
+    def get_config(self):
+        return self.default_Config
+    
+    def get_token(self):
+        return self.token
+
+    def get_status(self):
+        return self.client.checkConnection()
 
     def __del__(self):
         self.client.stop()

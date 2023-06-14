@@ -47,7 +47,7 @@ class ICWidget(Base, Form):
 
         self.RPM_slider.valueChanged.connect(self.update_RPM_monitor)
         self.RPM_slider.setMinimum(0)
-        self.RPM_slider.setMaximum(10000)
+        self.RPM_slider.setMaximum(8000)
 
         # make both buttons checkable
         self.leftIndicatorBtn.setCheckable(True)
@@ -59,7 +59,7 @@ class ICWidget(Base, Form):
         # Create QTimer object
         self.timer = QtCore.QTimer()
         # Set interval to 100ms (10 times per second)
-        self.timer.setInterval(100)
+        self.timer.setInterval(1000)
         # Connect timeout signal to send_value function
         self.timer.timeout.connect(self.send_value)
 
@@ -74,7 +74,9 @@ class ICWidget(Base, Form):
 
     def set_instance(self):
         self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
-        self.client, self.config, self.token = self.kuksa.get_client()
+        self.client = self.kuksa.get_client()
+        self.client.stop()
+        self.client.start()
 
     def update_Speed_monitor(self):
         speed = int(self.Speed_slider.value())
@@ -90,8 +92,11 @@ class ICWidget(Base, Form):
 
         try:
             # Send speed value to server
-            self.client.setValue(self.IC.speed, str(speed), 'value')
+            # self.client.setValue(self.IC.speed, str(speed), 'value')
             # Send RPM value to server
+            # self.client.setValue(self.IC.engineRPM, str(rpm), 'value')
+
+            self.client.setValue(self.IC.speed, str(speed), 'value')
             self.client.setValue(self.IC.engineRPM, str(rpm), 'value')
 
         except Exception as e:
@@ -118,6 +123,5 @@ if __name__ == '__main__':
     import sys
     app = QApplication(sys.argv)
     w = ICWidget()
-    kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
     w.show()
     sys.exit(app.exec_())

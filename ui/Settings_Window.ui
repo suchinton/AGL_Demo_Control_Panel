@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
-    <height>235</height>
+    <width>510</width>
+    <height>238</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -122,6 +122,17 @@
      <widget class="QPushButton" name="refreshBtn">
       <property name="text">
        <string>Refresh Status</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="startClientBtn">
+      <property name="text">
+       <string>Start client</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../assets/res.qrc">
+        <normaloff>:/icons/feather/play.svg</normaloff>:/icons/feather/play.svg</iconset>
       </property>
      </widget>
     </item>

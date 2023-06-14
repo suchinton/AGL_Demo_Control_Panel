@@ -8,7 +8,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 
 from functools import partial
 
-import extras.Kuksa_Instance as kuksa_instance
 from Widgets.settings import *
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -36,7 +35,7 @@ class MainWindow(Base, Form):
             button.clicked.connect(partial(self.stackedWidget.setCurrentIndex, i))
 
         settings = self.findChild(QPushButton, 'settingsBtn')
-        settings.clicked.connect(self.showSettings)
+        settings.clicked.connect(partial(self.stackedWidget.setCurrentIndex, 3))
 
     def toggleMaximized(self):
         if self.isMaximized():
@@ -48,13 +47,12 @@ class MainWindow(Base, Form):
         # show the settings window using its ui file
         self.settings = Settings()
         
-        self.settings.show()
+        #self.settings.show()
 
         
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()
-    kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
     window.show()
     sys.exit(app.exec_())
