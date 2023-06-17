@@ -6,42 +6,133 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>697</width>
-    <height>743</height>
+    <width>593</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">*{
+	border: none;
+	background-color: transparent;
+	background: none;
+	padding: 0;
+	margin: 0;
+	color: #fff;
+}
+
+#centralwidget{
+	background-color: #131313 ; /* dark green */
+}
+
+#centralwidget QPushButton{
+	background-color: #859287; /* light green */
+	padding: 5px 10px;
+	border-radius: 10px;
+}
+
+#centralwidget QPushButton:pressed {
+    background-color: #498661 ; /* green */
+}
+
+#centralwidget QSlider::groove:horizontal {
+    border: 1px solid #859287; /* light green */
+    height: 15px;
+    border-radius: 8px;
+}
+
+#centralwidget  QSlider::sub-page:horizontal {
+    background-color: #498661 ; /* green */
+    height: 15px;
+    border-radius: 5px;
+}
+
+#centralwidget QSlider::handle:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #eee, stop:1 #ccc);
+    border: 1px solid #777;
+    width: 20px;
+    margin-top: -2px;
+    margin-bottom: -2px;
+    border-radius: 8px;
+}
+
+QSlider::sub-page:vertical {
+    background-color: #131313 ; /* dark green */
+    height: 20px;
+    width: 18px;
+    margin: 2px;
+	border: 1px solid #859287; /* light green */
+    border-radius: 8px;
+}
+
+QSlider::groove:vertical {
+    border-radius: 8px;
+    width: 18px;
+    margin: 2px;
+	border: 1px solid #859287; /* light green */
+	background-color: #498661 ; /* green */ 
+}
+QSlider::groove:vertical:hover {
+	background-color: rgb(55, 62, 76);
+}
+QSlider::handle:vertical {
+    background-color: #d5d5d5;
+    height: 15px;
+    width: 20px;
+	border-radius: 5px;
+}
+QSlider::handle:vertical:hover {
+    background-color: #859287; /* light green */
+}
+QSlider::handle:vertical:pressed {
+    background-color: #498661 ; /* green */ 
+}
+
+
+QScrollBar:horizontal {
+        min-width: 240px;
+        height: 13px;
+    }
+
+    QScrollBar:vertical {
+        min-height: 240px;
+        width: 13px;
+    }
+
+    QScrollBar::groove {
+        background: 2A2827; /* dark grey */
+        border-radius: 5px;
+    }
+
+    QScrollBar::handle {
+        background: #498661 ; /* green */
+        border-radius: 5px;
+    }
+
+    QScrollBar::handle:horizontal {
+        width: 25px;
+    }
+
+    QScrollBar::handle:vertical {
+        height: 25px; scrollAreaWidgetContents 
+    }
+
+#frame_1{
+	background: #2E3632 ; /* dark green */
+	border-radius: 10px;
+}
+
+QLCDNumber {
+	background: #859287; /* light green */
+	border-radius: 10px;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <item alignment="Qt::AlignTop">
-    <widget class="QFrame" name="frame">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item alignment="Qt::AlignRight">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>LOGO</string>
-        </property>
-       </widget>
-      </item>
-      <item alignment="Qt::AlignLeft">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Instrument Cluster</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item>
-    <widget class="QFrame" name="frame_2">
+    <widget class="QFrame" name="centralwidget">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -65,13 +156,200 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>644</width>
-           <height>830</height>
+           <width>569</width>
+           <height>696</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
+           <widget class="QFrame" name="frame">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QFrame" name="frame_4">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QLabel" name="label">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <italic>true</italic>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Instrument Cluster</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frame_5">
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="reconnectBtn">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../assets/res.qrc">
+                 <normaloff>:/icons/feather/refresh-ccw.svg</normaloff>:/icons/feather/refresh-ccw.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="scriptBtn">
+               <property name="text">
+                <string>Script</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../assets/res.qrc">
+                 <normaloff>:/icons/feather/play-circle.svg</normaloff>:/icons/feather/play-circle.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignTop">
            <widget class="QFrame" name="frame_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>150</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0">
+              <widget class="QPushButton" name="leftIndicatorBtn">
+               <property name="acceptDrops">
+                <bool>false</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../assets/res.qrc">
+                 <normaloff>:/Images/Images/left.png</normaloff>:/Images/Images/left.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="checkable">
+                <bool>false</bool>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="hazardBtn">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../assets/res.qrc">
+                 <normaloff>:/Images/Images/hazard.png</normaloff>:/Images/Images/hazard.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="rightIndicatorBtn">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../assets/res.qrc">
+                 <normaloff>:/Images/Images/right.png</normaloff>:/Images/Images/right.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignTop">
+           <widget class="QFrame" name="frame_1">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -97,45 +375,14 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="4" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_4">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <italic>true</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Speed (Kmph)</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" rowspan="5">
-              <widget class="Line" name="line">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QSlider" name="Speed_slider">
-               <property name="maximum">
-                <number>240</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="2">
+             <item row="3" column="4">
               <widget class="QSlider" name="RPM_slider">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
-             <item row="4" column="2" alignment="Qt::AlignHCenter">
+             <item row="4" column="4" alignment="Qt::AlignHCenter">
               <widget class="QLabel" name="label_5">
                <property name="font">
                 <font>
@@ -149,97 +396,83 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="0" rowspan="3">
-              <widget class="QFrame" name="frame_7">
+             <item row="1" column="4" rowspan="2">
+              <widget class="QLCDNumber" name="RPM_monitor">
                <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
+                <enum>QFrame::NoFrame</enum>
                </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+               <property name="digitCount">
+                <number>4</number>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_3">
-                <item>
-                 <widget class="QLCDNumber" name="Speed_monitor">
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="digitCount">
-                   <number>3</number>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <property name="segmentStyle">
+                <enum>QLCDNumber::Flat</enum>
+               </property>
               </widget>
              </item>
-             <item row="0" column="2" rowspan="3">
-              <widget class="QLCDNumber" name="RPM_monitor"/>
+             <item row="1" column="1" rowspan="2" colspan="2">
+              <widget class="QLCDNumber" name="Speed_monitor">
+               <property name="font">
+                <font>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="smallDecimalPoint">
+                <bool>false</bool>
+               </property>
+               <property name="digitCount">
+                <number>3</number>
+               </property>
+               <property name="segmentStyle">
+                <enum>QLCDNumber::Flat</enum>
+               </property>
+              </widget>
              </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QFrame" name="frame_4">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>200</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>150</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_2">
-             <item row="1" column="1">
-              <widget class="QPushButton" name="rightIndicatorBtn">
-               <property name="text">
-                <string/>
+             <item row="3" column="1">
+              <widget class="QSlider" name="Speed_slider">
+               <property name="font">
+                <font>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
                </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../assets/Images/right.png</normaloff>../assets/Images/right.png</iconset>
+               <property name="maximum">
+                <number>240</number>
                </property>
-               <property name="iconSize">
-                <size>
-                 <width>60</width>
-                 <height>60</height>
-                </size>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+               <property name="tickInterval">
+                <number>0</number>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3" rowspan="4">
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
                </property>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QPushButton" name="leftIndicatorBtn">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../assets/Images/left.png</normaloff>../assets/Images/left.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>60</width>
-                 <height>60</height>
-                </size>
+              <widget class="QSlider" name="coolantTemp_slider">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
                </property>
               </widget>
              </item>
-             <item row="0" column="0" colspan="2" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_3">
+             <item row="4" column="1" alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="label_4">
                <property name="font">
                 <font>
                  <weight>75</weight>
@@ -248,7 +481,65 @@
                 </font>
                </property>
                <property name="text">
-                <string>Indicators</string>
+                <string>Speed (Kmph)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="5">
+              <widget class="QSlider" name="fuelLevel_slider">
+               <property name="font">
+                <font>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="sliderPosition">
+                <number>0</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="invertedAppearance">
+                <bool>false</bool>
+               </property>
+               <property name="invertedControls">
+                <bool>false</bool>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="../assets/res.qrc">:/icons/feather/thermometer.svg</pixmap>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="5">
+              <widget class="QLabel" name="label_3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="../assets/res.qrc">:/icons/feather/droplet.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>false</bool>
@@ -258,42 +549,36 @@
             </layout>
            </widget>
           </item>
-          <item>
-           <widget class="QFrame" name="frame_5">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>200</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>150</height>
-             </size>
-            </property>
+          <item alignment="Qt::AlignTop">
+           <widget class="QFrame" name="frame_2">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_7">
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QPushButton" name="accelerationBtn">
                <property name="font">
                 <font>
+                 <weight>75</weight>
                  <italic>true</italic>
+                 <bold>true</bold>
                 </font>
                </property>
                <property name="text">
-                <string>Place Holder Widget 1</string>
+                <string>Accelerate</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../assets/res.qrc">
+                 <normaloff>:/Misc_icons/Misc_icons/speed-up-fill.svg</normaloff>:/Misc_icons/Misc_icons/speed-up-fill.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -301,46 +586,17 @@
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame_6">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
             </property>
-            <property name="minimumSize">
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>0</width>
-              <height>200</height>
+              <width>20</width>
+              <height>40</height>
              </size>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>150</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_4">
-             <item row="0" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_8">
-               <property name="font">
-                <font>
-                 <italic>true</italic>
-                </font>
-               </property>
-               <property name="text">
-                <string>Place Holder Widget 2</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -351,6 +607,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../assets/res.qrc"/>
+ </resources>
  <connections/>
 </ui>
