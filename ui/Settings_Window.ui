@@ -6,54 +6,69 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>510</width>
-    <height>238</height>
+    <width>599</width>
+    <height>340</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">*{
+	border: none;
+	background-color: transparent;
+	background: none;
+	padding: 0;
+	margin: 0;
+	color: #fff;
+}
+
+#centralwidget{
+	background-color: #131313 ; /* dark green */
+}
+
+#centralwidget QPushButton{
+	background-color: #859287; /* light green */
+	padding: 5px 10px;
+	border-radius: 10px;
+}
+
+#centralwidget QPushButton:pressed {
+    background-color: #498661 ; /* green */
+}
+
+#centralwidget QLineEdit {
+    background-color: #859287; /* light green */
+	border-radius: 10px;
+	padding: 5px 0px;
+}
+
+Line {
+	background-color: #498661 ; /* green */
+}
+</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="0">
-     <widget class="QLabel" name="IPAddr">
+    <item row="0" column="0">
+     <widget class="QPushButton" name="startClientBtn">
       <property name="text">
-       <string>IP Address</string>
+       <string>Start client</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../assets/res.qrc">
+        <normaloff>:/icons/feather/play.svg</normaloff>:/icons/feather/play.svg</iconset>
       </property>
      </widget>
     </item>
-    <item row="3" column="1" colspan="3">
-     <widget class="QLineEdit" name="tokenPathInput"/>
-    </item>
-    <item row="3" column="0">
+    <item row="6" column="0">
      <widget class="QLabel" name="tokenPath">
       <property name="text">
-       <string>JWT token Path</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="status">
-      <property name="text">
-       <string>Status</string>
+       <string>JWT token Path *</string>
       </property>
      </widget>
     </item>
     <item row="2" column="1" colspan="3">
-     <widget class="QLineEdit" name="IPAddrInput"/>
-    </item>
-    <item row="0" column="3">
-     <widget class="QPushButton" name="reconnectBtn">
-      <property name="text">
-       <string>Reconnect</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../assets/res.qrc">
-        <normaloff>:/icons/feather/refresh-cw.svg</normaloff>:/icons/feather/refresh-cw.svg</iconset>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1" colspan="3">
      <widget class="QFrame" name="frame">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -94,27 +109,27 @@
       </layout>
      </widget>
     </item>
-    <item row="5" column="0" colspan="4">
-     <widget class="QDialogButtonBox" name="buttonBox">
-      <property name="standardButtons">
-       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+    <item row="4" column="0" colspan="4">
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Insecure Mode</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="1" colspan="3">
+    <item row="7" column="1" colspan="3">
      <widget class="QCheckBox" name="checkBox">
       <property name="text">
        <string/>
       </property>
       <property name="checked">
        <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0" colspan="4">
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
       </property>
      </widget>
     </item>
@@ -125,14 +140,52 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QPushButton" name="startClientBtn">
+    <item row="7" column="0">
+     <widget class="QLabel" name="label">
       <property name="text">
-       <string>Start client</string>
+       <string>Insecure Mode</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="IPAddr">
+      <property name="text">
+       <string>IP Address *</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1" colspan="3">
+     <widget class="QLineEdit" name="IPAddrInput"/>
+    </item>
+    <item row="0" column="3">
+     <widget class="QPushButton" name="reconnectBtn">
+      <property name="text">
+       <string>Reconnect</string>
       </property>
       <property name="icon">
        <iconset resource="../assets/res.qrc">
-        <normaloff>:/icons/feather/play.svg</normaloff>:/icons/feather/play.svg</iconset>
+        <normaloff>:/icons/feather/refresh-cw.svg</normaloff>:/icons/feather/refresh-cw.svg</iconset>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="status">
+      <property name="text">
+       <string>Status</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1" colspan="3">
+     <widget class="QLineEdit" name="tokenPathInput"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Create Bridge</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../assets/res.qrc">
+        <normaloff>:/icons/feather/link.svg</normaloff>:/icons/feather/link.svg</iconset>
       </property>
      </widget>
     </item>
@@ -141,6 +194,7 @@
  </widget>
  <resources>
   <include location="../assets/res.qrc"/>
+  <include location="../../../.designer/assets/res.qrc"/>
  </resources>
  <connections/>
 </ui>

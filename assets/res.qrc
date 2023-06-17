@@ -289,8 +289,17 @@
     <file>feather/zoom-out.svg</file>
   </qresource>
   <qresource prefix="Images">
-    <file>Images/left.png</file>
+    <file>Images/engine-coolant.png</file>
+    <file>Images/fuel-icon.png</file>
+    <file>Images/hazard.png</file>
+    <file>Images/Automotive_Grade_Linux_logo.svg</file>
     <file>Images/logo_agl.png</file>
     <file>Images/right.png</file>
+    <file>Images/logo.svg</file>
+    <file>Images/left.png</file>
+  </qresource>
+  <qresource prefix="Misc_icons">
+    <file>Misc_icons/dashboard-2-fill.svg</file>
+    <file>Misc_icons/speed-up-fill.svg</file>
   </qresource>
 </RCC>

@@ -1,5 +1,6 @@
 import kuksa_client as kuksa
 import threading
+import time
 
 class KuksaClientSingleton:
     __instance = None
@@ -27,10 +28,11 @@ class KuksaClientSingleton:
             self.token = "/home/suchinton/.local/lib/python3.10/site-packages/kuksa_certificates/jwt/super-admin.json.token"
 
             try:
-                self.client = kuksa.KuksaClientThread\
-                    (self.default_Config)
+                self.client = kuksa.KuksaClientThread(self.default_Config)
                 self.client.authorize(self.token)
-                #self.client.start()
+                time.sleep(2)
+                if self.client.checkConnection() == False:
+                    self.client = None
             except Exception as e:
                 print(e)
                 
@@ -38,12 +40,14 @@ class KuksaClientSingleton:
             KuksaClientSingleton.__instance = self
 
     def reconnect_client(self, new_Config, new_Token):
-        self.client.stop()
+        if self.client is not None:
+            self.client.stop()
         self.client = kuksa.KuksaClientThread(new_Config)
         self.client.authorize(new_Token)
+        return self.client
 
     def get_client(self):
-        return self.client
+        return self.client        
     
     def get_config(self):
         return self.default_Config

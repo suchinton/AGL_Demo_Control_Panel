@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>994</width>
+    <width>993</width>
     <height>571</height>
    </rect>
   </property>
@@ -460,7 +460,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="assets/res.qrc">
-    <normaloff>:/Images/Images/logo_agl.png</normaloff>:/Images/Images/logo_agl.png</iconset>
+    <normaloff>:/Images/Images/logo.svg</normaloff>:/Images/Images/logo.svg</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -476,31 +476,48 @@
 }
 
 #centralwidget{
-	background-color: rgb(29, 29, 29);
+	background-color: #131313 ; /* dark green */
 }
 
 #leftMenuSubContainer{
 	border-radius: 10px;
-	background-color: rgb(48, 59, 59);
+	background-color:  #2E3632; /* dark green */
 }
 
 #leftMenuSubContainer QPushButton{
-	background-color: rgb(107, 127, 124);
+	background-color: #859287; /* light green */
 	text-align: left;
 	padding: 5px 10px;
 	border-radius: 10px;
 }
 
 #leftMenuSubContainer QPushButton:pressed {
-    background-color: rgb(80, 97, 95); /* Customize the pressed state background color */
+    background-color: #498661 ; /* green */
 }
 
 #headerContainer{
 	border-radius: 10px;
-	background-color: rgb(48, 59, 59);
+	background-color: #2E3632; /* dark green */
 } 
 
+#headerContainer QPushButton{
+	background-color: #859287; /* light green */
+	text-align: center;
+	padding: 5px 3px;
+	border-radius: 13px;
+}
+
+#headerContainer QPushButton:pressed {
+    background-color: #498661 ; /* green */
+}
+
 </string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>24</width>
+    <height>24</height>
+   </size>
   </property>
   <property name="documentMode">
    <bool>false</bool>
@@ -554,12 +571,25 @@
             <layout class="QHBoxLayout" name="horizontalLayout">
              <item>
               <widget class="QPushButton" name="menuButton">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
-                <string/>
+                <string>Menu</string>
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
                  <normaloff>:/icons/feather/menu.svg</normaloff>:/icons/feather/menu.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -583,6 +613,13 @@
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>
               <widget class="QPushButton" name="icButton">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
                 <string>Instrument Cluster</string>
                </property>
@@ -590,10 +627,23 @@
                 <iconset resource="assets/res.qrc">
                  <normaloff>:/icons/feather/disc.svg</normaloff>:/icons/feather/disc.svg</iconset>
                </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="hvacButton">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
                 <string>HVAC</string>
                </property>
@@ -601,16 +651,35 @@
                 <iconset resource="assets/res.qrc">
                  <normaloff>:/icons/feather/wind.svg</normaloff>:/icons/feather/wind.svg</iconset>
                </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="newButton">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
                 <string>New</string>
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
                  <normaloff>:/icons/feather/plus.svg</normaloff>:/icons/feather/plus.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -641,12 +710,25 @@
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
               <widget class="QPushButton" name="settingsBtn">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
                 <string>Configure</string>
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
                  <normaloff>:/icons/feather/settings.svg</normaloff>:/icons/feather/settings.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -816,6 +898,9 @@
                 <iconset resource="assets/res.qrc">
                  <normaloff>:/icons/feather/minus.svg</normaloff>:/icons/feather/minus.svg</iconset>
                </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
               </widget>
              </item>
              <item>
@@ -855,6 +940,21 @@
           </sizepolicy>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QWidget" name="widget" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -918,6 +1018,7 @@
  </customwidgets>
  <resources>
   <include location="assets/res.qrc"/>
+  <include location="../../.designer/backup/assets/res.qrc"/>
  </resources>
  <connections/>
 </ui>

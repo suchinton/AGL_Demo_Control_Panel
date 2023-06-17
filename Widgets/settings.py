@@ -1,8 +1,9 @@
 import os
 import sys
+import time
 import json
-from PyQt5 import uic, QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit, QPushButton, QLabel
+from PyQt5 import uic
+from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton, QLabel
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -41,23 +42,31 @@ class settings(Base, Form):
 	def set_instance(self):
 		self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
 		self.client = self.kuksa.get_client()
+		
 		self.config = self.kuksa.get_config()
 		self.token = self.kuksa.get_token()
+
 		self.IPAddrInput.setText(self.config["ip"])
 		self.tokenPathInput.setText(self.token)
-		self.refreshStatus()
 
+		time.sleep(2)
+		self.refreshStatus()
 
 	def refreshStatus(self):
 		try:
+			if(self.client is None):
+				self.connectionStatus.setText('Not Connected')
+				self.connectionLogo.setStyleSheet("background-color: red")
+
 			if(self.client.checkConnection() == True):
 				self.connectionStatus.setText('Connected')
 				self.connectionLogo.setStyleSheet("background-color: green")
 				self.client.start()
-			else:
+			
+			if(self.client.checkConnection() == False):
 				self.client.stop()
 				self.connectionStatus.setText('Disconnected')
-				self.connectionLogo.setStyleSheet("background-color: red")			
+				self.connectionLogo.setStyleSheet("background-color: yellow")			
 		except:
 			pass
 
@@ -67,7 +76,7 @@ class settings(Base, Form):
 			self.token = self.tokenPathInput.text()
 			self.client = self.kuksa.reconnect_client(self.config, self.token)
 			self.client.start()
-			self.refreshStatus()			
+			self.refreshStatus()
 		except Exception as e:
 			print(e)
 
@@ -75,6 +84,5 @@ if __name__ == '__main__':
 	import sys
 	app = QApplication(sys.argv)
 	w = settings()
-	#kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
 	w.show()
 	sys.exit(app.exec_())

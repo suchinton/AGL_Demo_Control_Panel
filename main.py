@@ -2,9 +2,7 @@ import sys
 import os
 
 from PyQt5 import uic, QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
-
-# from ui_Main_Window import *
+from PyQt5.QtWidgets import QApplication, QPushButton
 
 from functools import partial
 
@@ -37,19 +35,13 @@ class MainWindow(Base, Form):
         settings = self.findChild(QPushButton, 'settingsBtn')
         settings.clicked.connect(partial(self.stackedWidget.setCurrentIndex, 3))
 
+        self.stackedWidget.setCurrentIndex(0)
+
     def toggleMaximized(self):
         if self.isMaximized():
             self.showNormal()
         else:
             self.showMaximized()
-
-    def showSettings(self):
-        # show the settings window using its ui file
-        self.settings = Settings()
-        
-        #self.settings.show()
-
-        
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
