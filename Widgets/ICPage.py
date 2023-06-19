@@ -38,6 +38,7 @@ class IC_Paths():
         self.engineRPM = "Vehicle.Powertrain.CombustionEngine.Speed"
         self.leftIndicator = "Vehicle.Body.Lights.DirectionIndicator.Left.IsSignaling"
         self.rightIndicator = "Vehicle.Body.Lights.DirectionIndicator.Right.IsSignaling"
+        self.hazard = "Vehicle.Body.Lights.Hazard.IsSignaling"
         self.fuelLevel = "Vehicle.Powertrain.FuelSystem.Level"
         self.coolantTemp = "Vehicle.Powertrain.CombustionEngine.ECT"
         self.selectedGear = "Vehicle.Powertrain.Transmission.SelectedGear"
@@ -164,6 +165,7 @@ class ICWidget(Base, Form):
             self.rightIndicatorBtn.setChecked(True)
             self.client.setValue(self.IC.leftIndicator, "true")
             self.client.setValue(self.IC.rightIndicator, "true")
+            self.client.setValue(self.IC.hazard, "true")
         else:
             painter = QPainter(hazardIcon)
             painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
@@ -175,6 +177,7 @@ class ICWidget(Base, Form):
             self.rightIndicatorBtn.setChecked(False)
             self.client.setValue(self.IC.leftIndicator, "false")
             self.client.setValue(self.IC.rightIndicator, "false")
+            self.client.setValue(self.IC.hazard, "false")
 
     def leftIndicatorBtnClicked(self):
         leftIndicatorIcon = QPixmap(":/Images/Images/left.png")
