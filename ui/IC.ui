@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>593</width>
+    <width>724</width>
     <height>720</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <string notr="true">*{
 	border: none;
 	background-color: transparent;
-	background: none;
+	background: none; 
 	padding: 0;
 	margin: 0;
 	color: #fff;
@@ -128,6 +128,20 @@ QScrollBar:horizontal {
 QLCDNumber {
 	background: #859287; /* light green */
 	border-radius: 10px;
+}
+
+#gearSelector {
+	background: #2E3632 ; /* dark green */
+	border-radius: 10px;
+}
+
+#gearSelector QPushButton {
+	padding: 4px 10px;
+	border-radius: 20px;
+}
+
+#gearSelector QPushButton:checked {
+    background-color: #965D62 ; /* red */
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -156,7 +170,7 @@ QLCDNumber {
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>569</width>
+           <width>700</width>
            <height>696</height>
           </rect>
          </property>
@@ -205,34 +219,7 @@ QLCDNumber {
                   </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QFrame" name="frame_5">
-                  <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                 </widget>
-                </item>
                </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="reconnectBtn">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../assets/res.qrc">
-                 <normaloff>:/icons/feather/refresh-ccw.svg</normaloff>:/icons/feather/refresh-ccw.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>30</width>
-                 <height>30</height>
-                </size>
-               </property>
               </widget>
              </item>
              <item>
@@ -282,6 +269,56 @@ QLCDNumber {
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="2">
+              <widget class="QPushButton" name="hazardBtn">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../assets/res.qrc">
+                 <normaloff>:/Images/Images/hazard.png</normaloff>:/Images/Images/hazard.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QPushButton" name="rightIndicatorBtn">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../assets/res.qrc">
+                 <normaloff>:/Images/Images/right.png</normaloff>:/Images/Images/right.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
              <item row="0" column="0">
               <widget class="QPushButton" name="leftIndicatorBtn">
                <property name="acceptDrops">
@@ -311,42 +348,40 @@ QLCDNumber {
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QPushButton" name="hazardBtn">
-               <property name="text">
-                <string/>
+             <item row="0" column="3">
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-               <property name="icon">
-                <iconset resource="../assets/res.qrc">
-                 <normaloff>:/Images/Images/hazard.png</normaloff>:/Images/Images/hazard.png</iconset>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
                </property>
-               <property name="iconSize">
+               <property name="sizeHint" stdset="0">
                 <size>
-                 <width>60</width>
-                 <height>60</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QPushButton" name="rightIndicatorBtn">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../assets/res.qrc">
-                 <normaloff>:/Images/Images/right.png</normaloff>:/Images/Images/right.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>60</width>
-                 <height>60</height>
-                </size>
-               </property>
-              </widget>
+              </spacer>
              </item>
             </layout>
            </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item alignment="Qt::AlignTop">
            <widget class="QFrame" name="frame_1">
@@ -375,14 +410,17 @@ QLCDNumber {
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="3" column="4">
-              <widget class="QSlider" name="RPM_slider">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+             <item row="3" column="1">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="../assets/res.qrc">:/icons/feather/thermometer.svg</pixmap>
                </property>
               </widget>
              </item>
-             <item row="4" column="4" alignment="Qt::AlignHCenter">
+             <item row="4" column="6" alignment="Qt::AlignHCenter">
               <widget class="QLabel" name="label_5">
                <property name="font">
                 <font>
@@ -396,46 +434,30 @@ QLCDNumber {
                </property>
               </widget>
              </item>
-             <item row="1" column="4" rowspan="2">
-              <widget class="QLCDNumber" name="RPM_monitor">
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="digitCount">
-                <number>4</number>
-               </property>
-               <property name="segmentStyle">
-                <enum>QLCDNumber::Flat</enum>
+             <item row="1" column="5" rowspan="4">
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
                </property>
               </widget>
              </item>
-             <item row="1" column="1" rowspan="2" colspan="2">
-              <widget class="QLCDNumber" name="Speed_monitor">
-               <property name="font">
-                <font>
-                 <weight>50</weight>
-                 <italic>false</italic>
-                 <bold>false</bold>
-                </font>
+             <item row="1" column="2">
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
                </property>
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
                </property>
-               <property name="smallDecimalPoint">
-                <bool>false</bool>
-               </property>
-               <property name="digitCount">
-                <number>3</number>
-               </property>
-               <property name="segmentStyle">
-                <enum>QLCDNumber::Flat</enum>
-               </property>
-              </widget>
+              </spacer>
              </item>
-             <item row="3" column="1">
+             <item row="3" column="3">
               <widget class="QSlider" name="Speed_slider">
                <property name="font">
                 <font>
@@ -457,69 +479,14 @@ QLCDNumber {
                </property>
               </widget>
              </item>
-             <item row="1" column="3" rowspan="4">
-              <widget class="Line" name="line">
+             <item row="3" column="6">
+              <widget class="QSlider" name="RPM_slider">
                <property name="orientation">
-                <enum>Qt::Vertical</enum>
+                <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QSlider" name="coolantTemp_slider">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_4">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <italic>true</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Speed (Kmph)</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="5">
-              <widget class="QSlider" name="fuelLevel_slider">
-               <property name="font">
-                <font>
-                 <kerning>true</kerning>
-                </font>
-               </property>
-               <property name="sliderPosition">
-                <number>0</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="invertedAppearance">
-                <bool>false</bool>
-               </property>
-               <property name="invertedControls">
-                <bool>false</bool>
-               </property>
-               <property name="tickPosition">
-                <enum>QSlider::NoTicks</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="../assets/res.qrc">:/icons/feather/thermometer.svg</pixmap>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="5">
+             <item row="3" column="8">
               <widget class="QLabel" name="label_3">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -546,8 +513,172 @@ QLCDNumber {
                </property>
               </widget>
              </item>
+             <item row="1" column="6" rowspan="2">
+              <widget class="QLCDNumber" name="RPM_monitor">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="digitCount">
+                <number>4</number>
+               </property>
+               <property name="segmentStyle">
+                <enum>QLCDNumber::Flat</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3" rowspan="2" colspan="2">
+              <widget class="QLCDNumber" name="Speed_monitor">
+               <property name="font">
+                <font>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="smallDecimalPoint">
+                <bool>false</bool>
+               </property>
+               <property name="digitCount">
+                <number>3</number>
+               </property>
+               <property name="segmentStyle">
+                <enum>QLCDNumber::Flat</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="8">
+              <widget class="QSlider" name="fuelLevel_slider">
+               <property name="font">
+                <font>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="sliderPosition">
+                <number>0</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="invertedAppearance">
+                <bool>false</bool>
+               </property>
+               <property name="invertedControls">
+                <bool>false</bool>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="7">
+              <spacer name="horizontalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="1" column="0">
+              <spacer name="horizontalSpacer_10">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="1" colspan="8">
+              <spacer name="verticalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>10</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSlider" name="coolantTemp_slider">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="3" alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="label_4">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Speed (Kmph)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="9">
+              <spacer name="horizontalSpacer_11">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
             </layout>
            </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item alignment="Qt::AlignTop">
            <widget class="QFrame" name="frame_2">
@@ -560,6 +691,12 @@ QLCDNumber {
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
               <widget class="QPushButton" name="accelerationBtn">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>80</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <weight>75</weight>
@@ -581,6 +718,195 @@ QLCDNumber {
                 </size>
                </property>
               </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignTop">
+           <widget class="QFrame" name="gearSelector">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>80</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>167</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="parkBtn">
+               <property name="font">
+                <font>
+                 <pointsize>20</pointsize>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>P</string>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="reverseBtn">
+               <property name="font">
+                <font>
+                 <pointsize>20</pointsize>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>R</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="neutralBtn">
+               <property name="font">
+                <font>
+                 <pointsize>20</pointsize>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>N</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="driveBtn">
+               <property name="font">
+                <font>
+                 <pointsize>20</pointsize>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>D</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>168</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>

@@ -1,11 +1,23 @@
+#   Copyright 2023 Suchinton Chakravarty
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
 import os
 import sys
-import time
-from PyQt5 import uic, QtCore
+from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QSlider, QLCDNumber, QPushButton
 from PyQt5.QtGui import QIcon, QPixmap, QPainter
-import math
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -28,6 +40,7 @@ class IC_Paths():
         self.rightIndicator = "Vehicle.Body.Lights.DirectionIndicator.Right.IsSignaling"
         self.fuelLevel = "Vehicle.Powertrain.FuelSystem.Level"
         self.coolantTemp = "Vehicle.Powertrain.CombustionEngine.ECT"
+        self.selectedGear = "Vehicle.Powertrain.Transmission.SelectedGear"
 
 class ICWidget(Base, Form):
     def __init__(self, parent=None):
@@ -37,19 +50,37 @@ class ICWidget(Base, Form):
 
         self.IC = IC_Paths()
 
-        self.reconnectBtn = self.findChild(QPushButton, "reconnectBtn")
+        # self.reconnectBtn = self.findChild(QPushButton, "reconnectBtn")
         self.Speed_slider = self.findChild(QSlider, "Speed_slider")
         self.Speed_monitor = self.findChild(QLCDNumber, "Speed_monitor")
         self.RPM_slider = self.findChild(QSlider, "RPM_slider")
         self.RPM_monitor = self.findChild(QLCDNumber, "RPM_monitor")
+
         self.coolantTemp_slider = self.findChild(QSlider, "coolantTemp_slider")
         self.fuelLevel_slider = self.findChild(QSlider, "fuelLevel_slider")
+
         self.accelerationBtn = self.findChild(QPushButton, "accelerationBtn")
+
         self.leftIndicatorBtn = self.findChild(QPushButton, "leftIndicatorBtn")
         self.rightIndicatorBtn = self.findChild(QPushButton, "rightIndicatorBtn")
         self.hazardBtn = self.findChild(QPushButton, "hazardBtn")
 
-        self.reconnectBtn.clicked.connect(self.set_instance)
+        self.parkBtn = self.findChild(QPushButton, "parkBtn")
+        self.reverseBtn = self.findChild(QPushButton, "reverseBtn")
+        self.neutralBtn = self.findChild(QPushButton, "neutralBtn")
+        self.driveBtn = self.findChild(QPushButton, "driveBtn")
+
+        # group for the buttons for mutual exclusion
+        self.driveGroupBtns = QtWidgets.QButtonGroup()
+        self.driveGroupBtns.setExclusive(True)
+        self.driveGroupBtns.addButton(self.parkBtn)
+        self.driveGroupBtns.addButton(self.reverseBtn)
+        self.driveGroupBtns.addButton(self.neutralBtn)
+        self.driveGroupBtns.addButton(self.driveBtn)
+
+        self.driveGroupBtns.buttonClicked.connect(self.driveBtnClicked)
+
+        #self.reconnectBtn.clicked.connect(self.set_instance)
 
         self.Speed_slider.valueChanged.connect(self.update_Speed_monitor)
         self.Speed_slider.setMinimum(0)
@@ -76,7 +107,9 @@ class ICWidget(Base, Form):
         # Create QTimer object
         self.timer = QtCore.QTimer()
         self.timer.setInterval(100)
-        self.timer.timeout.connect(lambda: [self.send_value(),self.updateSpeedAndEngineRpm] if self.client is not None else self.set_instance())
+        self.timer.timeout.connect(lambda: [self.send_value(),self.updateSpeedAndEngineRpm] 
+                                   if self.client is not None 
+                                   else self.set_instance())
 
         # Create QThread object
         self.thread = QtCore.QThread()
@@ -185,30 +218,22 @@ class ICWidget(Base, Form):
             self.client.setValue(self.IC.rightIndicator, "false")
 
     def calculate_speed(self, time):
-        # Use the given acceleration of 0-60 in 5 seconds
         acceleration = 60 / 5 # acceleration from 0 to 60 in 5 seconds
         time = time / 1000 # convert milliseconds to seconds
         speed = acceleration * time # calculate speed
         return speed
 
     def calculate_engine_rpm(self,speed):
-        # Use the wheel diameter of a Tesla Model 3 as an example
-        wheel_diameter = 0.48 # in meters [1]
+        wheel_diameter = 0.48 # in meters
         wheel_circumference = wheel_diameter * 3.14 # in meters
 
-        # Use the average sports car gear ratios [2]
         gear_ratios = [3.36, 2.10, 1.48, 1.16, 0.95, 0.81]
-
-        # Convert speed from km/h to m/s
-        speed = speed * 1000 / 3600
-
-        # Calculate the wheel revolutions per second
+        speed = speed * 1000 / 3600 # Convert speed from km/h to m/s
         wheel_rps = speed / wheel_circumference
 
-        # Find the current gear based on the wheel rps
         current_gear = None
         for i in range(len(gear_ratios)):
-            if wheel_rps * gear_ratios[i] < 8000 / 60: # assuming max rpm is 8000
+            if wheel_rps * gear_ratios[i] < 8000 / 60:
                 current_gear = i + 1
                 break
 
@@ -216,26 +241,20 @@ class ICWidget(Base, Form):
         if current_gear is None:
             current_gear = len(gear_ratios)
 
-        # Calculate the engine rpm based on the current gear ratio
         engine_rpm = wheel_rps * gear_ratios[current_gear - 1] * 60
 
         return engine_rpm
 
     def calculate_speed_from_rpm_and_gear(self,rpm,gear):
-        # Use the wheel diameter of a Tesla Model 3 as an example
-        wheel_diameter = 0.48 # in meters [1]
+
+        wheel_diameter = 0.48 # in meters
         wheel_circumference = wheel_diameter * 3.14 # in meters
 
-        # Use the average sports car gear ratios [2]
         gear_ratios = [3.36, 2.10, 1.48, 1.16, 0.95, 0.81]
-
-        # Calculate the wheel revolutions per second
         wheel_rps = rpm / (gear_ratios[gear - 1] * 60)
 
         # Calculate the speed in m/s
         speed = wheel_rps * wheel_circumference
-
-        # Convert speed from m/s to km/h
         speed = speed * 3600 / 1000
 
         return speed
@@ -254,6 +273,34 @@ class ICWidget(Base, Form):
         self.Speed_slider.setValue(int(speed))
         self.RPM_slider.setValue(int(rpm))
         self.send_value()
+
+    def driveBtnClicked(self):
+        #   // Selected Gear output = > 0 = Neutral, 1/2/.. = Forward, -1/.. = Reverse, 126 = Park, 127 = Drive
+        # #859287 ; /* light green */
+
+        if self.driveGroupBtns.checkedButton() == self.driveBtn:
+            self.accelerationBtn.setEnabled(True)
+            self.Speed_slider.setEnabled(True)
+            self.RPM_slider.setEnabled(True)
+            self.client.setValue(self.IC.selectedGear, "127")
+
+        if self.driveGroupBtns.checkedButton() == self.parkBtn:
+            self.accelerationBtn.setEnabled(False)
+            self.Speed_slider.setEnabled(False)
+            self.RPM_slider.setEnabled(False)
+            self.client.setValue(self.IC.selectedGear, "126")
+
+        if self.driveGroupBtns.checkedButton() == self.reverseBtn:
+            self.accelerationBtn.setEnabled(False)
+            self.Speed_slider.setEnabled(False)
+            self.RPM_slider.setEnabled(False)
+            self.client.setValue(self.IC.selectedGear, "-1")
+
+        if self.driveGroupBtns.checkedButton() == self.neutralBtn:
+            self.accelerationBtn.setEnabled(False)
+            self.Speed_slider.setEnabled(False)
+            self.RPM_slider.setEnabled(False)
+            self.client.setValue(self.IC.selectedGear, "0")
 
 if __name__ == '__main__':
     import sys
