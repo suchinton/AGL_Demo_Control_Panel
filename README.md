@@ -1,6 +1,6 @@
 # AGL_Demo_Control_Panel
 
-A PyQt5 application to simulate CAN Bus signals using Kuksa.val for the AGL Demo platform. This application is to be used in parallel to the relevant AGL Images or any application that subscribe to VSS signals using Kuksa.val server or Kuksa-databroaker.
+A PyQt5 application to simulate CAN Bus signals using Kuksa.val for the AGL Demo platform. This application is to be used in parallel to the relevant AGL Images or any application that subscribe to VSS signals using [Kuksa.val server](https://github.com/eclipse/kuksa.val/tree/master/kuksa-val-server) or [Kuksa-databroker](https://github.com/eclipse/kuksa.val/tree/master/kuksa_databroker).
 
 ## # Installation
 
@@ -15,7 +15,7 @@ pip install req.txt
 
 ## # Usage
 
-First we run the kuksa-val-server on the machine, you can also run the docker image for the same. 
+First we run the kuksa-val-server on the machine, you can also run the [docker image](https://github.com/eclipse/kuksa.val/blob/master/doc/quickstart.md) for the same. 
 
 If you are using an AGL image (using a VM) to test the application, you need to set up a bridged network to communicate with the server. You can do so by running the `setup_tap_wireless_int.sh` script.
 
@@ -35,6 +35,7 @@ _Note_: make sure to update the `file=` argument accordingly.
 run the sever with the following commands.
 
 ```bash
+# Running the server on 0.0.0.0 makes the service available on all ports
 kuksa-val-server --address 0.0.0.0 --insecure
 ```
 
