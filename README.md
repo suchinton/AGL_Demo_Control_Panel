@@ -38,14 +38,16 @@ run the sever with the following commands.
 kuksa-val-server --address 0.0.0.0 --insecure
 ```
 
-![Demo Video](https://raw.githubusercontent.com/suchinton/blogs/main/images/WPR/Week3/DemoVideo.mp4)
-
 ### Running the `AGL_Demo_Control_Panel`
 
 ```bash
 $ cd AGL_Demo_Control_Panel
 $ python -u main.py
 ```
+
+### Demo Video
+
+https://github.com/suchinton/AGL_Demo_Control_Panel/assets/75079303/be8b2839-e608-4efe-930e-47b91cff7fe6
 
 ## # Supported Applications
 
