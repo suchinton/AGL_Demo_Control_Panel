@@ -16,14 +16,13 @@ import sys
 import os
 
 from PyQt5 import uic, QtCore, QtWidgets
-from PyQt5.QtWidgets import QApplication, QPushButton
-
+from PyQt5.QtWidgets import QApplication, QPushButton, QWidget
 from functools import partial
-
-from Widgets.settings import *
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 Form, Base = uic.loadUiType(os.path.join(current_dir, "Main_Window.ui"))
+
+from extras.UI_Handeler import *
 
 class MainWindow(Base, Form):
     def __init__(self, parent=None):
@@ -31,64 +30,45 @@ class MainWindow(Base, Form):
         self.setupUi(self)
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
 
-        self.mouse_press_position = None
-        self.resizing = False
+        # # load the stylesheet
+        # theme = open(os.path.join(current_dir, "ui/styles/Tron/MainWindow.qss"), 'r')
+        # self.setStyleSheet(theme.read())
+
+        self.headerContainer = self.findChild(QWidget, 'headerContainer')
+        self.headerContainer.mouseDoubleClickEvent = lambda event: UI_Handeler.toggleMaximized(self)
+        self.headerContainer.mouseMoveEvent = lambda event: UI_Handeler.moveWindow(self, event)
+        self.headerContainer.mousePressEvent = lambda event: UI_Handeler.mousePressEvent(self, event)
+        self.headerContainer.mouseReleaseEvent = lambda event: UI_Handeler.mouseReleaseEvent(self, event)
+
+
+
+        self.leftMenuSubContainer = self.findChild(QWidget, 'leftMenuSubContainer')
+        self.menuButton = self.findChild(QPushButton, 'menuButton')
+        self.menuButton.clicked.connect(lambda: UI_Handeler.toggleNavigationBar(self, 250, True))
+
+        self.notificationContent = self.findChild(QWidget, 'notificationContent')
 
         # Window Controls
         closeButton = self.findChild(QPushButton, 'closeBtn')
         minimizeButton = self.findChild(QPushButton, 'minimizeBtn')
-        resizeButton = self.findChild(QPushButton, 'resizeBtn')
+        maximizeButton = self.findChild(QPushButton, 'maximizeBtn')
 
         closeButton.clicked.connect(self.close)
         minimizeButton.clicked.connect(self.showMinimized)
-        resizeButton.clicked.connect(self.toggleMaximized)
+        maximizeButton.clicked.connect(lambda: UI_Handeler.toggleMaximized(self))
 
         # Widget Navigation
-        buttons = (self.icButton, self.hvacButton, self.newButton)
+        buttons = (self.icButton, self.hvacButton, self.newButton, self.settingsBtn)
+        NavigationButtons = QtWidgets.QButtonGroup(self)
+        NavigationButtons.setExclusive(True)
 
         for i, button in enumerate(buttons):
-            button.clicked.connect(partial(self.stackedWidget.setCurrentIndex, i))
-
-        settings = self.findChild(QPushButton, 'settingsBtn')
-        settings.clicked.connect(partial(self.stackedWidget.setCurrentIndex, 3))
+            button.setCheckable(True)
+            NavigationButtons.addButton(button)
+            button.clicked.connect(partial(UI_Handeler.animateSwitch, self, i))
 
         self.stackedWidget.setCurrentIndex(0)
-
-    def toggleMaximized(self):
-        if self.isMaximized():
-            self.showNormal()
-        else:
-            self.showMaximized()
-
-    def mousePressEvent(self, event):
-        if event.button() == QtCore.Qt.LeftButton:
-            self.mouse_press_position = event.globalPos()
-            self.resizing = True
-
-    def mouseReleaseEvent(self, event):
-        if event.button() == QtCore.Qt.LeftButton:
-            self.resizing = False
-            self.setCursor(QtCore.Qt.ArrowCursor)
-
-    def mouseMoveEvent(self, event):
-        if self.resizing:
-            delta = event.globalPos() - self.mouse_press_position
-            self.resize(self.width() + delta.x(), self.height() + delta.y())
-            self.mouse_press_position = event.globalPos()
-            self.setCursor(QtCore.Qt.SizeAllCursor)
-
-    def mouseDoubleClickEvent(self, event):
-        if event.button() == QtCore.Qt.LeftButton:
-            self.toggleMaximized()
-
-    def enterEvent(self, event):
-        if self.resizing:
-            self.setCursor(QtCore.Qt.SizeAllCursor)
-
-    def leaveEvent(self, event):
-        if self.resizing:
-            self.setCursor(QtCore.Qt.ArrowCursor)
-
+        self.icButton.setChecked(True)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
