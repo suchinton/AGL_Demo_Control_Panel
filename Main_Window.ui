@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1005</width>
-    <height>652</height>
+    <width>1001</width>
+    <height>745</height>
    </rect>
   </property>
   <property name="palette">
@@ -458,10 +458,6 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="assets/res.qrc">
-    <normaloff>:/Images/Images/logo.svg</normaloff>:/Images/Images/logo.svg</iconset>
-  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
@@ -476,39 +472,63 @@
 }
 
 #centralwidget{
-	background-color: #131313 ; /* dark green */
+	background-color: #131313 ; /* black */
 }
 
 #leftMenuSubContainer{
 	border-radius: 10px;
-	background-color:  #2E3632; /* dark green */
+	background-color:  #041F2B ; /* dark blue */
 }
 
 #leftMenuSubContainer QPushButton{
-	background-color: #859287; /* light green */
+	background-color: #6C6C85 ; /* pastel purple */
 	text-align: left;
 	padding: 5px 10px;
 	border-radius: 10px;
 }
 
 #leftMenuSubContainer QPushButton:pressed {
-    background-color: #498661 ; /* green */
+    background-color: #4BD7D6 ; /* light blue */
 }
 
 #headerContainer{
 	border-radius: 10px;
-	background-color: #2E3632; /* dark green */
+	background-color: #041F2B ; /* dark blue */
 } 
 
 #headerContainer QPushButton{
-	background-color: #859287; /* light green */
+	background-color: #6C6C85 ; /* pastel purple */
 	text-align: center;
 	padding: 5px 3px;
 	border-radius: 13px;
 }
 
 #headerContainer QPushButton:pressed {
-    background-color: #498661 ; /* green */
+    background-color: #4BD7D6 ; /* light blue */
+}
+
+#navigationFrame QPushButton:checked {
+    background-color: #965D62 ; /* red */
+}
+
+#settingsFrame QPushButton:checked {
+    background-color: #965D62 ; /* red */
+}
+
+#notificationContent{
+	border-radius: 10px;
+	background-color:  #041F2B ; /* dark blue */
+}
+
+#notificationContent QPushButton{
+	background-color: #6C6C85 ; /* pastel purple */
+	text-align: left;
+	padding: 5px 10px;
+	border-radius: 10px;
+}
+
+#notificationContent QPushButton:pressed {
+    background-color: #4BD7D6 ; /* light blue */
 }
 
 </string>
@@ -536,211 +556,6 @@
     <bool>false</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" rowspan="2" alignment="Qt::AlignLeft">
-     <widget class="QWidget" name="leftMenuContainer" native="true">
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QWidget" name="leftMenuSubContainer" native="true">
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item alignment="Qt::AlignTop">
-           <widget class="QFrame" name="frame">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QPushButton" name="menuButton">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <italic>true</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Menu</string>
-               </property>
-               <property name="icon">
-                <iconset resource="assets/res.qrc">
-                 <normaloff>:/icons/feather/menu.svg</normaloff>:/icons/feather/menu.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignTop">
-           <widget class="QFrame" name="frame_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
-             <item>
-              <widget class="QPushButton" name="icButton">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <italic>true</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Instrument Cluster</string>
-               </property>
-               <property name="icon">
-                <iconset resource="assets/res.qrc">
-                 <normaloff>:/icons/feather/disc.svg</normaloff>:/icons/feather/disc.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="hvacButton">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <italic>true</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>HVAC</string>
-               </property>
-               <property name="icon">
-                <iconset resource="assets/res.qrc">
-                 <normaloff>:/icons/feather/wind.svg</normaloff>:/icons/feather/wind.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="newButton">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <italic>true</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>New</string>
-               </property>
-               <property name="icon">
-                <iconset resource="assets/res.qrc">
-                 <normaloff>:/icons/feather/plus.svg</normaloff>:/icons/feather/plus.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item alignment="Qt::AlignBottom">
-           <widget class="QFrame" name="frame_3">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
-             <item>
-              <widget class="QPushButton" name="settingsBtn">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <italic>true</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Configure</string>
-               </property>
-               <property name="icon">
-                <iconset resource="assets/res.qrc">
-                 <normaloff>:/icons/feather/settings.svg</normaloff>:/icons/feather/settings.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="0" column="2" rowspan="2">
      <widget class="QWidget" name="mainContainer" native="true">
       <property name="sizePolicy">
@@ -749,23 +564,8 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item alignment="Qt::AlignTop">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
         <widget class="QWidget" name="headerContainer" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -890,6 +690,13 @@
               <number>0</number>
              </property>
              <item>
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="minimizeBtn">
                <property name="text">
                 <string/>
@@ -904,7 +711,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="resizeBtn">
+              <widget class="QPushButton" name="maximizeBtn">
                <property name="text">
                 <string/>
                </property>
@@ -976,12 +783,333 @@
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>3</number>
+                <number>1</number>
                </property>
                <widget class="ICWidget" name="ICPage"/>
                <widget class="HVACWidget" name="HVACPage"/>
                <widget class="QWidget" name="newPage"/>
                <widget class="settings" name="settingsPage"/>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="notificationContent" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>100</height>
+          </size>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QFrame" name="notificationFrame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QFrame" name="frame_2">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="QLabel" name="messageIcon">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="pixmap">
+                   <pixmap resource="assets/res.qrc">:/icons/feather/alert-octagon.svg</pixmap>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="message">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Establish Connection to server </string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignRight">
+              <widget class="QPushButton" name="ackBtn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>40</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>OK</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0" rowspan="2" alignment="Qt::AlignLeft">
+     <widget class="QWidget" name="leftMenuContainer" native="true">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="leftMenuSubContainer" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>70</width>
+           <height>0</height>
+          </size>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item alignment="Qt::AlignTop">
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QPushButton" name="menuButton">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Menu</string>
+               </property>
+               <property name="icon">
+                <iconset resource="assets/res.qrc">
+                 <normaloff>:/icons/feather/menu.svg</normaloff>:/icons/feather/menu.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignTop">
+           <widget class="QFrame" name="navigationFrame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QPushButton" name="icButton">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="text">
+                <string>Instrument Cluster</string>
+               </property>
+               <property name="icon">
+                <iconset resource="assets/res.qrc">
+                 <normaloff>:/Images/Images/IC.svg</normaloff>:/Images/Images/IC.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="hvacButton">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>HVAC</string>
+               </property>
+               <property name="icon">
+                <iconset resource="assets/res.qrc">
+                 <normaloff>:/icons/feather/wind.svg</normaloff>:/icons/feather/wind.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="newButton">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>New</string>
+               </property>
+               <property name="icon">
+                <iconset resource="assets/res.qrc">
+                 <normaloff>:/icons/feather/plus.svg</normaloff>:/icons/feather/plus.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item alignment="Qt::AlignBottom">
+           <widget class="QFrame" name="settingsFrame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QPushButton" name="settingsBtn">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Configure</string>
+               </property>
+               <property name="icon">
+                <iconset resource="assets/res.qrc">
+                 <normaloff>:/icons/feather/settings.svg</normaloff>:/icons/feather/settings.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
               </widget>
              </item>
             </layout>
@@ -1018,7 +1146,6 @@
  </customwidgets>
  <resources>
   <include location="assets/res.qrc"/>
-  <include location="../../.designer/backup/assets/res.qrc"/>
  </resources>
  <connections/>
 </ui>

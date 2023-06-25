@@ -1,16 +1,18 @@
-#   Copyright 2023 Suchinton Chakravarty
-#
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
-#
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
+"""
+    Copyright 2023 Suchinton Chakravarty
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at 
+
+        http://www.apache.org/licenses/LICENSE-2.0  
+        
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+"""
 
 import os
 import sys
@@ -48,10 +50,13 @@ class ICWidget(Base, Form):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
         self.set_instance()
-
         self.IC = IC_Paths()
 
-        # self.reconnectBtn = self.findChild(QPushButton, "reconnectBtn")
+        # # load the stylesheet
+        # theme = open(os.path.join(current_dir, "../ui/styles/Tron/ICPage.qss"), 'r')
+        # self.setStyleSheet(theme.read())
+        # theme.close()
+
         self.Speed_slider = self.findChild(QSlider, "Speed_slider")
         self.Speed_monitor = self.findChild(QLCDNumber, "Speed_monitor")
         self.RPM_slider = self.findChild(QSlider, "RPM_slider")
@@ -122,8 +127,8 @@ class ICWidget(Base, Form):
     def set_instance(self):
         self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
         self.client = self.kuksa.get_client()
-        if self.client is None:
-            print("Client is None")
+        # if self.client is None:
+        #     print("Client is None")
 
     def update_Speed_monitor(self):
         speed = int(self.Speed_slider.value())
@@ -294,15 +299,15 @@ class ICWidget(Base, Form):
             self.client.setValue(self.IC.selectedGear, "126")
 
         if self.driveGroupBtns.checkedButton() == self.reverseBtn:
-            self.accelerationBtn.setEnabled(False)
-            self.Speed_slider.setEnabled(False)
-            self.RPM_slider.setEnabled(False)
+            self.accelerationBtn.setEnabled(True)
+            self.Speed_slider.setEnabled(True)
+            self.RPM_slider.setEnabled(True)
             self.client.setValue(self.IC.selectedGear, "-1")
 
         if self.driveGroupBtns.checkedButton() == self.neutralBtn:
             self.accelerationBtn.setEnabled(False)
             self.Speed_slider.setEnabled(False)
-            self.RPM_slider.setEnabled(False)
+            self.RPM_slider.setEnabled(True)
             self.client.setValue(self.IC.selectedGear, "0")
 
 if __name__ == '__main__':
