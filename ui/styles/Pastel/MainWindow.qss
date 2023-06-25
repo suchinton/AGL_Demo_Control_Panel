@@ -1,0 +1,69 @@
+*{
+	border: none;
+	background-color: transparent;
+	background: none;
+	padding: 0;
+	margin: 0;
+	color: #fff;
+}
+
+#centralwidget{
+	background-color: #131313 ; /* dark green */
+}
+
+#leftMenuSubContainer{
+	border-radius: 10px;
+	background-color:  #2E3632; /* dark green */
+}
+
+#leftMenuSubContainer QPushButton{
+	background-color: #859287; /* light green */
+	text-align: left;
+	padding: 5px 10px;
+	border-radius: 10px;
+}
+
+#leftMenuSubContainer QPushButton:pressed {
+    background-color: #498661 ; /* green */
+}
+
+#headerContainer{
+	border-radius: 10px;
+	background-color: #2E3632; /* dark green */
+} 
+
+#headerContainer QPushButton{
+	background-color: #859287; /* light green */
+	text-align: center;
+	padding: 5px 3px;
+	border-radius: 13px;
+}
+
+#headerContainer QPushButton:pressed {
+    background-color: #498661 ; /* green */
+}
+
+#navigationFrame QPushButton:checked {
+    background-color: #965D62 ; /* red */
+}
+
+#settingsFrame QPushButton:checked {
+    background-color: #965D62 ; /* red */
+}
+
+#notificationContent{
+	border-radius: 10px;
+	background-color:  #2E3632; /* dark green */
+}
+
+#notificationContent QPushButton{
+	background-color: #859287; /* light green */
+	text-align: left;
+	padding: 5px 10px;
+	border-radius: 10px;
+}
+
+#notificationContent QPushButton:pressed {
+    background-color: #498661 ; /* green */
+}
+
