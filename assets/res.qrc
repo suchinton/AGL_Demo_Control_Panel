@@ -289,10 +289,11 @@
     <file>feather/zoom-out.svg</file>
   </qresource>
   <qresource prefix="Images">
+    <file>Images/fan.svg</file>
+    <file>Images/tempUp.svg</file>
+    <file>Images/tempDown.svg</file>
     <file>Images/engine-coolant.png</file>
-    <file>Images/thermometer-snow-white.svg</file>
-    <file>Images/speedometer2-white.svg</file>
-    <file>Images/thermometer-sun-white.svg</file>
+    <file>Images/IC.svg</file>
     <file>Images/fuel-icon.png</file>
     <file>Images/hazard.png</file>
     <file>Images/Automotive_Grade_Linux_logo.svg</file>
