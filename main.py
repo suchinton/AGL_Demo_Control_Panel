@@ -31,6 +31,7 @@ class MainWindow(Base, Form):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
         # # load the stylesheet
         # theme = open(os.path.join(current_dir, "ui/styles/Tron/MainWindow.qss"), 'r')
@@ -60,7 +61,12 @@ class MainWindow(Base, Form):
         maximizeButton.clicked.connect(lambda: UI_Handeler.toggleMaximized(self))
 
         # Widget Navigation
-        buttons = (self.icButton, self.hvacButton, self.newButton, self.settingsBtn)
+        buttons = (self.icButton, 
+                   self.hvacButton, 
+                   self.steeringCtrlButton,
+                   self.navButton,
+                   self.newButton, 
+                   self.settingsBtn)
         NavigationButtons = QtWidgets.QButtonGroup(self)
         NavigationButtons.setExclusive(True)
 
@@ -69,8 +75,15 @@ class MainWindow(Base, Form):
             NavigationButtons.addButton(button)
             button.clicked.connect(partial(UI_Handeler.animateSwitch, self, i))
 
+        self.stackedWidget.currentChanged.connect(self.handleChangedPage)
+
         self.stackedWidget.setCurrentIndex(0)
         self.icButton.setChecked(True)
+
+    def handleChangedPage(self, index):
+        Page = self.stackedWidget.widget(index)
+        if Page is not self.stackedWidget.widget(3):
+            pass
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

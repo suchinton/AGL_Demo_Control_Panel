@@ -464,6 +464,7 @@
   <property name="styleSheet">
    <string notr="true">*{
 	border: none;
+	border-radius: 8px;
 	background-color: transparent;
 	background: none;
 	padding: 0;
@@ -783,10 +784,12 @@
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>1</number>
+                <number>2</number>
                </property>
                <widget class="ICWidget" name="ICPage"/>
                <widget class="HVACWidget" name="HVACPage"/>
+               <widget class="SteeringCtrlWidget" name="SteeringCtrlPage"/>
+               <widget class="NavWidget" name="NavPage"/>
                <widget class="QWidget" name="newPage"/>
                <widget class="settings" name="settingsPage"/>
               </widget>
@@ -1040,6 +1043,54 @@
               </widget>
              </item>
              <item>
+              <widget class="QPushButton" name="steeringCtrlButton">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Steering Inputs</string>
+               </property>
+               <property name="icon">
+                <iconset resource="assets/res.qrc">
+                 <normaloff>:/icons/feather/circle.svg</normaloff>:/icons/feather/circle.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="navButton">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Navigation</string>
+               </property>
+               <property name="icon">
+                <iconset resource="assets/res.qrc">
+                 <normaloff>:/icons/feather/compass.svg</normaloff>:/icons/feather/compass.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="newButton">
                <property name="font">
                 <font>
@@ -1141,6 +1192,18 @@
    <class>settings</class>
    <extends>QWidget</extends>
    <header>Widgets/settings</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NavWidget</class>
+   <extends>QWidget</extends>
+   <header>Widgets/NavPage</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SteeringCtrlWidget</class>
+   <extends>QWidget</extends>
+   <header>Widgets/SteeringCtrlPage</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
