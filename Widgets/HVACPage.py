@@ -16,7 +16,7 @@
 
 import os
 import sys
-from PyQt5 import uic
+from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import QApplication, QListWidget, QSlider, QPushButton
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -38,7 +38,7 @@ class HVAC_Paths():
         self.rightTemp = "Vehicle.Cabin.HVAC.Station.Row1.Right.Temperature"
         self.rightFanSpeed = "Vehicle.Cabin.HVAC.Station.Row1.Right.FanSpeed"
 
-        # temperatureList contains values from 32 to 16 and appends "°C" to each value
+        # temperatureList contains values from 32 to 16 
         self.temperatureList = [str(i) + "°C" for i in range(32, 15, -1)]
 
 class HVACWidget(Base, Form):
@@ -75,10 +75,22 @@ class HVACWidget(Base, Form):
         self.rightTempDown.clicked.connect(lambda: self.rightTempList.setCurrentRow(self.rightTempList.currentRow() + 1))
 
         self.leftFanSpeed_slider = self.findChild(QSlider, "leftFanSpeed_slider")
-        self.leftFanSpeed_slider.valueChanged.connect(self.leftFanSpeed_sliderChanged)
+        self.leftFanSpeed_slider.valueChanged.connect(self.send_value)
 
         self.rightFanSpeed_slider = self.findChild(QSlider, "rightFanSpeed_slider")
-        self.rightFanSpeed_slider.valueChanged.connect(self.rightFanSpeed_sliderChanged)
+        self.rightFanSpeed_slider.valueChanged.connect(self.send_value)
+
+        # self.timer = QtCore.QTimer()
+        # self.timer.setInterval(1000)
+        # self.timer.timeout.connect(lambda: [self.update_HVAC(), self.send_value()]
+        #                                     if self.client is not None 
+        #                                     else self.set_instance())
+# 
+        # self.thread = QtCore.QThread()
+        # self.timer.moveToThread(self.thread)
+        # self.thread.started.connect(self.timer.start)
+        # self.thread.start() 
+
         
     def leftTempListClicked(self):
         item = self.leftTempList.currentItem()
@@ -102,11 +114,18 @@ class HVACWidget(Base, Form):
         self.client.set(self.HVAC.rightFanSpeed, value)
         print(value)
 
+    def send_value(self):
+        self.client.set(self.HVAC.leftTemp, self.leftTempList.currentItem().text())
+        self.client.set(self.HVAC.rightTemp, self.rightTempList.currentItem().text())
+        self.client.set(self.HVAC.leftFanSpeed, self.leftFanSpeed_slider.value())
+        self.client.set(self.HVAC.rightFanSpeed, self.rightFanSpeed_slider.value())
+
     def set_instance(self):
         self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
         self.client = self.kuksa.get_client()
-        if self.client is None:
-            print("Client is None")
+
+    def end_instance(self):
+        pass
 
 if __name__ == '__main__':
     import sys

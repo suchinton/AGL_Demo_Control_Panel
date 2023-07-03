@@ -264,7 +264,7 @@ QListWidget::item:hover {
            <x>0</x>
            <y>0</y>
            <width>689</width>
-           <height>415</height>
+           <height>404</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -647,7 +647,7 @@ QListWidget::item:hover {
                   </property>
                   <property name="icon">
                    <iconset resource="../assets/res.qrc">
-                    <normaloff>:/Images/Images/tempUp.svg</normaloff>:/Images/Images/tempUp.svg</iconset>
+                    <normaloff>:/Images/Images/tempDown.svg</normaloff>:/Images/Images/tempDown.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
