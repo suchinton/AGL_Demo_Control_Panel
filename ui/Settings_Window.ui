@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>603</width>
-    <height>340</height>
+    <height>346</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,36 +17,32 @@
    <string notr="true">*{
 	border: none;
 	background-color: transparent;
-	background: none;
+	background: none; 
 	padding: 0;
 	margin: 0;
 	color: #fff;
 }
 
+
 #centralwidget{
 	background-color: #131313 ; /* dark green */
 }
 
-#centralwidget QPushButton{
-	background-color: #859287; /* light green */
+QPushButton{
+	background-color: #6C6C85 ; /* pastel purple */
 	padding: 5px 10px;
 	border-radius: 10px;
 }
 
-#centralwidget QPushButton:pressed {
-    background-color: #498661 ; /* green */
+QPushButton:pressed {
+    background-color: #4BD7D6 ; /* light blue */
 }
 
 #centralwidget QLineEdit {
-    background-color: #859287; /* light green */
+    background-color: #6C6C85 ; /* pastel purple */
 	border-radius: 10px;
 	padding: 5px 0px;
-}
-
-Line {
-	background-color: #498661 ; /* green */
-}
-</string>
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -133,7 +129,7 @@ Line {
         <widget class="QLineEdit" name="tokenPathInput"/>
        </item>
        <item row="4" column="3" colspan="2">
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QCheckBox" name="ConnectionTypeChkBox">
          <property name="text">
           <string/>
          </property>
