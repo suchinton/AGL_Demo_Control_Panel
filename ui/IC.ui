@@ -356,13 +356,6 @@ QLCDNumber {
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="1" column="5" rowspan="4">
-              <widget class="Line" name="line">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="0">
               <spacer name="horizontalSpacer_10">
                <property name="orientation">
@@ -378,33 +371,6 @@ QLCDNumber {
                 </size>
                </property>
               </spacer>
-             </item>
-             <item row="3" column="8">
-              <widget class="QLabel" name="label_3">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="../assets/res.qrc">:/icons/feather/droplet.svg</pixmap>
-               </property>
-               <property name="scaledContents">
-                <bool>false</bool>
-               </property>
-              </widget>
              </item>
              <item row="1" column="6" rowspan="2">
               <widget class="QLCDNumber" name="RPM_monitor">
@@ -443,42 +409,65 @@ QLCDNumber {
                </property>
               </widget>
              </item>
-             <item row="3" column="3">
-              <widget class="QSlider" name="Speed_slider">
-               <property name="font">
-                <font>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="maximum">
-                <number>240</number>
-               </property>
+             <item row="1" column="1">
+              <widget class="QSlider" name="coolantTemp_slider">
                <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="tickPosition">
-                <enum>QSlider::NoTicks</enum>
-               </property>
-               <property name="tickInterval">
-                <number>0</number>
+                <enum>Qt::Vertical</enum>
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
-              <widget class="QLabel" name="label_2">
+             <item row="4" column="3" alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="label_4">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Speed (Kmph)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="5" rowspan="4">
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="8">
+              <widget class="QLabel" name="label_3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
                <property name="text">
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../assets/res.qrc">:/icons/feather/thermometer.svg</pixmap>
+                <pixmap resource="../assets/res.qrc">:/icons/feather/droplet.svg</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
-             <item row="1" column="2">
-              <spacer name="horizontalSpacer_5">
+             <item row="0" column="1" colspan="8">
+              <spacer name="verticalSpacer_5">
                <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+                <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeType">
                 <enum>QSizePolicy::Fixed</enum>
@@ -486,7 +475,7 @@ QLCDNumber {
                <property name="sizeHint" stdset="0">
                 <size>
                  <width>20</width>
-                 <height>20</height>
+                 <height>10</height>
                 </size>
                </property>
               </spacer>
@@ -517,8 +506,30 @@ QLCDNumber {
                </property>
               </widget>
              </item>
-             <item row="1" column="9">
-              <spacer name="horizontalSpacer_11">
+             <item row="3" column="3">
+              <widget class="QSlider" name="Speed_slider">
+               <property name="font">
+                <font>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="maximum">
+                <number>240</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+               <property name="tickInterval">
+                <number>0</number>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <spacer name="horizontalSpacer_5">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -527,32 +538,11 @@ QLCDNumber {
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>10</width>
+                 <width>20</width>
                  <height>20</height>
                 </size>
                </property>
               </spacer>
-             </item>
-             <item row="4" column="6" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_5">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <italic>true</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Engine RPM</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QSlider" name="coolantTemp_slider">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-              </widget>
              </item>
              <item row="1" column="7">
               <spacer name="horizontalSpacer_6">
@@ -570,22 +560,6 @@ QLCDNumber {
                </property>
               </spacer>
              </item>
-             <item row="0" column="1" colspan="8">
-              <spacer name="verticalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>10</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
              <item row="3" column="6">
               <widget class="QSlider" name="RPM_slider">
                <property name="orientation">
@@ -593,8 +567,34 @@ QLCDNumber {
                </property>
               </widget>
              </item>
-             <item row="4" column="3" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_4">
+             <item row="1" column="9">
+              <spacer name="horizontalSpacer_11">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="../assets/res.qrc">:/icons/feather/thermometer.svg</pixmap>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="6" alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="label_5">
                <property name="font">
                 <font>
                  <weight>75</weight>
@@ -603,7 +603,7 @@ QLCDNumber {
                 </font>
                </property>
                <property name="text">
-                <string>Speed (Kmph)</string>
+                <string>Engine RPM</string>
                </property>
               </widget>
              </item>
@@ -935,6 +935,9 @@ QLCDNumber {
              <width>30</width>
              <height>30</height>
             </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
