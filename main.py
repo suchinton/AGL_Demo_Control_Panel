@@ -20,6 +20,7 @@ import os
 from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QApplication, QPushButton, QWidget
 from functools import partial
+from PyQt5.QtGui import QFontDatabase
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 Form, Base = uic.loadUiType(os.path.join(current_dir, "Main_Window.ui"))
@@ -33,17 +34,22 @@ class MainWindow(Base, Form):
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
+        fonts = [font for font in os.listdir(os.path.join(current_dir, "assets/fonts")) if font.endswith(".ttf")]
+        fonts = [os.path.join(current_dir, "assets/fonts/", font) for font in fonts]
+
+        for font in fonts:
+            QFontDatabase.addApplicationFont(font)
         # # load the stylesheet
         # theme = open(os.path.join(current_dir, "ui/styles/Tron/MainWindow.qss"), 'r')
         # self.setStyleSheet(theme.read())
+
+        self.setStyle(QtWidgets.QStyleFactory.create('Fusion'))
 
         self.headerContainer = self.findChild(QWidget, 'headerContainer')
         self.headerContainer.mouseDoubleClickEvent = lambda event: UI_Handeler.toggleMaximized(self)
         self.headerContainer.mouseMoveEvent = lambda event: UI_Handeler.moveWindow(self, event)
         self.headerContainer.mousePressEvent = lambda event: UI_Handeler.mousePressEvent(self, event)
         self.headerContainer.mouseReleaseEvent = lambda event: UI_Handeler.mouseReleaseEvent(self, event)
-
-
 
         self.leftMenuSubContainer = self.findChild(QWidget, 'leftMenuSubContainer')
         self.menuButton = self.findChild(QPushButton, 'menuButton')
@@ -67,6 +73,7 @@ class MainWindow(Base, Form):
                    self.navButton,
                    self.newButton, 
                    self.settingsBtn)
+        
         NavigationButtons = QtWidgets.QButtonGroup(self)
         NavigationButtons.setExclusive(True)
 
