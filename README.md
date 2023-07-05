@@ -54,7 +54,7 @@ $ python -u main.py
 
 ### Demo Video
 
-https://raw.githubusercontent.com/suchinton/blogs/main/images/WPR/Week5/Demo_Acc.mp4
+https://github.com/suchinton/AGL_Demo_Control_Panel/assets/75079303/b1d08461-f39b-42d4-97d8-ed7307df1fa2
 
 ## # Supported Applications
 
