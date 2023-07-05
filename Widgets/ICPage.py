@@ -73,18 +73,17 @@ class ICWidget(Base, Form):
         self.rightIndicatorBtn = self.findChild(QPushButton, "rightIndicatorBtn")
         self.hazardBtn = self.findChild(QPushButton, "hazardBtn")
 
-        self.parkBtn = self.findChild(QPushButton, "parkBtn")
-        self.reverseBtn = self.findChild(QPushButton, "reverseBtn")
-        self.neutralBtn = self.findChild(QPushButton, "neutralBtn")
-        self.driveBtn = self.findChild(QPushButton, "driveBtn")
+        buttons = [self.parkBtn, 
+                   self.reverseBtn, 
+                   self.neutralBtn, 
+                   self.driveBtn]
 
         # group for the buttons for mutual exclusion
-        self.driveGroupBtns = QtWidgets.QButtonGroup()
+        self.driveGroupBtns = QtWidgets.QButtonGroup(self)
         self.driveGroupBtns.setExclusive(True)
-        self.driveGroupBtns.addButton(self.parkBtn)
-        self.driveGroupBtns.addButton(self.reverseBtn)
-        self.driveGroupBtns.addButton(self.neutralBtn)
-        self.driveGroupBtns.addButton(self.driveBtn)
+
+        for button in buttons:
+            self.driveGroupBtns.addButton(button)
 
         self.driveGroupBtns.buttonClicked.connect(self.driveBtnClicked)
 
