@@ -11,9 +11,9 @@ class UI_Handeler(MainWindow):
         if enable:
             width = self.leftMenuSubContainer.width()
             maxExtend = maxWidth
-            standard = 70
+            standard = 80
 
-            if width == 70:
+            if width == 80:
                 widthExtended = maxExtend
             else:
                 widthExtended = standard

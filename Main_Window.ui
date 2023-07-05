@@ -476,6 +476,10 @@
 	background-color: #131313 ; /* black */
 }
 
+#ICPage{
+	background-color: #131313 ; /* black */
+}
+
 #leftMenuSubContainer{
 	border-radius: 10px;
 	background-color:  #041F2B ; /* dark blue */
@@ -532,7 +536,9 @@
     background-color: #4BD7D6 ; /* light blue */
 }
 
-</string>
+QStackedWidget{
+	background-color: #131313 ; /* black */
+}</string>
   </property>
   <property name="iconSize">
    <size>
@@ -566,6 +572,21 @@
        </sizepolicy>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QWidget" name="headerContainer" native="true">
          <property name="sizePolicy">
@@ -652,7 +673,7 @@
               <widget class="QLabel" name="aglLabel">
                <property name="font">
                 <font>
-                 <pointsize>12</pointsize>
+                 <family>Open Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
@@ -764,7 +785,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="widget" native="true">
+           <widget class="QWidget" name="Stackwidget" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <property name="spacing">
               <number>0</number>
@@ -784,7 +805,7 @@
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>2</number>
+                <number>0</number>
                </property>
                <widget class="ICWidget" name="ICPage"/>
                <widget class="HVACWidget" name="HVACPage"/>
@@ -934,7 +955,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>70</width>
+           <width>80</width>
            <height>0</height>
           </size>
          </property>
@@ -952,6 +973,7 @@
               <widget class="QPushButton" name="menuButton">
                <property name="font">
                 <font>
+                 <family>Open Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
@@ -997,6 +1019,7 @@
                </property>
                <property name="font">
                 <font>
+                 <family>Open Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
@@ -1022,6 +1045,7 @@
               <widget class="QPushButton" name="hvacButton">
                <property name="font">
                 <font>
+                 <family>Open Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
@@ -1046,6 +1070,7 @@
               <widget class="QPushButton" name="steeringCtrlButton">
                <property name="font">
                 <font>
+                 <family>Open Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
@@ -1070,6 +1095,7 @@
               <widget class="QPushButton" name="navButton">
                <property name="font">
                 <font>
+                 <family>Open Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
@@ -1094,6 +1120,7 @@
               <widget class="QPushButton" name="newButton">
                <property name="font">
                 <font>
+                 <family>Open Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
@@ -1143,6 +1170,7 @@
               <widget class="QPushButton" name="settingsBtn">
                <property name="font">
                 <font>
+                 <family>Open Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
