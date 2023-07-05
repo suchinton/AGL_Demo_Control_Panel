@@ -20,17 +20,9 @@ class KuksaClientSingleton:
         if KuksaClientSingleton.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
-            #self.default_Config = {
-            #    "ip": '10.10.10.203',
-            #    "port": "8090",
-            #    'protocol': 'ws',
-            #    'insecure': True,
-            #}
 
             self.default_Config = config.KUKSA_CONFIG
             self.token = config.TOKEN_PATH
-
-            #self.token = "/home/suchinton/.local/lib/python3.10/site-packages/kuksa_certificates/jwt/super-admin.json.token"
 
             try:
                 self.client = kuksa.KuksaClientThread(self.default_Config)

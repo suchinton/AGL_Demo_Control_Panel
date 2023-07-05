@@ -23,6 +23,10 @@
 	color: #fff;
 }
 
+#scrollAreaWidgetContents{
+	background-color: #131313 ; /* black */
+}
+
 #centralwidget{
 	background-color: #131313 ; /* black */
 }
@@ -264,7 +268,7 @@ QListWidget::item:hover {
            <x>0</x>
            <y>0</y>
            <width>689</width>
-           <height>404</height>
+           <height>415</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>697</width>
+    <width>681</width>
     <height>609</height>
    </rect>
   </property>
@@ -90,23 +90,6 @@ QPushButton:pressed {
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
-         <item row="1" column="0">
-          <widget class="QLabel" name="To">
-           <property name="text">
-            <string>To: </string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QPushButton" name="T_coordinates">
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Confirm</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="2">
           <widget class="QLineEdit" name="To_address">
            <property name="autoFillBackground">
@@ -114,10 +97,13 @@ QPushButton:pressed {
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="From_address">
+         <item row="0" column="3">
+          <widget class="QPushButton" name="F_coordinates">
            <property name="autoFillBackground">
             <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Confirm</string>
            </property>
           </widget>
          </item>
@@ -128,8 +114,22 @@ QPushButton:pressed {
            </property>
           </widget>
          </item>
-         <item row="0" column="3">
-          <widget class="QPushButton" name="F_coordinates">
+         <item row="1" column="0">
+          <widget class="QLabel" name="To">
+           <property name="text">
+            <string>To: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLineEdit" name="From_address">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QPushButton" name="T_coordinates">
            <property name="autoFillBackground">
             <bool>false</bool>
            </property>
@@ -210,6 +210,19 @@ QPushButton:pressed {
      </layout>
     </widget>
    </item>
+   <item row="1" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
    <item row="0" column="0">
     <spacer name="horizontalSpacer_2">
      <property name="orientation">
@@ -222,19 +235,6 @@ QPushButton:pressed {
       <size>
        <width>40</width>
        <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="1">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
       </size>
      </property>
     </spacer>
