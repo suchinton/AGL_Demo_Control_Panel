@@ -28,6 +28,10 @@ Form, Base = uic.loadUiType(os.path.join(current_dir, "Main_Window.ui"))
 from extras.UI_Handeler import *
 
 class MainWindow(Base, Form):
+
+    # signal to stop the thread
+    stop_thread_signal = QtCore.pyqtSignal()
+
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
@@ -83,14 +87,22 @@ class MainWindow(Base, Form):
             button.clicked.connect(partial(UI_Handeler.animateSwitch, self, i))
 
         self.stackedWidget.currentChanged.connect(self.handleChangedPage)
+        
+        # connect each page of stackedWidget to the thread stop signal
+        # for page in range(self.stackedWidget.count()):
+        
+        self.stop_thread_signal.connect(self.stackedWidget.widget(0).kuksa_feeder.stop)
 
         self.stackedWidget.setCurrentIndex(0)
         self.icButton.setChecked(True)
 
     def handleChangedPage(self, index):
-        Page = self.stackedWidget.widget(index)
-        if Page is not self.stackedWidget.widget(3):
-            pass
+        #Page = self.stackedWidget.widget(index)
+        #if Page is not self.stackedWidget.widget(3):
+        #    pass
+        
+        # emit the signal to stop the thread
+        self.stop_thread_signal.emit()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
