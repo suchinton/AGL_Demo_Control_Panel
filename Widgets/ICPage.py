@@ -346,25 +346,21 @@ class ICScript(ICWidget):
         for widget in ICWidget.scrollAreaWidgetContents.children():
             widget.setEnabled(True)
 
-
 class FeedKuksa(QThread):
-    def init(self):
-        super().init()
+    def __init__(self, parent=None):
+        QThread.__init__(self,parent)
         self.stop_flag = False
         self.set_instance()
 
     def run(self):
-
-        if self.client is None:
-            self.set_instance()
-
+        print("Starting thread")
+        self.set_instance()
         while not self.stop_flag:
             self.send_values()
 
     def stop(self):
         self.stop_flag = True
         print("Stopping thread")
-        self.set_instance()
 
     def set_instance(self):
         self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
@@ -383,6 +379,7 @@ class FeedKuksa(QThread):
                 self.set_instance()
         else:
             print("Kuksa client is None, try reconnecting")
+            time.sleep(2)
             self.set_instance()
 
 if __name__ == '__main__':

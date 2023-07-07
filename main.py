@@ -31,6 +31,7 @@ class MainWindow(Base, Form):
 
     # signal to stop the thread
     stop_thread_signal = QtCore.pyqtSignal()
+    start_thread_signal = QtCore.pyqtSignal()
 
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
@@ -50,7 +51,7 @@ class MainWindow(Base, Form):
         self.setStyle(QtWidgets.QStyleFactory.create('Fusion'))
 
         self.headerContainer = self.findChild(QWidget, 'headerContainer')
-        self.headerContainer.mouseDoubleClickEvent = lambda event: UI_Handeler.toggleMaximized(self)
+        self.headerContainer.DoubleClickMaximize = lambda: UI_Handeler.toggleMaximized(self)
         self.headerContainer.mouseMoveEvent = lambda event: UI_Handeler.moveWindow(self, event)
         self.headerContainer.mousePressEvent = lambda event: UI_Handeler.mousePressEvent(self, event)
         self.headerContainer.mouseReleaseEvent = lambda event: UI_Handeler.mouseReleaseEvent(self, event)
@@ -66,7 +67,9 @@ class MainWindow(Base, Form):
         minimizeButton = self.findChild(QPushButton, 'minimizeBtn')
         maximizeButton = self.findChild(QPushButton, 'maximizeBtn')
 
-        closeButton.clicked.connect(self.close)
+        #closeButton.clicked.connect(self.close)
+        # make the close button also end all threads
+        closeButton.clicked.connect(lambda: [self.close(), self.stop_thread_signal.emit()])
         minimizeButton.clicked.connect(self.showMinimized)
         maximizeButton.clicked.connect(lambda: UI_Handeler.toggleMaximized(self))
 
@@ -93,8 +96,23 @@ class MainWindow(Base, Form):
         self.stackedWidget.setCurrentIndex(0)
         self.icButton.setChecked(True)
 
+        self.current_page = self.stackedWidget.currentIndex()
+
     def handleChangedPage(self, index):
-        self.stop_thread_signal.emit()
+        # stop the previous thread and start the new one
+        try:
+            self.stop_thread_signal.connect(self.stackedWidget.widget(self.current_page).kuksa_feeder.stop)
+            self.stop_thread_signal.emit()
+        except:
+            pass
+
+        self.current_page = self.stackedWidget.currentIndex()
+
+        try:
+            self.start_thread_signal.connect(self.stackedWidget.widget(self.current_page).kuksa_feeder.start)
+            self.start_thread_signal.emit()
+        except:
+            pass
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

@@ -16,8 +16,10 @@
 
 import os
 import sys
+import time
 from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import QApplication, QListWidget, QSlider, QPushButton
+from PyQt5.QtCore import QThread
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -45,8 +47,10 @@ class HVACWidget(Base, Form):
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
-        self.set_instance()
+        
         self.HVAC = HVAC_Paths()
+
+        self.feed_kukas = FeedKuksa()
         
         self.leftTempList = self.findChild(QListWidget, "leftTempList")
         self.leftTempList.addItems(self.HVAC.temperatureList)
@@ -75,57 +79,68 @@ class HVACWidget(Base, Form):
         self.rightTempDown.clicked.connect(lambda: self.rightTempList.setCurrentRow(self.rightTempList.currentRow() + 1))
 
         self.leftFanSpeed_slider = self.findChild(QSlider, "leftFanSpeed_slider")
-        self.leftFanSpeed_slider.valueChanged.connect(self.send_value)
+        self.leftFanSpeed_slider.valueChanged.connect(self.leftFanSpeed_sliderChanged)
 
         self.rightFanSpeed_slider = self.findChild(QSlider, "rightFanSpeed_slider")
-        self.rightFanSpeed_slider.valueChanged.connect(self.send_value)
-
-        # self.timer = QtCore.QTimer()
-        # self.timer.setInterval(1000)
-        # self.timer.timeout.connect(lambda: [self.update_HVAC(), self.send_value()]
-        #                                     if self.client is not None 
-        #                                     else self.set_instance())
-# 
-        # self.thread = QtCore.QThread()
-        # self.timer.moveToThread(self.thread)
-        # self.thread.started.connect(self.timer.start)
-        # self.thread.start() 
-
+        self.rightFanSpeed_slider.valueChanged.connect(self.rightFanSpeed_sliderChanged)
         
     def leftTempListClicked(self):
         item = self.leftTempList.currentItem()
         self.leftTempList.scrollToItem(item, 1)
-        self.client.set(self.HVAC.leftTemp, item.text())
+        self.feed_kukas.send_values(self.HVAC.leftTemp, item.text()[:-2])
         print(item.text())
 
     def rightTempListClicked(self):
         item = self.rightTempList.currentItem()
         self.rightTempList.scrollToItem(item, 1)
-        self.client.set(self.HVAC.rightTemp, item.text())
+        self.feed_kukas.send_values(self.HVAC.rightTemp, item.text()[:-2])
         print(item.text())
 
     def leftFanSpeed_sliderChanged(self):
         value = self.leftFanSpeed_slider.value()
-        self.client.set(self.HVAC.leftFanSpeed, value)
+        self.feed_kukas.send_values(self.HVAC.leftFanSpeed, str(value))
         print(value)
 
     def rightFanSpeed_sliderChanged(self):
         value = self.rightFanSpeed_slider.value()
-        self.client.set(self.HVAC.rightFanSpeed, value)
+        self.feed_kukas.send_values(self.HVAC.rightFanSpeed, str(value))
         print(value)
 
-    def send_value(self):
-        self.client.set(self.HVAC.leftTemp, self.leftTempList.currentItem().text())
-        self.client.set(self.HVAC.rightTemp, self.rightTempList.currentItem().text())
-        self.client.set(self.HVAC.leftFanSpeed, self.leftFanSpeed_slider.value())
-        self.client.set(self.HVAC.rightFanSpeed, self.rightFanSpeed_slider.value())
+class FeedKuksa(QThread):
+    def __init__(self, parent=None):
+        QThread.__init__(self,parent)
+        self.stop_flag = False
+        self.set_instance()
+
+    def run(self):
+        print("Starting thread")
+        self.set_instance()
+        while not self.stop_flag:
+            self.send_values()
+
+    def stop(self):
+        self.stop_flag = True
+        print("Stopping thread")
 
     def set_instance(self):
         self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
         self.client = self.kuksa.get_client()
 
-    def end_instance(self):
-        pass
+    def send_values(self, Path=None, Value=None, Attribute=None):
+        if self.client is not None:
+            if self.client.checkConnection() is True:
+
+                if Attribute is not None:
+                    self.client.setValue(Path, Value, Attribute)
+                else:
+                    self.client.setValue(Path, Value)
+            else:
+                print("Could not connect to Kuksa")
+                self.set_instance()
+        else:
+            print("Kuksa client is None, try reconnecting")
+            time.sleep(2)
+            self.set_instance()
 
 if __name__ == '__main__':
     import sys
