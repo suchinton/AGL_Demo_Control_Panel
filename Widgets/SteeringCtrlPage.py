@@ -18,8 +18,6 @@ import os
 import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtQuickWidgets import QQuickWidget
-from PyQt5.QtCore import QUrl
 from PyQt5.QtCore import QThread
 
 import time
@@ -64,10 +62,7 @@ class SteeringCtrlWidget(Base, Form):
         self.Steering = Steering_Paths()
 
         self.kuksa_feeder = FeedKuksa()
-        self.kuksa_feeder.start()
-
-        self.QMLWidget = self.findChild(QQuickWidget, "QMLWidget")
-        self.QMLWidget.setSource(QUrl(current_dir + "/Steering.qml"))        
+        self.kuksa_feeder.start()     
 
 class FeedKuksa(QThread):
     def __init__(self, parent=None):
