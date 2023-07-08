@@ -17,7 +17,7 @@ import os
 import sys
 import time
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton, QLabel
+from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton, QLabel, QCheckBox
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -36,6 +36,8 @@ class settings(Base, Form):
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
+
+        self.SSLToggle = self.findChild(QCheckBox, "SSLToggle")
 
         self.connectionStatus = self.findChild(QLabel, "connectionStatus")
         self.connectionLogo = self.findChild(QLabel, "connectionLogo")
@@ -62,12 +64,12 @@ class settings(Base, Form):
         self.token = self.kuksa.get_token()
 
         self.IPAddrInput.setText(self.config["ip"])
+        self.SSLToggle.setChecked(self.config["insecure"])
         self.tokenPathInput.setText(self.token)
 
         time.sleep(2)
 
-        if self.client == None:
-            print("Client not connected")
+        if (self.client is None):
             self.connectionStatus.setText('Not Connected')
             self.connectionLogo.setStyleSheet("background-color: red")
 
@@ -82,6 +84,7 @@ class settings(Base, Form):
 
             if (self.client.checkConnection() == True):
                 self.connectionStatus.setText('Connected')
+                self.connectionLogo.setPixmap(":/icons/feather/check-circle.svg")
                 self.connectionLogo.setStyleSheet("background-color: green")
                 self.client.start()
                 return True
@@ -97,6 +100,7 @@ class settings(Base, Form):
     def reconnectClient(self):
         try:
             self.config["ip"] = self.IPAddrInput.text()
+            self.config["insecure"] = self.SSLToggle.isChecked()
             self.token = self.tokenPathInput.text()
             self.client = self.kuksa.reconnect_client(self.config, self.token)
             self.client.start()

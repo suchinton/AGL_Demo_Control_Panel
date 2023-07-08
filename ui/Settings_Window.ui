@@ -25,23 +25,25 @@
 
 
 #centralwidget{
-	background-color: #131313 ; /* dark green */
+	background-color: #131313 ; /* black */
 }
 
 QPushButton{
-	background-color: #6C6C85 ; /* pastel purple */
+	background-color: transparent;
 	padding: 5px 10px;
+	border: 1px solid #4BD7D6 ; /* light blue */
 	border-radius: 10px;
 }
 
 QPushButton:pressed {
-    background-color: #4BD7D6 ; /* light blue */
+    background-color: #6C6C85 ; /* pastel purple */
 }
 
 #centralwidget QLineEdit {
-    background-color: #6C6C85 ; /* pastel purple */
+	background-color: transparent;
+	padding: 5px 10px;
+	border: 1px solid #4BD7D6 ; /* light blue */
 	border-radius: 10px;
-	padding: 5px 0px;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -123,13 +125,21 @@ QPushButton:pressed {
         </widget>
        </item>
        <item row="2" column="3" colspan="2">
-        <widget class="QLineEdit" name="IPAddrInput"/>
+        <widget class="QLineEdit" name="IPAddrInput">
+         <property name="placeholderText">
+          <string>Default: localhost</string>
+         </property>
+        </widget>
        </item>
        <item row="3" column="3" colspan="2">
-        <widget class="QLineEdit" name="tokenPathInput"/>
+        <widget class="QLineEdit" name="tokenPathInput">
+         <property name="placeholderText">
+          <string>/Path/To/Token</string>
+         </property>
+        </widget>
        </item>
        <item row="4" column="3" colspan="2">
-        <widget class="QCheckBox" name="ConnectionTypeChkBox">
+        <widget class="QCheckBox" name="SSLToggle">
          <property name="text">
           <string/>
          </property>
@@ -186,17 +196,6 @@ QPushButton:pressed {
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Create Bridge</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../assets/res.qrc">
-           <normaloff>:/icons/feather/link.svg</normaloff>:/icons/feather/link.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="startClientBtn">
          <property name="text">
           <string>Start client</string>
@@ -208,13 +207,6 @@ QPushButton:pressed {
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="refreshBtn">
-         <property name="text">
-          <string>Refresh Status</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="reconnectBtn">
          <property name="text">
           <string>Reconnect</string>
@@ -222,6 +214,13 @@ QPushButton:pressed {
          <property name="icon">
           <iconset resource="../assets/res.qrc">
            <normaloff>:/icons/feather/refresh-cw.svg</normaloff>:/icons/feather/refresh-cw.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="refreshBtn">
+         <property name="text">
+          <string>Refresh Status</string>
          </property>
         </widget>
        </item>
