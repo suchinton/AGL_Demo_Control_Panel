@@ -93,8 +93,25 @@ https://github.com/suchinton/AGL_Demo_Control_Panel/assets/75079303/b1d08461-f39
 
 ## # Troubleshooting
 
-If on the `Navigation` page, the map does not render properly or appears to be black, try running the given command in the terminal.
+If on the `Navigation` page, the map does not render properly or appears to be black, try the following steps:
+
+1. Uninstall the requirements
+
+```bash
+pip uninstall -r requirements.txt
+```
+2. Uinstall PyQtWebEngine-Qt5
+   
+```bash
+pip uninstall PyQtWebEngine-Qt5
+```
+3. Remove sandboxing for QtWebEngine
 
 ```bash
 export QTWEBENGINE_CHROMIUM_FLAGS="--no-sandbox"
+```
+4. Reinstall python dependencies
+
+```bash
+pip install -r requirements.txt
 ```
