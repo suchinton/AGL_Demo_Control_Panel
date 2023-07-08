@@ -23,9 +23,11 @@ from PyQt5 import uic, QtCore
 from PyQt5.QtCore import QUrl, QObject
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot
 from PyQt5.QtWebEngineWidgets import QWebEngineView
-from PyQt5.QtWidgets import QApplication, QListWidget, QLineEdit
-from PyQt5.QtGui import QPainterPath, QRegion
+from PyQt5.QtWidgets import QApplication, QListWidget, QLineEdit, QCompleter, QListView
+from PyQt5.QtGui import QPainterPath, QRegion, QStandardItemModel, QStandardItem
 from PyQt5.QtCore import QRectF
+from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import Qt
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -39,40 +41,57 @@ Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/Nav.ui"))
 
 # ========================================
 
+class Nav_Paths():
+    def __init__(self):
+        self.currLat = "Vehicle.CurrentLocation.Latitude"
+        self.currLng = "Vehicle.CurrentLocation.Longitude"
+        self.desLat = "Vehicle.Cabin.Infotainment.Navigation.DestinationSet.Latitude"
+        self.desLng = "Vehicle.Cabin.Infotainment.Navigation.DestinationSet.Longitude"
+
 class NavWidget(Base, Form):
+    suggestionsUpdated = pyqtSignal(list)
+
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
-        self.set_instance()
 
         self.From_address = self.findChild(QLineEdit, "From_address")
         self.To_address = self.findChild(QLineEdit, "To_address")
-        self.Suggestions = self.findChild(QListWidget, "Suggestions")
         self.map_view = self.findChild(QWebEngineView, "map_view")
+
         path = QPainterPath()
         path.addRoundedRect(QRectF(self.map_view.rect()), 10, 10)
         mask = QRegion(path.toFillPolygon().toPolygon())
         self.map_view.setMask(mask)
 
-        # create two QThreads to run the search_address function for each text field
         self.searching_thread = QThread()
 
-        self.From_address.textChanged.connect(lambda: self.start_search(self.From_address.text()))
-        self.To_address.textChanged.connect(lambda: self.start_search(self.To_address.text()))
+        self.suggested_addresses = QStandardItemModel()
+        completer = CustomCompleter(self.suggested_addresses)
+        self.From_address.setCompleter(completer)
 
-        self.Suggestions.itemClicked.connect(self.select_suggestion)
+        self.From_address.textChanged.connect(self.delayed_search)
+        #self.To_address.textChanged.connect(lambda: self.start_search(self.To_address.text()))
 
-    def start_search(self, query):
+        self.suggestionsUpdated.connect(self.update_suggestions)
 
-        self.searching_thread.run = lambda: self.search_address(query)
-        self.searching_thread.start()
+        self.timer = QTimer()
+        self.timer.setInterval(500)  # Adjust delay as needed
+        self.timer.setSingleShot(True)
+        self.timer.timeout.connect(self.start_search)
 
-        # When search address is finished, print "Search finished" to the console and end the thread'
-        self.searching_thread.finished.connect(lambda: print("Search finished"))
+    def delayed_search(self):
+        self.timer.start()
+
+    def start_search(self):
+        query = self.From_address.text().strip()
+        if query:
+            self.searching_thread.run = lambda: self.search_address(query)
+            self.searching_thread.start()
 
     def search_address(self, query):
         options = self.fetch_address_suggestions(query)
-        self.show_suggestions(options)
+        self.suggestionsUpdated.emit(options)
 
     def fetch_address_suggestions(self, query):
         url = f"https://nominatim.openstreetmap.org/search?format=json&limit=5&q={requests.utils.quote(query)}"
@@ -83,15 +102,21 @@ class NavWidget(Base, Form):
             return []
 
     def show_suggestions(self, options):
-        self.Suggestions.clear()
-        for suggestion in options:
-            address = suggestion.get("display_name", "")
-            self.Suggestions.addItem(address)
+      current_query = self.From_address.text().strip()
+      if current_query:
+          self.suggested_addresses.clear()
+          for suggestion in options:
+              address = suggestion.get("display_name", "")
+              self.suggested_addresses.appendRow(QStandardItem(address))
+
+    @pyqtSlot(list)
+    def update_suggestions(self, options):
+        self.show_suggestions(options)
 
     def select_suggestion(self, item):
         address = item.text()
         # self.address_input.setText(address)
-        self.show_location(address)
+        coordinates = self.show_location(address)
 
     def show_location(self, query):
         url = f"https://nominatim.openstreetmap.org/search?format=json&limit=1&q={requests.utils.quote(query)}"
@@ -104,7 +129,7 @@ class NavWidget(Base, Form):
                 location = [float(lat), float(lon)]
 
                 self.update_map(location)
-                print(location)
+                return location
 
     def update_map(self, location):
         map_html = self.create_map_html(location)
@@ -118,15 +143,33 @@ class NavWidget(Base, Form):
         marker = folium.Marker(location=location)
         marker.add_to(map)
         return map._repr_html_()
-    
-    def set_instance(self):
-        self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
-        self.client = self.kuksa.get_client()
 
+class CustomCompleter(QCompleter):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setPopup(QListView())
+        self.popup().setStyleSheet("""
+         QListView {
+             background-color: #131313 ; /* black */
+             color: #fff;
+             border: 1px solid #4BD7D6 ; /* light blue */
+             border-radius: 2px;
+             padding: 10px;
+             margin: 2px;
+         }
+        """)
+
+        self.popup().setWindowFlags(Qt.Popup | Qt.FramelessWindowHint)
+        self.popup().setUniformItemSizes(True)
+        self.popup().setWordWrap(True)
+        self.popup().setSpacing(1)
+        self.popup().setFrameShape(QListView.NoFrame)
+        self.popup().setFrameShadow(QListView.Plain)
+        self.popup().setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
 if __name__ == '__main__':
     import sys
     app = QApplication(sys.argv)
-    w = NavhWidget()
+    w = NavWidget()
     w.show()
     sys.exit(app.exec_())
