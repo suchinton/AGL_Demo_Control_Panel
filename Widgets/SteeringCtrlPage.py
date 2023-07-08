@@ -61,8 +61,7 @@ class SteeringCtrlWidget(Base, Form):
         
         self.Steering = Steering_Paths()
 
-        self.kuksa_feeder = FeedKuksa()
-        self.kuksa_feeder.start()     
+        self.feed_kukas = FeedKuksa()
 
 class FeedKuksa(QThread):
     def __init__(self, parent=None):
