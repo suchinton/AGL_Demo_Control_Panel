@@ -100,7 +100,7 @@ If on the `Navigation` page, the map does not render properly or appears to be b
 ```bash
 pip uninstall -r requirements.txt
 ```
-2. Uinstall PyQtWebEngine-Qt5
+2. Uninstall PyQtWebEngine-Qt5
    
 ```bash
 pip uninstall PyQtWebEngine-Qt5
