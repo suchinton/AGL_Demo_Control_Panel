@@ -55,8 +55,8 @@ class ICWidget(Base, Form):
         
         self.IC = IC_Paths()
 
-        self.kuksa_feeder = FeedKuksa()
-        self.kuksa_feeder.start()
+        self.feed_kuksa = FeedKuksa()
+        self.feed_kuksa.start()
 
         # # load the stylesheet
         # theme = open(os.path.join(current_dir, "../ui/styles/Tron/ICPage.qss"), 'r')
@@ -130,20 +130,20 @@ class ICWidget(Base, Form):
     def update_Speed_monitor(self):
         speed = int(self.Speed_slider.value())
         self.Speed_monitor.display(speed)
-        self.kuksa_feeder.send_values(self.IC.speed, str(speed), 'value')
+        self.feed_kuksa.send_values(self.IC.speed, str(speed), 'value')
 
     def update_RPM_monitor(self):
         rpm = int(self.RPM_slider.value())
         self.RPM_monitor.display(rpm)
-        self.kuksa_feeder.send_values(self.IC.engineRPM, str(rpm), 'value')
+        self.feed_kuksa.send_values(self.IC.engineRPM, str(rpm), 'value')
 
     def update_coolantTemp_monitor(self):
         coolantTemp = int(self.coolantTemp_slider.value())
-        self.kuksa_feeder.send_values(self.IC.coolantTemp, str(coolantTemp), 'value')
+        self.feed_kuksa.send_values(self.IC.coolantTemp, str(coolantTemp), 'value')
 
     def update_fuelLevel_monitor(self):
         fuelLevel = int(self.fuelLevel_slider.value())
-        self.kuksa_feeder.send_values(self.IC.fuelLevel, str(fuelLevel))
+        self.feed_kuksa.send_values(self.IC.fuelLevel, str(fuelLevel))
 
     def hazardBtnClicked(self):
         hazardIcon = QPixmap(":/Images/Images/hazard.png")
@@ -156,9 +156,9 @@ class ICWidget(Base, Form):
 
             self.leftIndicatorBtn.setChecked(True)
             self.rightIndicatorBtn.setChecked(True)
-            self.kuksa_feeder.send_values(self.IC.leftIndicator, "true")
-            self.kuksa_feeder.send_values(self.IC.rightIndicator, "true")
-            self.kuksa_feeder.send_values(self.IC.hazard, "true")
+            self.feed_kuksa.send_values(self.IC.leftIndicator, "true")
+            self.feed_kuksa.send_values(self.IC.rightIndicator, "true")
+            self.feed_kuksa.send_values(self.IC.hazard, "true")
         else:
             painter = QPainter(hazardIcon)
             painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
@@ -168,9 +168,9 @@ class ICWidget(Base, Form):
 
             self.leftIndicatorBtn.setChecked(False)
             self.rightIndicatorBtn.setChecked(False)
-            self.kuksa_feeder.send_values(self.IC.leftIndicator, "false")
-            self.kuksa_feeder.send_values(self.IC.rightIndicator, "false")
-            self.kuksa_feeder.send_values(self.IC.hazard, "false")
+            self.feed_kuksa.send_values(self.IC.leftIndicator, "false")
+            self.feed_kuksa.send_values(self.IC.rightIndicator, "false")
+            self.feed_kuksa.send_values(self.IC.hazard, "false")
 
     def leftIndicatorBtnClicked(self):
         leftIndicatorIcon = QPixmap(":/Images/Images/left.png")
@@ -182,7 +182,7 @@ class ICWidget(Base, Form):
             painter.end()
 
             self.leftIndicatorBtn.setIcon(QIcon(leftIndicatorIcon))
-            self.kuksa_feeder.send_values(self.IC.leftIndicator, "true")
+            self.feed_kuksa.send_values(self.IC.leftIndicator, "true")
         else:
 
             painter = QPainter(leftIndicatorIcon)
@@ -191,7 +191,7 @@ class ICWidget(Base, Form):
             painter.end()
 
             self.leftIndicatorBtn.setIcon(QIcon(leftIndicatorIcon))
-            self.kuksa_feeder.send_values(self.IC.leftIndicator, "false")
+            self.feed_kuksa.send_values(self.IC.leftIndicator, "false")
 
     def rightIndicatorBtnClicked(self):
         rightIndicatorIcon = QPixmap(":/Images/Images/right.png")
@@ -202,7 +202,7 @@ class ICWidget(Base, Form):
             painter.fillRect(rightIndicatorIcon.rect(), QtCore.Qt.green)
             painter.end()
             self.rightIndicatorBtn.setIcon(QIcon(rightIndicatorIcon))
-            self.kuksa_feeder.send_values(self.IC.rightIndicator, "true")
+            self.feed_kuksa.send_values(self.IC.rightIndicator, "true")
         else:
 
             painter = QPainter(rightIndicatorIcon)
@@ -210,7 +210,7 @@ class ICWidget(Base, Form):
             painter.fillRect(rightIndicatorIcon.rect(), QtCore.Qt.black)
             painter.end()
             self.rightIndicatorBtn.setIcon(QIcon(rightIndicatorIcon))
-            self.kuksa_feeder.send_values(self.IC.rightIndicator, "false")
+            self.feed_kuksa.send_values(self.IC.rightIndicator, "false")
 
     def accelerationBtnPressed(self):
         self.startTime = QtCore.QTime.currentTime()
@@ -264,25 +264,25 @@ class ICWidget(Base, Form):
             self.accelerationBtn.setEnabled(True)
             self.Speed_slider.setEnabled(True)
             self.RPM_slider.setEnabled(True)
-            self.kuksa_feeder.send_values(self.IC.selectedGear, "127")
+            self.feed_kuksa.send_values(self.IC.selectedGear, "127")
 
         if self.driveGroupBtns.checkedButton() == self.parkBtn:
             self.accelerationBtn.setEnabled(False)
             self.Speed_slider.setEnabled(False)
             self.RPM_slider.setEnabled(False)
-            self.kuksa_feeder.send_values(self.IC.selectedGear, "126")
+            self.feed_kuksa.send_values(self.IC.selectedGear, "126")
 
         if self.driveGroupBtns.checkedButton() == self.reverseBtn:
             self.accelerationBtn.setEnabled(True)
             self.Speed_slider.setEnabled(True)
             self.RPM_slider.setEnabled(True)
-            self.kuksa_feeder.send_values(self.IC.selectedGear, "-1")
+            self.feed_kuksa.send_values(self.IC.selectedGear, "-1")
 
         if self.driveGroupBtns.checkedButton() == self.neutralBtn:
             self.accelerationBtn.setEnabled(False)
             self.Speed_slider.setEnabled(False)
             self.RPM_slider.setEnabled(True)
-            self.kuksa_feeder.send_values(self.IC.selectedGear, "0")
+            self.feed_kuksa.send_values(self.IC.selectedGear, "0")
 
 
 class AccelerationFns():

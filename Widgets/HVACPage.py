@@ -50,7 +50,7 @@ class HVACWidget(Base, Form):
         
         self.HVAC = HVAC_Paths()
 
-        self.feed_kukas = FeedKuksa()
+        self.feed_kuksa = FeedKuksa()
         
         self.leftTempList = self.findChild(QListWidget, "leftTempList")
         self.leftTempList.addItems(self.HVAC.temperatureList)
@@ -83,27 +83,27 @@ class HVACWidget(Base, Form):
 
         self.rightFanSpeed_slider = self.findChild(QSlider, "rightFanSpeed_slider")
         self.rightFanSpeed_slider.valueChanged.connect(self.rightFanSpeed_sliderChanged)
-        
+
     def leftTempListClicked(self):
         item = self.leftTempList.currentItem()
         self.leftTempList.scrollToItem(item, 1)
-        self.feed_kukas.send_values(self.HVAC.leftTemp, item.text()[:-2])
+        self.feed_kuksa.send_values(self.HVAC.leftTemp, item.text()[:-2])
         print(item.text())
 
     def rightTempListClicked(self):
         item = self.rightTempList.currentItem()
         self.rightTempList.scrollToItem(item, 1)
-        self.feed_kukas.send_values(self.HVAC.rightTemp, item.text()[:-2])
+        self.feed_kuksa.send_values(self.HVAC.rightTemp, item.text()[:-2])
         print(item.text())
 
     def leftFanSpeed_sliderChanged(self):
         value = self.leftFanSpeed_slider.value()
-        self.feed_kukas.send_values(self.HVAC.leftFanSpeed, str(value))
+        self.feed_kuksa.send_values(self.HVAC.leftFanSpeed, str(value))
         print(value)
 
     def rightFanSpeed_sliderChanged(self):
         value = self.rightFanSpeed_slider.value()
-        self.feed_kukas.send_values(self.HVAC.rightFanSpeed, str(value))
+        self.feed_kuksa.send_values(self.HVAC.rightFanSpeed, str(value))
         print(value)
 
 class FeedKuksa(QThread):
