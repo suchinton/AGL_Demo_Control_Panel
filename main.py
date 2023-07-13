@@ -91,7 +91,7 @@ class MainWindow(Base, Form):
 
         self.stackedWidget.currentChanged.connect(self.handleChangedPage)
         
-        self.stop_thread_signal.connect(self.stackedWidget.widget(0).kuksa_feeder.stop)
+        self.stop_thread_signal.connect(self.stackedWidget.widget(0).feed_kuksa.stop)
 
         self.stackedWidget.setCurrentIndex(0)
         self.icButton.setChecked(True)
@@ -101,7 +101,7 @@ class MainWindow(Base, Form):
     def handleChangedPage(self, index):
         # stop the previous thread and start the new one
         try:
-            self.stop_thread_signal.connect(self.stackedWidget.widget(self.current_page).kuksa_feeder.stop)
+            self.stop_thread_signal.connect(self.stackedWidget.widget(self.current_page).feed_kuksa.stop)
             self.stop_thread_signal.emit()
         except:
             pass
@@ -109,7 +109,7 @@ class MainWindow(Base, Form):
         self.current_page = self.stackedWidget.currentIndex()
 
         try:
-            self.start_thread_signal.connect(self.stackedWidget.widget(self.current_page).kuksa_feeder.start)
+            self.start_thread_signal.connect(self.stackedWidget.widget(self.current_page).feed_kuksa.start)
             self.start_thread_signal.emit()
         except:
             pass
