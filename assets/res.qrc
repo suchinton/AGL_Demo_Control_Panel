@@ -288,18 +288,33 @@
     <file>feather/zoom-in.svg</file>
     <file>feather/zoom-out.svg</file>
   </qresource>
+  <qresource prefix="fonts">
+    <file>fonts/OpenSans-Bold.ttf</file>
+    <file>fonts/OpenSans-BoldItalic.ttf</file>
+    <file>fonts/OpenSans-ExtraBold.ttf</file>
+    <file>fonts/OpenSans-ExtraBoldItalic.ttf</file>
+    <file>fonts/OpenSans-Italic.ttf</file>
+    <file>fonts/OpenSans-Light.ttf</file>
+    <file>fonts/OpenSans-LightItalic.ttf</file>
+    <file>fonts/OpenSans-Regular.ttf</file>
+    <file>fonts/OpenSans-Semibold.ttf</file>
+    <file>fonts/OpenSans-SemiboldItalic.ttf</file>
+  </qresource>
   <qresource prefix="Images">
+    <file>Images/voice.svg</file>
+    <file>Images/low-beam.png</file>
+    <file>Images/lane.png</file>
+    <file>Images/high-beam.png</file>
+    <file>Images/cruise.png</file>
     <file>Images/fan.svg</file>
     <file>Images/tempUp.svg</file>
     <file>Images/tempDown.svg</file>
-    <file>Images/engine-coolant.png</file>
     <file>Images/IC.svg</file>
     <file>Images/fuel-icon.png</file>
     <file>Images/hazard.png</file>
     <file>Images/Automotive_Grade_Linux_logo.svg</file>
     <file>Images/logo_agl.png</file>
     <file>Images/right.png</file>
-    <file>Images/logo.svg</file>
     <file>Images/left.png</file>
   </qresource>
 </RCC>
