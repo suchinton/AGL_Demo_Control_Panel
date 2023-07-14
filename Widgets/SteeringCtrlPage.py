@@ -17,7 +17,7 @@
 import os
 import sys
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QButtonGroup
 from PyQt5.QtCore import QThread
 
 import time
@@ -36,24 +36,32 @@ Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/SteeringControls.ui
 
 class Steering_Paths():
     def __init__(self):
-        self.VolumeUp = "ehicle.Cabin.SteeringWheel.Switches.VolumeUp"
+        self.VolumeUp = "Vehicle.Cabin.SteeringWheel.Switches.VolumeUp"
         self.VolumeDown = "Vehicle.Cabin.SteeringWheel.Switches.VolumeDown"
         self.VolumeMute = "Vehicle.Cabin.SteeringWheel.Switches.VolumeMute"
+
+        self.Mode = "Vehicle.Cabin.SteeringWheel.Switches.Mode"
 
         self.NextTrack = "Vehicle.Cabin.SteeringWheel.Switches.Next"
         self.PreviousTrack = "Vehicle.Cabin.SteeringWheel.Switches.Previous"
 
         self.Info = "Vehicle.Cabin.SteeringWheel.Switches.Info"
 
-        self.CruiseEnable = "Vehicle.Cabin.SteeringWheel.Switches.CruiseEnable"
-
-        self.Voice = "Vehicle.Cabin.SteeringWheel.Switches.Voice"
         self.PhoneCall = "Vehicle.Cabin.SteeringWheel.Switches.PhoneCall"
         self.PhoneHangup = "Vehicle.Cabin.SteeringWheel.Switches.PhoneHangup"
+        self.Voice = "Vehicle.Cabin.SteeringWheel.Switches.Voice"
+        self.LaneDeparture = "Vehicle.Cabin.SteeringWheel.Switches.LaneDepartureWarning"
 
         self.Horn = "Vehicle.Cabin.SteeringWheel.Switches.Horn"
+        
+        self.CruiseEnable = "Vehicle.Cabin.SteeringWheel.Switches.CruiseEnable"
+        self.CruseSet = "Vehicle.Cabin.SteeringWheel.Switches.CruiseSet"
+        self.CruiseResume = "Vehicle.Cabin.SteeringWheel.Switches.CruiseResume"
+        self.CruiseCancel = "Vehicle.Cabin.SteeringWheel.Switches.CruiseCancel"
 
-
+        self.CruiseLimit = "Vehicle.Cabin.SteeringWheel.Switches.CruiseLimit"
+        self.CruiseDistance = "Vehicle.Cabin.SteeringWheel.Switches.CruiseDistance"
+        
 class SteeringCtrlWidget(Base, Form):
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
@@ -61,7 +69,44 @@ class SteeringCtrlWidget(Base, Form):
         
         self.Steering = Steering_Paths()
 
-        self.feed_kukas = FeedKuksa()
+        self.feed_kuksa = FeedKuksa()
+
+        LeftControlsBtns = [self.VolUpBtn,
+                               self.VolDownBtn,
+                               self.VolMuteBtn,
+                               self.NextTrackBtn,
+                               self.PrevTrackBtn,
+                               self.InfoBtn]
+         
+        self.LeftControlsBtnsGroup = QButtonGroup()
+
+        for btn in LeftControlsBtns:
+            self.LeftControlsBtnsGroup.addButton(btn)
+
+        self.LeftControlsBtnsGroup.buttonClicked.connect(self.left_controls_clicked)
+
+        RightControlsBtns = [self.CruiseEnableBtn,
+                                 self.VoiceBtn,
+                                 self.PhoneCallBtn,
+                                 self.PhoneHangupBtn]
+
+        self.RiqhtControlsBtnsGroup = QButtonGroup()
+
+        for btn in RightControlsBtns:
+            self.RiqhtControlsBtnsGroup.addButton(btn)
+
+        self.RiqhtControlsBtnsGroup.buttonClicked.connect(self.right_controls_clicked)
+
+        self.HornBtn.clicked.connect(self.horn_clicked)
+
+    def left_controls_clicked(self):
+        print("Left controls clicked")
+
+    def right_controls_clicked(self):
+        print("Right controls clicked")
+
+    def horn_clicked(self):
+        print("Horn clicked")
 
 class FeedKuksa(QThread):
     def __init__(self, parent=None):
