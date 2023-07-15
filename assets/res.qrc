@@ -301,6 +301,8 @@
     <file>fonts/OpenSans-SemiboldItalic.ttf</file>
   </qresource>
   <qresource prefix="Images">
+    <file>Images/cruise-distance.svg</file>
+    <file>Images/steering-wheel.svg</file>
     <file>Images/voice.svg</file>
     <file>Images/low-beam.png</file>
     <file>Images/lane.png</file>
