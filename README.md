@@ -13,7 +13,6 @@ Install the Python dependencies by running
 pip install -r requirements.txt
 ```
 
----
 
 ## # Usage
 
@@ -56,7 +55,7 @@ Run the server in AGL with the following commands,
 ```bash
 kuksa-val-server --address 0.0.0.0 --insecure
 ```
----
+
 
 ## Running the `AGL_Demo_Control_Panel`
 
@@ -75,43 +74,66 @@ Once the main window is visible, we go to the settings page
     - Yellow: Faulty settings
     - Green: Connected
 
----
+## # Testing Against AGL Image on RPi 4
+
+ The `AGL_Demo_Control_Panel` can be tested against the [IC application](https://github.com/aakash-s45/ic) by running the `agl-cluster-demo-platform-flutter` image on a Raspberry Pi 4 
+
+### Building for RPi 4
+
+For building the `agl-cluster-demo-platform-flutter` image for the Raspberry Pi 4 I followed the following steps after setting up my [build environment](https://docs.automotivelinux.org/en/master/#01_Getting_Started/02_Building_AGL_Image/03_Downloading_AGL_Software/).
+
+```bash
+source meta-agl/scripts/aglsetup.sh -f \
+-m raspberrypi4 -b build-flutter-cluster agl-demo agl-devel
+
+source agl-init-build-env
+
+bitbake agl-cluster-demo-platform-flutter
+```
+
+### Flashing Image to SD Card
+
+Simply use the raspberry [Pi Imager Tool](https://www.raspberrypi.com/software/) to flash the custom image. You can also follow AGL's official documentation for the same. 
+
+### Connecting to the Pi using Ethernet
+
+Since the IC Flutter demo app does not provide a GUI method to find the IP address of the Pi, and also does not connect to the WiFi by default, We can enable communication using a LAN cable.
+
+To enable the Ethernet port to find the Pi on local network, the following steps can be taken in the Gnome Settings Panel, similar settings should be available in other network configuration tools.
+
+- Settings -> Network -> Wired ->  IPv4
+- IPv4 Method -> Shared to other computers
+
+```bash
+# Find IP addr of the ethernet
+ip address show eno1
+ping <ip-address-for-eno1>
+
+# Resolve all available IP addresses on network, 
+# recommend turning off WiFi
+
+arp -a
+
+ssh root@<ip-address-raspberrypi>
+```
+
+After successfully `ssh`-ing into the session, we kill the existing `kuksa` service (since it runs on localhost) and restart `kuksa-val-server` on special ip address `0.0.0.0`.
+
+```bash
+pkill kuksa
+kuksa-val-server --address 0.0.0.0 --insecure 
+
+# optional flag "--log-level VERBOSE"
+```
+
+_Note_: Make sure that IP address entered is that of the PI4, and make sure to check `Insecure Mode` before connecting.
 
 ## # Demo Video
 
 https://github.com/suchinton/AGL_Demo_Control_Panel/assets/75079303/b1d08461-f39b-42d4-97d8-ed7307df1fa2
-
----
 
 ## # Supported Applications
 
 - [IC](https://github.com/aakash-s45/ic): Instrument Cluster for AGL flutter build
 - 🚧 **(WIP)** [HVAC_dashboard](https://github.com/hritik-chouhan/HVAC_dashboard): A Flutter-based HVAC application made for AGL IVI dashboard
 - more to come!
-
---- 
-
-## # Troubleshooting
-
-If on the `Navigation` page, the map does not render properly or appears to be black, try the following steps:
-
-1. Uninstall the requirements
-
-```bash
-pip uninstall -r requirements.txt
-```
-2. Uninstall PyQtWebEngine-Qt5
-   
-```bash
-pip uninstall PyQtWebEngine-Qt5
-```
-3. Remove sandboxing for QtWebEngine
-
-```bash
-export QTWEBENGINE_CHROMIUM_FLAGS="--no-sandbox"
-```
-4. Reinstall python dependencies
-
-```bash
-pip install -r requirements.txt
-```
