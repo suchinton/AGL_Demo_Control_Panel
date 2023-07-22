@@ -68,33 +68,47 @@ class SteeringCtrlWidget(Base, Form):
         self.setupUi(self)
         
         self.Steering = Steering_Paths()
-
         self.feed_kuksa = FeedKuksa()
+        self.add_buttons()
 
+    def add_buttons(self):
+
+        # Define button groups and actions
         LeftControlsBtns = [self.VolUpBtn,
                                self.VolDownBtn,
+                               self.ModeBtn,
                                self.VolMuteBtn,
                                self.NextTrackBtn,
                                self.PrevTrackBtn,
                                self.InfoBtn]
          
+
+        PhoneBtns = [self.PhoneCallBtn, self.PhoneHangupBtn]
+        ExtraContolsBtns = [self.VoiceBtn, self.LaneDepartureBtn]
+
+        RightControlsBtns = [self.CruiseEnableBtn,
+                            self.CruiseSetBtn,
+                            self.CruiseResumeBtn,
+                            self.CruiseCancelBtn,
+                            self.CruiseLimitBtn,
+                            self.CruiseDistanceBtn]
+
         self.LeftControlsBtnsGroup = QButtonGroup()
+        self.PhoneBtnsGroup = QButtonGroup()
+        self.ExtraContolsBtnsGroup = QButtonGroup()
+        self.RiqhtControlsBtnsGroup = QButtonGroup()
 
         for btn in LeftControlsBtns:
             self.LeftControlsBtnsGroup.addButton(btn)
 
-        self.LeftControlsBtnsGroup.buttonClicked.connect(self.left_controls_clicked)
-
-        RightControlsBtns = [self.CruiseEnableBtn,
-                                 self.VoiceBtn,
-                                 self.PhoneCallBtn,
-                                 self.PhoneHangupBtn]
-
-        self.RiqhtControlsBtnsGroup = QButtonGroup()
+        for btn in PhoneBtns:
+            self.PhoneBtnsGroup.addButton(btn)
+            
 
         for btn in RightControlsBtns:
             self.RiqhtControlsBtnsGroup.addButton(btn)
 
+        self.LeftControlsBtnsGroup.buttonClicked.connect(self.left_controls_clicked)
         self.RiqhtControlsBtnsGroup.buttonClicked.connect(self.right_controls_clicked)
 
         self.HornBtn.clicked.connect(self.horn_clicked)
