@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1001</width>
-    <height>745</height>
+    <width>1082</width>
+    <height>836</height>
    </rect>
   </property>
   <property name="palette">
@@ -805,12 +805,11 @@ QStackedWidget{
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>0</number>
+                <number>2</number>
                </property>
                <widget class="ICWidget" name="ICPage"/>
                <widget class="HVACWidget" name="HVACPage"/>
                <widget class="SteeringCtrlWidget" name="SteeringCtrlPage"/>
-               <widget class="NavWidget" name="NavPage"/>
                <widget class="QWidget" name="newPage"/>
                <widget class="settings" name="settingsPage"/>
               </widget>
@@ -1081,32 +1080,7 @@ QStackedWidget{
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
-                 <normaloff>:/icons/feather/circle.svg</normaloff>:/icons/feather/circle.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="navButton">
-               <property name="font">
-                <font>
-                 <family>Open Sans</family>
-                 <weight>75</weight>
-                 <italic>true</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Navigation</string>
-               </property>
-               <property name="icon">
-                <iconset resource="assets/res.qrc">
-                 <normaloff>:/icons/feather/compass.svg</normaloff>:/icons/feather/compass.svg</iconset>
+                 <normaloff>:/Images/Images/steering-wheel.svg</normaloff>:/Images/Images/steering-wheel.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1220,12 +1194,6 @@ QStackedWidget{
    <class>settings</class>
    <extends>QWidget</extends>
    <header>Widgets/settings</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>NavWidget</class>
-   <extends>QWidget</extends>
-   <header>Widgets/NavPage</header>
    <container>1</container>
   </customwidget>
   <customwidget>

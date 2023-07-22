@@ -77,7 +77,6 @@ class MainWindow(Base, Form):
         buttons = (self.icButton, 
                    self.hvacButton, 
                    self.steeringCtrlButton,
-                   self.navButton,
                    self.newButton, 
                    self.settingsBtn)
         

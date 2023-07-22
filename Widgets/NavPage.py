@@ -14,6 +14,7 @@
     limitations under the License.
 """
 
+import extras.Kuksa_Instance as kuksa_instance
 import os
 import sys
 import requests
@@ -35,11 +36,11 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(os.path.dirname(current_dir))
 
-import extras.Kuksa_Instance as kuksa_instance
 
 Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/Nav.ui"))
 
 # ========================================
+
 
 class Nav_Paths():
     def __init__(self):
@@ -47,6 +48,7 @@ class Nav_Paths():
         self.currLng = "Vehicle.CurrentLocation.Longitude"
         self.desLat = "Vehicle.Cabin.Infotainment.Navigation.DestinationSet.Latitude"
         self.desLng = "Vehicle.Cabin.Infotainment.Navigation.DestinationSet.Longitude"
+
 
 class NavWidget(Base, Form):
     suggestionsUpdated = pyqtSignal(list)
@@ -71,7 +73,7 @@ class NavWidget(Base, Form):
         self.From_address.setCompleter(completer)
 
         self.From_address.textChanged.connect(self.delayed_search)
-        #self.To_address.textChanged.connect(lambda: self.start_search(self.To_address.text()))
+        # self.To_address.textChanged.connect(lambda: self.start_search(self.To_address.text()))
 
         self.suggestionsUpdated.connect(self.update_suggestions)
 
@@ -102,12 +104,12 @@ class NavWidget(Base, Form):
             return []
 
     def show_suggestions(self, options):
-      current_query = self.From_address.text().strip()
-      if current_query:
-          self.suggested_addresses.clear()
-          for suggestion in options:
-              address = suggestion.get("display_name", "")
-              self.suggested_addresses.appendRow(QStandardItem(address))
+        current_query = self.From_address.text().strip()
+        if current_query:
+            self.suggested_addresses.clear()
+            for suggestion in options:
+                address = suggestion.get("display_name", "")
+                self.suggested_addresses.appendRow(QStandardItem(address))
 
     @pyqtSlot(list)
     def update_suggestions(self, options):
@@ -144,6 +146,7 @@ class NavWidget(Base, Form):
         marker.add_to(map)
         return map._repr_html_()
 
+
 class CustomCompleter(QCompleter):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -166,6 +169,7 @@ class CustomCompleter(QCompleter):
         self.popup().setFrameShape(QListView.NoFrame)
         self.popup().setFrameShadow(QListView.Plain)
         self.popup().setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
 
 if __name__ == '__main__':
     import sys
