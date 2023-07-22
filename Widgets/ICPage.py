@@ -14,7 +14,6 @@
     limitations under the License.
 """
 
-import extras.Kuksa_Instance as kuksa_instance
 import os
 import sys
 from PyQt5 import uic, QtCore, QtWidgets
@@ -30,6 +29,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(os.path.dirname(current_dir))
 
+from extras.FeedKuksa import FeedKuksa
 
 Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/IC.ui"))
 
@@ -345,42 +345,6 @@ class ICScript(ICWidget):
         # enable all widgets in the scroll area
         for widget in ICWidget.scrollAreaWidgetContents.children():
             widget.setEnabled(True)
-
-class FeedKuksa(QThread):
-    def __init__(self, parent=None):
-        QThread.__init__(self,parent)
-        self.stop_flag = False
-        self.set_instance()
-
-    def run(self):
-        print("Starting thread")
-        self.set_instance()
-        while not self.stop_flag:
-            self.send_values()
-
-    def stop(self):
-        self.stop_flag = True
-        print("Stopping thread")
-
-    def set_instance(self):
-        self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
-        self.client = self.kuksa.get_client()
-
-    def send_values(self, Path=None, Value=None, Attribute=None):
-        if self.client is not None:
-            if self.client.checkConnection() is True:
-
-                if Attribute is not None:
-                    self.client.setValue(Path, Value, Attribute)
-                else:
-                    self.client.setValue(Path, Value)
-            else:
-                print("Could not connect to Kuksa")
-                self.set_instance()
-        else:
-            print("Kuksa client is None, try reconnecting")
-            time.sleep(2)
-            self.set_instance()
 
 if __name__ == '__main__':
     import sys

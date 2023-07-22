@@ -1,3 +1,4 @@
+from typing import Optional
 import kuksa_client as kuksa
 import threading
 import time
@@ -5,11 +6,11 @@ import time
 from extras import config
 
 class KuksaClientSingleton:
-    __instance = None
+    __instance: Optional["KuksaClientSingleton"] = None
     __lock = threading.Lock()
 
     @staticmethod
-    def get_instance():
+    def get_instance() -> "KuksaClientSingleton":
         if KuksaClientSingleton.__instance is None:
             with KuksaClientSingleton.__lock:
                 if KuksaClientSingleton.__instance is None:
@@ -53,7 +54,12 @@ class KuksaClientSingleton:
         return self.token
 
     def get_status(self):
-        return self.client.checkConnection()
+        if self.client is not None:
+            return self.client.checkConnection()
+        else:
+            return False
 
     def __del__(self):
-        self.client.stop()
+        if self.client is not None:
+            self.client.stop()
+        return None
