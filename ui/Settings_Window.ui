@@ -143,6 +143,11 @@ QPushButton:pressed {
          <property name="text">
           <string/>
          </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/icons/feather/shield.svg</normaloff>
+           <normalon>:/icons/feather/shield-off.svg</normalon>:/icons/feather/shield.svg</iconset>
+         </property>
          <property name="checked">
           <bool>false</bool>
          </property>
