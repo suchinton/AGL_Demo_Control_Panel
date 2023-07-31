@@ -57,21 +57,90 @@ QPushButton:pressed {
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="4" column="1">
-        <widget class="QLabel" name="label">
+       <item row="10" column="4" colspan="2" alignment="Qt::AlignLeft">
+        <widget class="QPushButton" name="pushButton_3">
          <property name="text">
-          <string>Insecure Mode</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/icons/feather/eye.svg</normaloff>:/icons/feather/eye.svg</iconset>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="3" column="0" colspan="3">
+        <widget class="QLabel" name="tokenPath">
+         <property name="text">
+          <string>JWT token Path *</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="4" colspan="2" alignment="Qt::AlignLeft">
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/icons/feather/eye.svg</normaloff>:/icons/feather/eye.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="6" alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Page Settings</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QLabel" name="connectionLogo">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../assets/res.qrc">:/icons/feather/alert-triangle.svg</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="4" colspan="2">
+        <widget class="QLineEdit" name="tokenPathInput">
+         <property name="placeholderText">
+          <string>/Path/To/Token</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
         <widget class="QLabel" name="status">
          <property name="text">
           <string>Status</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="4">
+       <item row="2" column="0" colspan="3">
+        <widget class="QLabel" name="IPAddr">
+         <property name="text">
+          <string>IP Address *</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3" rowspan="4">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="5">
         <widget class="QLabel" name="connectionStatus">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -84,21 +153,43 @@ QPushButton:pressed {
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="tokenPath">
-         <property name="text">
-          <string>JWT token Path *</string>
+       <item row="5" column="2" colspan="4">
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="IPAddr">
-         <property name="text">
-          <string>IP Address *</string>
+       <item row="2" column="4" colspan="2">
+        <widget class="QLineEdit" name="IPAddrInput">
+         <property name="placeholderText">
+          <string>Default: localhost</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1" colspan="4">
+       <item row="4" column="4" colspan="2">
+        <widget class="QCheckBox" name="SSLToggle">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/icons/feather/shield.svg</normaloff>
+           <normalon>:/icons/feather/shield-off.svg</normalon>:/icons/feather/shield.svg</iconset>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="3">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Insecure Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" colspan="4">
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -114,60 +205,166 @@ QPushButton:pressed {
          </property>
         </spacer>
        </item>
-       <item row="1" column="3">
-        <widget class="QLabel" name="connectionLogo">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="../assets/res.qrc">:/icons/feather/alert-triangle.svg</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3" colspan="2">
-        <widget class="QLineEdit" name="IPAddrInput">
-         <property name="placeholderText">
-          <string>Default: localhost</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3" colspan="2">
-        <widget class="QLineEdit" name="tokenPathInput">
-         <property name="placeholderText">
-          <string>/Path/To/Token</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="3" colspan="2">
-        <widget class="QCheckBox" name="SSLToggle">
+       <item row="7" column="4" colspan="2" alignment="Qt::AlignLeft">
+        <widget class="QPushButton" name="pushButton">
          <property name="text">
           <string/>
          </property>
          <property name="icon">
           <iconset resource="../assets/res.qrc">
-           <normaloff>:/icons/feather/shield.svg</normaloff>
-           <normalon>:/icons/feather/shield-off.svg</normalon>:/icons/feather/shield.svg</iconset>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
+           <normaloff>:/icons/feather/eye.svg</normaloff>:/icons/feather/eye.svg</iconset>
          </property>
         </widget>
        </item>
-       <item row="1" column="2" rowspan="4">
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+       <item row="7" column="0" rowspan="4">
+        <widget class="QFrame" name="PageIcons">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>20</height>
-          </size>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_6">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Ignored">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../assets/res.qrc">:/Images/Images/IC.svg</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_7">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../assets/res.qrc">:/icons/feather/wind.svg</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_8">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../assets/res.qrc">:/Images/Images/steering-wheel.svg</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="7" column="1" rowspan="4">
+        <widget class="QFrame" name="PageLabels">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-        </spacer>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Instrument Cluster</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>HVAC</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Steering Controls</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -232,19 +429,6 @@ QPushButton:pressed {
       </layout>
      </widget>
     </item>
-    <item row="1" column="0">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
     <item row="5" column="1" colspan="3">
      <spacer name="verticalSpacer">
       <property name="orientation">
@@ -287,6 +471,19 @@ QPushButton:pressed {
        <size>
         <width>20</width>
         <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="0" rowspan="5">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
        </size>
       </property>
      </spacer>
