@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1082</width>
-    <height>836</height>
+    <width>1297</width>
+    <height>739</height>
    </rect>
   </property>
   <property name="palette">
@@ -480,19 +480,19 @@
 	background-color: #131313 ; /* black */
 }
 
-#leftMenuSubContainer{
+#BottomMenuSubContainer{
 	border-radius: 10px;
 	background-color:  #041F2B ; /* dark blue */
 }
 
-#leftMenuSubContainer QPushButton{
+#BottomMenuSubContainer QPushButton{
 	background-color: #6C6C85 ; /* pastel purple */
 	text-align: left;
 	padding: 5px 10px;
 	border-radius: 10px;
 }
 
-#leftMenuSubContainer QPushButton:pressed {
+#BottomMenuSubContainer QPushButton:pressed {
     background-color: #4BD7D6 ; /* light blue */
 }
 
@@ -923,8 +923,14 @@ QStackedWidget{
       </layout>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="2" alignment="Qt::AlignLeft">
-     <widget class="QWidget" name="leftMenuContainer" native="true">
+    <item row="2" column="2">
+     <widget class="QWidget" name="BottomMenuContainer" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="styleSheet">
        <string notr="true"/>
       </property>
@@ -945,7 +951,7 @@ QStackedWidget{
         <number>0</number>
        </property>
        <item>
-        <widget class="QWidget" name="leftMenuSubContainer" native="true">
+        <widget class="QWidget" name="BottomMenuSubContainer" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -958,8 +964,8 @@ QStackedWidget{
            <height>0</height>
           </size>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item alignment="Qt::AlignTop">
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
            <widget class="QFrame" name="frame">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -996,7 +1002,20 @@ QStackedWidget{
             </layout>
            </widget>
           </item>
-          <item alignment="Qt::AlignTop">
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
            <widget class="QFrame" name="navigationFrame">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -1010,7 +1029,7 @@ QStackedWidget{
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
+            <layout class="QHBoxLayout" name="horizontalLayout_10">
              <item>
               <widget class="QPushButton" name="icButton">
                <property name="enabled">
@@ -1119,19 +1138,19 @@ QStackedWidget{
            </widget>
           </item>
           <item>
-           <spacer name="verticalSpacer">
+           <spacer name="horizontalSpacer_3">
             <property name="orientation">
-             <enum>Qt::Vertical</enum>
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
-              <height>40</height>
+              <width>40</width>
+              <height>20</height>
              </size>
             </property>
            </spacer>
           </item>
-          <item alignment="Qt::AlignBottom">
+          <item>
            <widget class="QFrame" name="settingsFrame">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
