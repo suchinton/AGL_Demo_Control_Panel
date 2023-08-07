@@ -1,0 +1,5 @@
+- fan: [fan.svg](https://www.iconfinder.com/icons/3328905/cooling_fan_hotel_service_icon) by [Alpár-Etele Méder](https://www.iconfinder.com/pocike)
+- IC: [IC.svg](https://freeicons.io/seo-icons/speed-optimization-icon-32691) by [Fasil](https://freeicons.io/profile/722) under Creative [Creative Commons(Attribution 3.0 unported)](https://creativecommons.org/licenses/by/3.0/)
+- Temps: [TempUP.svg](https://freeicons.io/weather-4/weather-tforecast-hermometer-temperature-summer-hot-icon-44794) & [TempDown.svg](https://freeicons.io/weather-4/weather-forecast-thermometer-temperature-winter-cold-icon-44752) by [www.wishforge.games](https://freeicons.io/profile/2257) 
+- Cruise: Vectors and icons by <a href="https://github.com/Esri/calcite-ui-icons?ref=svgrepo.com" target="_blank">Esri</a> in MIT License via <a href="https://www.svgrepo.com/" target="_blank">SVG Repo</a>
+- Voice: Vectors and icons by <a href="https://github.com/carbon-design-system/carbon?ref=svgrepo.com" target="_blank">Carbon Design</a> in Apache License via <a href="https://www.svgrepo.com/" target="_blank">SVG Repo</a>
