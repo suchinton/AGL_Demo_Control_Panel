@@ -487,8 +487,8 @@
 
 #BottomMenuSubContainer QPushButton{
 	background-color: #6C6C85 ; /* pastel purple */
-	text-align: left;
-	padding: 5px 10px;
+	text-align: center;
+	padding: 5px 5px;
 	border-radius: 10px;
 }
 
@@ -673,7 +673,7 @@ QStackedWidget{
               <widget class="QLabel" name="aglLabel">
                <property name="font">
                 <font>
-                 <family>Open Sans</family>
+                 <family>DejaVu Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
@@ -978,7 +978,7 @@ QStackedWidget{
               <widget class="QPushButton" name="menuButton">
                <property name="font">
                 <font>
-                 <family>Open Sans</family>
+                 <family>DejaVu Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
@@ -989,12 +989,12 @@ QStackedWidget{
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
-                 <normaloff>:/icons/feather/menu.svg</normaloff>:/icons/feather/menu.svg</iconset>
+                 <normaloff>:/icons/feather/grid.svg</normaloff>:/icons/feather/grid.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
-                 <width>25</width>
-                 <height>25</height>
+                 <width>35</width>
+                 <height>35</height>
                 </size>
                </property>
               </widget>
@@ -1037,7 +1037,7 @@ QStackedWidget{
                </property>
                <property name="font">
                 <font>
-                 <family>Open Sans</family>
+                 <family>DejaVu Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
@@ -1045,7 +1045,7 @@ QStackedWidget{
                 </font>
                </property>
                <property name="text">
-                <string>Instrument Cluster</string>
+                <string/>
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
@@ -1053,8 +1053,8 @@ QStackedWidget{
                </property>
                <property name="iconSize">
                 <size>
-                 <width>25</width>
-                 <height>25</height>
+                 <width>35</width>
+                 <height>35</height>
                 </size>
                </property>
               </widget>
@@ -1063,14 +1063,15 @@ QStackedWidget{
               <widget class="QPushButton" name="hvacButton">
                <property name="font">
                 <font>
-                 <family>Open Sans</family>
+                 <family>DejaVu Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
+                 <kerning>true</kerning>
                 </font>
                </property>
                <property name="text">
-                <string>HVAC</string>
+                <string/>
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
@@ -1078,8 +1079,8 @@ QStackedWidget{
                </property>
                <property name="iconSize">
                 <size>
-                 <width>25</width>
-                 <height>25</height>
+                 <width>35</width>
+                 <height>35</height>
                 </size>
                </property>
               </widget>
@@ -1088,14 +1089,15 @@ QStackedWidget{
               <widget class="QPushButton" name="steeringCtrlButton">
                <property name="font">
                 <font>
-                 <family>Open Sans</family>
+                 <family>DejaVu Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
+                 <kerning>true</kerning>
                 </font>
                </property>
                <property name="text">
-                <string>Steering Inputs</string>
+                <string/>
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
@@ -1103,8 +1105,8 @@ QStackedWidget{
                </property>
                <property name="iconSize">
                 <size>
-                 <width>25</width>
-                 <height>25</height>
+                 <width>35</width>
+                 <height>35</height>
                 </size>
                </property>
               </widget>
@@ -1113,14 +1115,15 @@ QStackedWidget{
               <widget class="QPushButton" name="newButton">
                <property name="font">
                 <font>
-                 <family>Open Sans</family>
+                 <family>DejaVu Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
+                 <kerning>true</kerning>
                 </font>
                </property>
                <property name="text">
-                <string>New</string>
+                <string/>
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
@@ -1128,8 +1131,8 @@ QStackedWidget{
                </property>
                <property name="iconSize">
                 <size>
-                 <width>25</width>
-                 <height>25</height>
+                 <width>35</width>
+                 <height>35</height>
                 </size>
                </property>
               </widget>
@@ -1163,7 +1166,7 @@ QStackedWidget{
               <widget class="QPushButton" name="settingsBtn">
                <property name="font">
                 <font>
-                 <family>Open Sans</family>
+                 <family>DejaVu Sans</family>
                  <weight>75</weight>
                  <italic>true</italic>
                  <bold>true</bold>
@@ -1178,8 +1181,8 @@ QStackedWidget{
                </property>
                <property name="iconSize">
                 <size>
-                 <width>25</width>
-                 <height>25</height>
+                 <width>35</width>
+                 <height>35</height>
                 </size>
                </property>
               </widget>

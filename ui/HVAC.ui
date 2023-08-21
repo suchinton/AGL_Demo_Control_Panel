@@ -267,8 +267,8 @@ QListWidget::item:hover {
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>689</width>
-           <height>415</height>
+           <width>697</width>
+           <height>389</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -507,8 +507,8 @@ QListWidget::item:hover {
                   </property>
                   <property name="iconSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>40</width>
+                    <height>40</height>
                    </size>
                   </property>
                  </widget>
@@ -524,8 +524,8 @@ QListWidget::item:hover {
                   </property>
                   <property name="iconSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>40</width>
+                    <height>40</height>
                    </size>
                   </property>
                  </widget>
@@ -655,8 +655,8 @@ QListWidget::item:hover {
                   </property>
                   <property name="iconSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>40</width>
+                    <height>40</height>
                    </size>
                   </property>
                  </widget>
@@ -812,8 +812,8 @@ QListWidget::item:hover {
                   </property>
                   <property name="iconSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>40</width>
+                    <height>40</height>
                    </size>
                   </property>
                  </widget>
