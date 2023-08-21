@@ -28,7 +28,8 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(os.path.dirname(current_dir))
 
-import extras.Kuksa_Instance as kuksa_instance
+from extras.FeedKuksa import FeedKuksa
+import extras.FeedCAN as feed_can
 
 Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/SteeringControls.ui"))
 
@@ -36,31 +37,26 @@ Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/SteeringControls.ui
 
 class Steering_Paths():
     def __init__(self):
-        self.VolumeUp = "Vehicle.Cabin.SteeringWheel.Switches.VolumeUp"
-        self.VolumeDown = "Vehicle.Cabin.SteeringWheel.Switches.VolumeDown"
-        self.VolumeMute = "Vehicle.Cabin.SteeringWheel.Switches.VolumeMute"
-
-        self.Mode = "Vehicle.Cabin.SteeringWheel.Switches.Mode"
-
-        self.NextTrack = "Vehicle.Cabin.SteeringWheel.Switches.Next"
-        self.PreviousTrack = "Vehicle.Cabin.SteeringWheel.Switches.Previous"
-
-        self.Info = "Vehicle.Cabin.SteeringWheel.Switches.Info"
-
-        self.PhoneCall = "Vehicle.Cabin.SteeringWheel.Switches.PhoneCall"
-        self.PhoneHangup = "Vehicle.Cabin.SteeringWheel.Switches.PhoneHangup"
-        self.Voice = "Vehicle.Cabin.SteeringWheel.Switches.Voice"
-        self.LaneDeparture = "Vehicle.Cabin.SteeringWheel.Switches.LaneDepartureWarning"
-
-        self.Horn = "Vehicle.Cabin.SteeringWheel.Switches.Horn"
-        
-        self.CruiseEnable = "Vehicle.Cabin.SteeringWheel.Switches.CruiseEnable"
-        self.CruseSet = "Vehicle.Cabin.SteeringWheel.Switches.CruiseSet"
-        self.CruiseResume = "Vehicle.Cabin.SteeringWheel.Switches.CruiseResume"
-        self.CruiseCancel = "Vehicle.Cabin.SteeringWheel.Switches.CruiseCancel"
-
-        self.CruiseLimit = "Vehicle.Cabin.SteeringWheel.Switches.CruiseLimit"
-        self.CruiseDistance = "Vehicle.Cabin.SteeringWheel.Switches.CruiseDistance"
+        self.switches = {
+            "VolumeUp": ["Vehicle.Cabin.SteeringWheel.Switches.VolumeUp","021#FFFFFFFF40000000"],
+            "VolumeDown": ["Vehicle.Cabin.SteeringWheel.Switches.VolumeDown","021#FFFFFFFF10000000"],
+            "VolumeMute": ["Vehicle.Cabin.SteeringWheel.Switches.VolumeMute","021#FFFFFFFF01000000"],
+            "Mode": ["Vehicle.Cabin.SteeringWheel.Switches.Mode","021#FFFFFFFF20000000"],
+            "NextTrack": ["Vehicle.Cabin.SteeringWheel.Switches.Next","021#FFFFFFFF08000000"],
+            "PreviousTrack": ["Vehicle.Cabin.SteeringWheel.Switches.Previous","021#FFFFFFFF80000000"],
+            "Info": ["Vehicle.Cabin.SteeringWheel.Switches.Info","021#FFFFFFFF02000000"],
+            "PhoneCall": ["Vehicle.Cabin.SteeringWheel.Switches.PhoneCall","021#FFFFFFFF00010000"],
+            "PhoneHangup": ["Vehicle.Cabin.SteeringWheel.Switches.PhoneHangup","021#FFFFFFFF00020000"],
+            "Voice": ["Vehicle.Cabin.SteeringWheel.Switches.Voice","021#FFFFFFFF00040000"],
+            "LaneDeparture": ["Vehicle.Cabin.SteeringWheel.Switches.LaneDepartureWarning","021#FFFFFFFF00000001"],
+            "Horn": ["Vehicle.Cabin.SteeringWheel.Switches.Horn","021#FFFFFFFF00000080"],
+            "CruiseEnable": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseEnable","021#FFFFFFFF00008000"],
+            "CruiseSet": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseSet","021#FFFFFFFF00001000"],
+            "CruiseResume": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseResume",],
+            "CruiseCancel": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseCancel","021#FFFFFFFF00000800"],
+            "CruiseLimit": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseLimit","021#FFFFFFFF00000200"],
+            "CruiseDistance": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseDistance","021#FFFFFFFF00000100"]
+        }
         
 class SteeringCtrlWidget(Base, Form):
     def __init__(self, parent=None):
@@ -74,24 +70,24 @@ class SteeringCtrlWidget(Base, Form):
     def add_buttons(self):
 
         # Define button groups and actions
-        LeftControlsBtns = [self.VolUpBtn,
-                               self.VolDownBtn,
-                               self.ModeBtn,
-                               self.VolMuteBtn,
-                               self.NextTrackBtn,
-                               self.PrevTrackBtn,
-                               self.InfoBtn]
+        LeftControlsBtns = [self.VolumeUp,
+                               self.VolumeDown,
+                               self.Mode,
+                               self.VolumeMute,
+                               self.NextTrack,
+                               self.PreviousTrack,
+                               self.Info]
          
 
-        PhoneBtns = [self.PhoneCallBtn, self.PhoneHangupBtn]
-        ExtraContolsBtns = [self.VoiceBtn, self.LaneDepartureBtn]
+        PhoneBtns = [self.PhoneCall, self.PhoneHangup]
+        ExtraContolsBtns = [self.Voice, self.LaneDeparture]
 
-        RightControlsBtns = [self.CruiseEnableBtn,
-                            self.CruiseSetBtn,
-                            self.CruiseResumeBtn,
-                            self.CruiseCancelBtn,
-                            self.CruiseLimitBtn,
-                            self.CruiseDistanceBtn]
+        RightControlsBtns = [self.CruiseEnable,
+                            self.CruiseSet,
+                            self.CruiseResume,
+                            self.CruiseCancel,
+                            self.CruiseLimit,
+                            self.CruiseDistance]
 
         self.LeftControlsBtnsGroup = QButtonGroup()
         self.PhoneBtnsGroup = QButtonGroup()
@@ -111,9 +107,11 @@ class SteeringCtrlWidget(Base, Form):
         self.LeftControlsBtnsGroup.buttonClicked.connect(self.left_controls_clicked)
         self.RiqhtControlsBtnsGroup.buttonClicked.connect(self.right_controls_clicked)
 
-        self.HornBtn.clicked.connect(self.horn_clicked)
+        self.Horn.clicked.connect(self.horn_clicked)
 
-    def left_controls_clicked(self):
+    def left_controls_clicked(self, button):
+        button_clicked = button.objectName()
+        feed_can.send_can_signal(self.Steering.switches[button_clicked][1])
         print("Left controls clicked")
 
     def right_controls_clicked(self):
@@ -121,42 +119,6 @@ class SteeringCtrlWidget(Base, Form):
 
     def horn_clicked(self):
         print("Horn clicked")
-
-class FeedKuksa(QThread):
-    def __init__(self, parent=None):
-        QThread.__init__(self,parent)
-        self.stop_flag = False
-        self.set_instance()
-
-    def run(self):
-        print("Starting thread")
-        self.set_instance()
-        while not self.stop_flag:
-            self.send_values()
-
-    def stop(self):
-        self.stop_flag = True
-        print("Stopping thread")
-
-    def set_instance(self):
-        self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
-        self.client = self.kuksa.get_client()
-
-    def send_values(self, Path=None, Value=None, Attribute=None):
-        if self.client is not None:
-            if self.client.checkConnection() is True:
-
-                if Attribute is not None:
-                    self.client.setValue(Path, Value, Attribute)
-                else:
-                    self.client.setValue(Path, Value)
-            else:
-                print("Could not connect to Kuksa")
-                self.set_instance()
-        else:
-            print("Kuksa client is None, try reconnecting")
-            time.sleep(2)
-            self.set_instance()
 
 if __name__ == '__main__':
     import sys
