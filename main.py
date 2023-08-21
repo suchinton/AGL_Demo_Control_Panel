@@ -39,15 +39,6 @@ class MainWindow(Base, Form):
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-        fonts = [font for font in os.listdir(os.path.join(current_dir, "assets/fonts")) if font.endswith(".ttf")]
-        fonts = [os.path.join(current_dir, "assets/fonts/", font) for font in fonts]
-
-        for font in fonts:
-            QFontDatabase.addApplicationFont(font)
-        # # load the stylesheet
-        # theme = open(os.path.join(current_dir, "ui/styles/Tron/MainWindow.qss"), 'r')
-        # self.setStyleSheet(theme.read())
-
         self.setStyle(QtWidgets.QStyleFactory.create('Fusion'))
 
         self.headerContainer = self.findChild(QWidget, 'headerContainer')
