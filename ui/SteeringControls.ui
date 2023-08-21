@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1388</width>
-    <height>711</height>
+    <height>793</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,7 +67,7 @@ QPushButton:checked {
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="2" rowspan="3">
+    <item row="2" column="2" rowspan="3">
      <widget class="QFrame" name="frame">
       <property name="minimumSize">
        <size>
@@ -98,7 +98,7 @@ QPushButton:checked {
         <number>0</number>
        </property>
        <item row="1" column="0">
-        <widget class="QPushButton" name="HornBtn">
+        <widget class="QPushButton" name="Horn">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
            <horstretch>0</horstretch>
@@ -123,7 +123,20 @@ QPushButton:checked {
       </layout>
      </widget>
     </item>
-    <item row="1" column="4" rowspan="4" alignment="Qt::AlignVCenter">
+    <item row="2" column="5" rowspan="4">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="4" rowspan="4" alignment="Qt::AlignVCenter">
      <widget class="QFrame" name="RightControls">
       <property name="minimumSize">
        <size>
@@ -148,7 +161,7 @@ QPushButton:checked {
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
           <item row="0" column="0">
-           <widget class="QPushButton" name="CruiseLimitBtn">
+           <widget class="QPushButton" name="CruiseLimit">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -171,7 +184,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QPushButton" name="CruiseDistanceBtn">
+           <widget class="QPushButton" name="CruiseDistance">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -210,7 +223,7 @@ QPushButton:checked {
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
           <item row="2" column="1" colspan="2">
-           <widget class="QPushButton" name="CruiseSetBtn">
+           <widget class="QPushButton" name="CruiseSet">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -234,7 +247,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item row="0" column="1" colspan="2">
-           <widget class="QPushButton" name="CruiseResumeBtn">
+           <widget class="QPushButton" name="CruiseResume">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -258,7 +271,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QPushButton" name="CruiseEnableBtn">
+           <widget class="QPushButton" name="CruiseEnable">
             <property name="text">
              <string/>
             </property>
@@ -275,7 +288,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QPushButton" name="CruiseCancelBtn">
+           <widget class="QPushButton" name="CruiseCancel">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -320,7 +333,7 @@ QPushButton:checked {
       </layout>
      </widget>
     </item>
-    <item row="1" column="0" rowspan="4">
+    <item row="2" column="0" rowspan="4">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -333,33 +346,7 @@ QPushButton:checked {
       </property>
      </spacer>
     </item>
-    <item row="5" column="0" colspan="6">
-     <spacer name="verticalSpacer_4">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="5" rowspan="4">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="4" column="2">
+    <item row="5" column="2">
      <widget class="QFrame" name="ExtraControls">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -369,7 +356,7 @@ QPushButton:checked {
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QPushButton" name="PhoneCallBtn">
+        <widget class="QPushButton" name="PhoneCall">
          <property name="text">
           <string/>
          </property>
@@ -386,7 +373,7 @@ QPushButton:checked {
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="PhoneHangupBtn">
+        <widget class="QPushButton" name="PhoneHangup">
          <property name="text">
           <string/>
          </property>
@@ -403,7 +390,7 @@ QPushButton:checked {
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="VoiceBtn">
+        <widget class="QPushButton" name="Voice">
          <property name="text">
           <string/>
          </property>
@@ -420,7 +407,7 @@ QPushButton:checked {
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="LaneDepartureBtn">
+        <widget class="QPushButton" name="LaneDeparture">
          <property name="text">
           <string/>
          </property>
@@ -439,7 +426,20 @@ QPushButton:checked {
       </layout>
      </widget>
     </item>
-    <item row="1" column="1" rowspan="4" alignment="Qt::AlignVCenter">
+    <item row="1" column="1" colspan="4">
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="1" rowspan="4" alignment="Qt::AlignVCenter">
      <widget class="QFrame" name="LeftControls">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -464,7 +464,7 @@ QPushButton:checked {
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="0" column="0" colspan="3">
-           <widget class="QPushButton" name="VolUpBtn">
+           <widget class="QPushButton" name="VolumeUp">
             <property name="text">
              <string/>
             </property>
@@ -481,7 +481,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QPushButton" name="PrevTrackBtn">
+           <widget class="QPushButton" name="PreviousTrack">
             <property name="text">
              <string/>
             </property>
@@ -498,7 +498,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QPushButton" name="ModeBtn">
+           <widget class="QPushButton" name="Mode">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -524,7 +524,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QPushButton" name="NextTrackBtn">
+           <widget class="QPushButton" name="NextTrack">
             <property name="text">
              <string/>
             </property>
@@ -541,7 +541,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item row="2" column="0" colspan="3">
-           <widget class="QPushButton" name="VolDownBtn">
+           <widget class="QPushButton" name="VolumeDown">
             <property name="text">
              <string/>
             </property>
@@ -586,7 +586,7 @@ QPushButton:checked {
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QPushButton" name="InfoBtn">
+           <widget class="QPushButton" name="Info">
             <property name="text">
              <string/>
             </property>
@@ -603,7 +603,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="VolMuteBtn">
+           <widget class="QPushButton" name="VolumeMute">
             <property name="text">
              <string/>
             </property>
@@ -625,8 +625,8 @@ QPushButton:checked {
       </layout>
      </widget>
     </item>
-    <item row="0" column="1" colspan="4">
-     <spacer name="verticalSpacer_3">
+    <item row="6" column="0" colspan="6">
+     <spacer name="verticalSpacer_4">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
@@ -637,6 +637,17 @@ QPushButton:checked {
        </size>
       </property>
      </spacer>
+    </item>
+    <item row="0" column="0" colspan="6">
+     <widget class="QWidget" name="Header" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>70</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_4"/>
+     </widget>
     </item>
    </layout>
   </widget>
