@@ -118,18 +118,6 @@
     <file>feather/zoom-in.svg</file>
     <file>feather/zoom-out.svg</file>
   </qresource>
-  <qresource prefix="fonts">
-    <file>fonts/OpenSans-Bold.ttf</file>
-    <file>fonts/OpenSans-BoldItalic.ttf</file>
-    <file>fonts/OpenSans-ExtraBold.ttf</file>
-    <file>fonts/OpenSans-ExtraBoldItalic.ttf</file>
-    <file>fonts/OpenSans-Italic.ttf</file>
-    <file>fonts/OpenSans-Light.ttf</file>
-    <file>fonts/OpenSans-LightItalic.ttf</file>
-    <file>fonts/OpenSans-Regular.ttf</file>
-    <file>fonts/OpenSans-Semibold.ttf</file>
-    <file>fonts/OpenSans-SemiboldItalic.ttf</file>
-  </qresource>
   <qresource prefix="Images">
     <file>Images/cruise-distance.svg</file>
     <file>Images/steering-wheel.svg</file>
