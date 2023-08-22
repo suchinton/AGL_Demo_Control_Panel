@@ -38,24 +38,60 @@ Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/SteeringControls.ui
 class Steering_Paths():
     def __init__(self):
         self.switches = {
-            "VolumeUp": ["Vehicle.Cabin.SteeringWheel.Switches.VolumeUp","021#FFFFFFFF40000000"],
-            "VolumeDown": ["Vehicle.Cabin.SteeringWheel.Switches.VolumeDown","021#FFFFFFFF10000000"],
-            "VolumeMute": ["Vehicle.Cabin.SteeringWheel.Switches.VolumeMute","021#FFFFFFFF01000000"],
-            "Mode": ["Vehicle.Cabin.SteeringWheel.Switches.Mode","021#FFFFFFFF20000000"],
-            "NextTrack": ["Vehicle.Cabin.SteeringWheel.Switches.Next","021#FFFFFFFF08000000"],
-            "PreviousTrack": ["Vehicle.Cabin.SteeringWheel.Switches.Previous","021#FFFFFFFF80000000"],
-            "Info": ["Vehicle.Cabin.SteeringWheel.Switches.Info","021#FFFFFFFF02000000"],
-            "PhoneCall": ["Vehicle.Cabin.SteeringWheel.Switches.PhoneCall","021#FFFFFFFF00010000"],
-            "PhoneHangup": ["Vehicle.Cabin.SteeringWheel.Switches.PhoneHangup","021#FFFFFFFF00020000"],
-            "Voice": ["Vehicle.Cabin.SteeringWheel.Switches.Voice","021#FFFFFFFF00040000"],
-            "LaneDeparture": ["Vehicle.Cabin.SteeringWheel.Switches.LaneDepartureWarning","021#FFFFFFFF00000001"],
-            "Horn": ["Vehicle.Cabin.SteeringWheel.Switches.Horn","021#FFFFFFFF00000080"],
-            "CruiseEnable": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseEnable","021#FFFFFFFF00008000"],
-            "CruiseSet": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseSet","021#FFFFFFFF00001000"],
-            "CruiseResume": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseResume",],
-            "CruiseCancel": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseCancel","021#FFFFFFFF00000800"],
-            "CruiseLimit": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseLimit","021#FFFFFFFF00000200"],
-            "CruiseDistance": ["Vehicle.Cabin.SteeringWheel.Switches.CruiseDistance","021#FFFFFFFF00000100"]
+            "VolumeUp": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.VolumeUp", 
+                "CAN": "021#FFFFFFFF40000000"},
+            "VolumeDown": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.VolumeDown", 
+                "CAN": "021#FFFFFFFF10000000"},
+            "VolumeMute": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.VolumeMute", 
+                "CAN": "021#FFFFFFFF01000000"},
+            "Mode": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Mode", 
+                "CAN": "021#FFFFFFFF20000000"},
+            "NextTrack": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Next", 
+                "CAN": "021#FFFFFFFF08000000"},
+            "PreviousTrack": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Previous", 
+                "CAN": "021#FFFFFFFF80000000"},
+            "Info": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Info", 
+                "CAN": "021#FFFFFFFF02000000"},
+            "PhoneCall": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.PhoneCall", 
+                "CAN": "021#FFFFFFFF00010000"},
+            "PhoneHangup": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.PhoneHangup", 
+                "CAN": "021#FFFFFFFF00020000"},
+            "Voice": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Voice", 
+                "CAN": "021#FFFFFFFF00040000"},
+            "LaneDeparture": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.LaneDepartureWarning", 
+                "CAN": "021#FFFFFFFF00000001"},
+            "Horn": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Horn", 
+                "CAN": "021#FFFFFFFF00000080"},
+            "CruiseEnable": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseEnable", 
+                "CAN": "021#FFFFFFFF00008000"},
+            "CruiseSet": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseSet", 
+                "CAN": "021#FFFFFFFF00001000"},
+            "CruiseResume": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseResume", 
+                "CAN": "021#FFFFFFFF00004000"},
+            "CruiseCancel": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseCancel", 
+                "CAN": "021#FFFFFFFF00000800"},
+            "CruiseLimit": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseLimit", 
+                "CAN": "021#FFFFFFFF00000200"},
+            "CruiseDistance": {
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseDistance", 
+                "CAN": "021#FFFFFFFF00000100"}
         }
         
 class SteeringCtrlWidget(Base, Form):
@@ -99,7 +135,6 @@ class SteeringCtrlWidget(Base, Form):
 
         for btn in PhoneBtns:
             self.PhoneBtnsGroup.addButton(btn)
-            
 
         for btn in RightControlsBtns:
             self.RiqhtControlsBtnsGroup.addButton(btn)
