@@ -12,12 +12,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-import extras.Kuksa_Instance as kuksa_instance
+
 import os
 import sys
 import time
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton, QLabel, QCheckBox
+from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton, QLabel
+from qtwidgets import AnimatedToggle
+from PyQt5.QtWidgets import QWidget
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -25,19 +27,29 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(os.path.dirname(current_dir))
 
+import extras.Kuksa_Instance as kuksa_instance
 
 Form, Base = uic.loadUiType(os.path.join(
     current_dir, "../ui/Settings_Window.ui"))
 
 # ========================================
 
+Steering_Signal_Type = "Kuksa"
 
-class settings(Base, Form):
+class settings(Base, Form):    
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
 
-        self.SSLToggle = self.findChild(QCheckBox, "SSLToggle")
+        self.SSL_toggle = AnimatedToggle(
+            checked_color="#4BD7D6",
+            pulse_checked_color="#00ffff"
+        )
+
+        self.CAN_Kuksa_toggle = AnimatedToggle(
+            checked_color="#4BD7D6",
+            pulse_checked_color="#00ffff"
+        )
 
         self.connectionStatus = self.findChild(QLabel, "connectionStatus")
         self.connectionLogo = self.findChild(QLabel, "connectionLogo")
@@ -52,9 +64,31 @@ class settings(Base, Form):
         self.startClientBtn.clicked.connect(self.set_instance)
         self.reconnectBtn.clicked.connect(self.reconnectClient)
         self.refreshBtn.clicked.connect(self.refreshStatus)
+        self.SSL_toggle.clicked.connect(self.toggleSSL)
+        self.CAN_Kuksa_toggle.clicked.connect(self.toggle_CAN_Kuksa)
+    
+        Frame3 = self.findChild(QWidget, "frame_3")
+        layout = Frame3.layout()
+        
+        layout.replaceWidget(self.place_holder_toggle_1, self.SSL_toggle)
+        layout.replaceWidget(self.place_holder_toggle_2, self.CAN_Kuksa_toggle)
+        
+        self.place_holder_toggle_1.deleteLater()
+        self.place_holder_toggle_2.deleteLater()
 
         self.refreshStatus()
-        self.show()
+        #self.show()
+
+    def toggleSSL(self):
+        self.config["insecure"] = self.SSL_toggle.isChecked()
+        print(self.config)
+
+    def toggle_CAN_Kuksa(self):
+        global Steering_Signal_Type
+        if (self.CAN_Kuksa_toggle.isChecked()):
+            Steering_Signal_Type = "CAN"
+        else:
+            Steering_Signal_Type = "Kuksa"
 
     def set_instance(self):
         self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
@@ -64,7 +98,7 @@ class settings(Base, Form):
         self.token = self.kuksa.get_token()
 
         self.IPAddrInput.setText(self.config["ip"])
-        self.SSLToggle.setChecked(self.config["insecure"])
+        self.SSL_toggle.setChecked(self.config["insecure"])
         self.tokenPathInput.setText(self.token)
 
         time.sleep(2)
@@ -100,7 +134,7 @@ class settings(Base, Form):
     def reconnectClient(self):
         try:
             self.config["ip"] = self.IPAddrInput.text()
-            self.config["insecure"] = self.SSLToggle.isChecked()
+            self.config["insecure"] = self.SSL_toggle.isChecked()
             self.token = self.tokenPathInput.text()
             self.client = self.kuksa.reconnect_client(self.config, self.token)
             self.client.start()
