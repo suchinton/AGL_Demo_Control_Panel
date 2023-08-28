@@ -30,6 +30,7 @@ sys.path.append(os.path.dirname(current_dir))
 
 from extras.FeedKuksa import FeedKuksa
 import extras.FeedCAN as feed_can
+from . import settings
 
 Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/SteeringControls.ui"))
 
@@ -101,59 +102,49 @@ class SteeringCtrlWidget(Base, Form):
         
         self.Steering = Steering_Paths()
         self.feed_kuksa = FeedKuksa()
+        self.settings = settings
+
         self.add_buttons()
 
     def add_buttons(self):
 
         # Define button groups and actions
-        LeftControlsBtns = [self.VolumeUp,
-                               self.VolumeDown,
-                               self.Mode,
-                               self.VolumeMute,
-                               self.NextTrack,
-                               self.PreviousTrack,
-                               self.Info]
-         
+        ControlsBtns = [self.VolumeUp,
+                        self.VolumeDown,
+                        self.Mode,
+                        self.VolumeMute,
+                        self.NextTrack,
+                        self.PreviousTrack,
+                        self.Info,
+                        self.PhoneCall, 
+                        self.PhoneHangup,
+                        self.Voice, 
+                        self.LaneDeparture,
+                        self.CruiseEnable,
+                        self.CruiseSet,
+                        self.CruiseResume,
+                        self.CruiseCancel,
+                        self.CruiseLimit,
+                        self.CruiseDistance]
 
-        PhoneBtns = [self.PhoneCall, self.PhoneHangup]
-        ExtraContolsBtns = [self.Voice, self.LaneDeparture]
+        self.ControlsBtnsGroup = QButtonGroup()
 
-        RightControlsBtns = [self.CruiseEnable,
-                            self.CruiseSet,
-                            self.CruiseResume,
-                            self.CruiseCancel,
-                            self.CruiseLimit,
-                            self.CruiseDistance]
+        for btn in ControlsBtns:
+            self.ControlsBtnsGroup.addButton(btn)
 
-        self.LeftControlsBtnsGroup = QButtonGroup()
-        self.PhoneBtnsGroup = QButtonGroup()
-        self.ExtraContolsBtnsGroup = QButtonGroup()
-        self.RiqhtControlsBtnsGroup = QButtonGroup()
+        self.ControlsBtnsGroup.buttonClicked.connect(self.controls_clicked)
 
-        for btn in LeftControlsBtns:
-            self.LeftControlsBtnsGroup.addButton(btn)
-
-        for btn in PhoneBtns:
-            self.PhoneBtnsGroup.addButton(btn)
-
-        for btn in RightControlsBtns:
-            self.RiqhtControlsBtnsGroup.addButton(btn)
-
-        self.LeftControlsBtnsGroup.buttonClicked.connect(self.left_controls_clicked)
-        self.RiqhtControlsBtnsGroup.buttonClicked.connect(self.right_controls_clicked)
-
-        self.Horn.clicked.connect(self.horn_clicked)
-
-    def left_controls_clicked(self, button):
+    def controls_clicked(self, button):
         button_clicked = button.objectName()
-        feed_can.send_can_signal(self.Steering.switches[button_clicked][1])
-        print("Left controls clicked")
-
-    def right_controls_clicked(self):
-        print("Right controls clicked")
-
-    def horn_clicked(self):
-        print("Horn clicked")
+        signal_type = settings.Steering_Signal_Type
+        if signal_type == "Kuksa":
+            self.feed_kuksa.send_values(self.Steering.switches[button_clicked]["Kuksa"], 1)
+            self.feed_kuksa.send_values(self.Steering.switches[button_clicked]["Kuksa"], 0)
+        elif signal_type == "CAN":
+            feed_can.send_can_signal(self.Steering.switches[button_clicked]["CAN"])
+            # Making sure button state goes back to off
+            feed_can.send_can_signal("021#FFFFFFFF00000000")
+        print(button_clicked + " button clicked")
 
 if __name__ == '__main__':
     import sys
