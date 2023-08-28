@@ -9,6 +9,10 @@ def send_can_signal(frame):
         print("CAN signal sent successfully:")
         print("CAN ID:", hex(msg.arbitration_id))
         print("Data:", msg.data)
+        if frame!="021#FFFFFFFF00000000":
+            # Turn off signal
+            send_can_signal("021#FFFFFFFF00000000")
+
     except can.CanError:
         print("Failed to send CAN signal")
     finally:
