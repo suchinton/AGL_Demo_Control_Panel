@@ -20,7 +20,6 @@ import os
 from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QApplication, QPushButton, QWidget
 from functools import partial
-from PyQt5.QtGui import QFontDatabase
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 Form, Base = uic.loadUiType(os.path.join(current_dir, "Main_Window.ui"))
@@ -48,8 +47,8 @@ class MainWindow(Base, Form):
         self.headerContainer.mouseReleaseEvent = lambda event: UI_Handeler.mouseReleaseEvent(self, event)
 
         self.leftMenuSubContainer = self.findChild(QWidget, 'leftMenuSubContainer')
-        self.menuButton = self.findChild(QPushButton, 'menuButton')
-        self.menuButton.clicked.connect(lambda: UI_Handeler.toggleNavigationBar(self, 250, True))
+        self.dashboardButton = self.findChild(QPushButton, 'dashboardButton')
+        self.dashboardButton.clicked.connect(lambda: UI_Handeler.toggleNavigationBar(self, 250, True))
 
         self.notificationContent = self.findChild(QWidget, 'notificationContent')
 
@@ -58,18 +57,17 @@ class MainWindow(Base, Form):
         minimizeButton = self.findChild(QPushButton, 'minimizeBtn')
         maximizeButton = self.findChild(QPushButton, 'maximizeBtn')
 
-        #closeButton.clicked.connect(self.close)
         # make the close button also end all threads
         closeButton.clicked.connect(lambda: [self.close(), self.stop_thread_signal.emit()])
         minimizeButton.clicked.connect(self.showMinimized)
         maximizeButton.clicked.connect(lambda: UI_Handeler.toggleMaximized(self))
 
         # Widget Navigation
-        buttons = (self.icButton, 
-                   self.hvacButton, 
-                   self.steeringCtrlButton,
-                   self.newButton, 
-                   self.settingsBtn)
+        buttons = ( self.dashboardButton,
+                    self.icButton, 
+                    self.hvacButton, 
+                    self.steeringCtrlButton,
+                    self.settingsBtn)
         
         NavigationButtons = QtWidgets.QButtonGroup(self)
         NavigationButtons.setExclusive(True)

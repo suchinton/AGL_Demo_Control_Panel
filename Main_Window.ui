@@ -805,12 +805,12 @@ QStackedWidget{
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>2</number>
+                <number>0</number>
                </property>
+               <widget class="Dashboard" name="Dashboard"/>
                <widget class="ICWidget" name="ICPage"/>
                <widget class="HVACWidget" name="HVACPage"/>
                <widget class="SteeringCtrlWidget" name="SteeringCtrlPage"/>
-               <widget class="QWidget" name="newPage"/>
                <widget class="settings" name="settingsPage"/>
               </widget>
              </item>
@@ -975,7 +975,7 @@ QStackedWidget{
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <item>
-              <widget class="QPushButton" name="menuButton">
+              <widget class="QPushButton" name="dashboardButton">
                <property name="font">
                 <font>
                  <family>DejaVu Sans</family>
@@ -985,7 +985,7 @@ QStackedWidget{
                 </font>
                </property>
                <property name="text">
-                <string>Menu</string>
+                <string/>
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
@@ -1111,32 +1111,6 @@ QStackedWidget{
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QPushButton" name="newButton">
-               <property name="font">
-                <font>
-                 <family>DejaVu Sans</family>
-                 <weight>75</weight>
-                 <italic>true</italic>
-                 <bold>true</bold>
-                 <kerning>true</kerning>
-                </font>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="assets/res.qrc">
-                 <normaloff>:/icons/feather/plus.svg</normaloff>:/icons/feather/plus.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>35</width>
-                 <height>35</height>
-                </size>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
@@ -1222,6 +1196,12 @@ QStackedWidget{
    <class>SteeringCtrlWidget</class>
    <extends>QWidget</extends>
    <header>Widgets/SteeringCtrlPage</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Dashboard</class>
+   <extends>QWidget</extends>
+   <header>Widgets/Dashboard</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
