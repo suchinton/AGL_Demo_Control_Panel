@@ -100,7 +100,7 @@ QPushButton:pressed {
             </property>
             <property name="icon">
              <iconset resource="../assets/res.qrc">
-              <normaloff>:/Images/Images/IC.svg</normaloff>:/Images/Images/IC.svg</iconset>
+              <normaloff>:/Carbon_Icons/carbon icons/meter.svg</normaloff>:/Carbon_Icons/carbon icons/meter.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -129,7 +129,7 @@ QPushButton:pressed {
             </property>
             <property name="icon">
              <iconset resource="../assets/res.qrc">
-              <normaloff>:/icons/feather/wind.svg</normaloff>:/icons/feather/wind.svg</iconset>
+              <normaloff>:/Carbon_Icons/carbon icons/windy--strong.svg</normaloff>:/Carbon_Icons/carbon icons/windy--strong.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -187,7 +187,7 @@ QPushButton:pressed {
             </property>
             <property name="icon">
              <iconset resource="../assets/res.qrc">
-              <normaloff>:/icons/feather/settings.svg</normaloff>:/icons/feather/settings.svg</iconset>
+              <normaloff>:/Carbon_Icons/carbon icons/settings.svg</normaloff>:/Carbon_Icons/carbon icons/settings.svg</iconset>
             </property>
             <property name="iconSize">
              <size>

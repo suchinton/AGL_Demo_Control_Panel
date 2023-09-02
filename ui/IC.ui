@@ -389,7 +389,7 @@ QLCDNumber {
                </property>
               </widget>
              </item>
-             <item row="1" column="8">
+             <item row="1" column="8" alignment="Qt::AlignHCenter">
               <widget class="QSlider" name="fuelLevel_slider">
                <property name="font">
                 <font>
@@ -413,7 +413,7 @@ QLCDNumber {
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
+             <item row="1" column="1" alignment="Qt::AlignHCenter">
               <widget class="QSlider" name="coolantTemp_slider">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -442,7 +442,7 @@ QLCDNumber {
                </property>
               </widget>
              </item>
-             <item row="3" column="8">
+             <item row="3" column="8" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
               <widget class="QLabel" name="label_3">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -462,7 +462,7 @@ QLCDNumber {
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../assets/res.qrc">:/icons/feather/droplet.svg</pixmap>
+                <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon icons/rain-drop.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>false</bool>
@@ -588,13 +588,13 @@ QLCDNumber {
                </property>
               </spacer>
              </item>
-             <item row="3" column="1">
+             <item row="3" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
               <widget class="QLabel" name="label_2">
                <property name="text">
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../assets/res.qrc">:/icons/feather/thermometer.svg</pixmap>
+                <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon icons/temperature--water.svg</pixmap>
                </property>
               </widget>
              </item>
@@ -959,22 +959,23 @@ QLCDNumber {
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="scriptBtn">
+          <widget class="QLabel" name="label_6">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <italic>true</italic>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="text">
-            <string>Script</string>
+            <string>Demo Mode</string>
            </property>
-           <property name="icon">
-            <iconset resource="../assets/res.qrc">
-             <normaloff>:/icons/feather/play-circle.svg</normaloff>:/icons/feather/play-circle.svg</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="demoToggle">
+           <property name="text">
+            <string/>
            </property>
           </widget>
          </item>

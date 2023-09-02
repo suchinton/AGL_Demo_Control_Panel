@@ -204,53 +204,24 @@ QListWidget::item:hover {
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QFrame" name="frame_5">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+          <widget class="QLabel" name="label_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <italic>true</italic>
+             <bold>true</bold>
+            </font>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <italic>true</italic>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>HVAC</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="scriptBtn">
            <property name="text">
-            <string>Script</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../assets/res.qrc">
-             <normaloff>:/icons/feather/play-circle.svg</normaloff>:/icons/feather/play-circle.svg</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
+            <string>HVAC</string>
            </property>
           </widget>
          </item>
@@ -268,7 +239,7 @@ QListWidget::item:hover {
            <x>0</x>
            <y>0</y>
            <width>697</width>
-           <height>389</height>
+           <height>370</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -455,7 +426,7 @@ QListWidget::item:hover {
                    <string/>
                   </property>
                   <property name="pixmap">
-                   <pixmap resource="../assets/res.qrc">:/Images/Images/fan.svg</pixmap>
+                   <pixmap resource="../assets/res.qrc">:/Images/Images/HMI_HVAC_Fan_Icon.svg</pixmap>
                   </property>
                  </widget>
                 </item>
@@ -503,7 +474,7 @@ QListWidget::item:hover {
                   </property>
                   <property name="icon">
                    <iconset resource="../assets/res.qrc">
-                    <normaloff>:/Images/Images/tempDown.svg</normaloff>:/Images/Images/tempDown.svg</iconset>
+                    <normaloff>:/Carbon_Icons/carbon icons/temperature--hot.svg</normaloff>:/Carbon_Icons/carbon icons/temperature--hot.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -520,7 +491,7 @@ QListWidget::item:hover {
                   </property>
                   <property name="icon">
                    <iconset resource="../assets/res.qrc">
-                    <normaloff>:/Images/Images/tempUp.svg</normaloff>:/Images/Images/tempUp.svg</iconset>
+                    <normaloff>:/Carbon_Icons/carbon icons/temperature--frigid.svg</normaloff>:/Carbon_Icons/carbon icons/temperature--frigid.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -637,10 +608,13 @@ QListWidget::item:hover {
                    <string/>
                   </property>
                   <property name="pixmap">
-                   <pixmap resource="../assets/res.qrc">:/Images/Images/fan.svg</pixmap>
+                   <pixmap resource="../assets/res.qrc">:/Images/Images/HMI_HVAC_Fan_Icon.svg</pixmap>
                   </property>
                   <property name="scaledContents">
                    <bool>false</bool>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -651,7 +625,7 @@ QListWidget::item:hover {
                   </property>
                   <property name="icon">
                    <iconset resource="../assets/res.qrc">
-                    <normaloff>:/Images/Images/tempDown.svg</normaloff>:/Images/Images/tempDown.svg</iconset>
+                    <normaloff>:/Carbon_Icons/carbon icons/temperature--hot.svg</normaloff>:/Carbon_Icons/carbon icons/temperature--hot.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -808,7 +782,7 @@ QListWidget::item:hover {
                   </property>
                   <property name="icon">
                    <iconset resource="../assets/res.qrc">
-                    <normaloff>:/Images/Images/tempUp.svg</normaloff>:/Images/Images/tempUp.svg</iconset>
+                    <normaloff>:/Carbon_Icons/carbon icons/temperature--frigid.svg</normaloff>:/Carbon_Icons/carbon icons/temperature--frigid.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
