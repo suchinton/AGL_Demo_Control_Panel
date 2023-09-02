@@ -1,3 +1,5 @@
 pyqt5
 kuksa-client==0.3.0
 python-can>=4.2.2
+qtpy
+qtwidgets

@@ -1,135 +1,43 @@
 <RCC>
-  <qresource prefix="icons">
-    <file>feather/alert-circle.svg</file>
-    <file>feather/alert-octagon.svg</file>
-    <file>feather/alert-triangle.svg</file>
-    <file>feather/align-center.svg</file>
-    <file>feather/align-justify.svg</file>
-    <file>feather/align-left.svg</file>
-    <file>feather/align-right.svg</file>
-    <file>feather/arrow-down-circle.svg</file>
-    <file>feather/arrow-down-left.svg</file>
-    <file>feather/arrow-down-right.svg</file>
-    <file>feather/arrow-down.svg</file>
-    <file>feather/arrow-left-circle.svg</file>
-    <file>feather/arrow-left.svg</file>
-    <file>feather/arrow-right-circle.svg</file>
-    <file>feather/arrow-right.svg</file>
-    <file>feather/arrow-up-circle.svg</file>
-    <file>feather/arrow-up-left.svg</file>
-    <file>feather/arrow-up-right.svg</file>
-    <file>feather/arrow-up.svg</file>
-    <file>feather/check-circle.svg</file>
-    <file>feather/check-square.svg</file>
-    <file>feather/check.svg</file>
-    <file>feather/chevron-down.svg</file>
-    <file>feather/chevron-left.svg</file>
-    <file>feather/chevron-right.svg</file>
-    <file>feather/chevron-up.svg</file>
-    <file>feather/chevrons-down.svg</file>
-    <file>feather/chevrons-left.svg</file>
-    <file>feather/chevrons-right.svg</file>
-    <file>feather/chevrons-up.svg</file>
-    <file>feather/circle.svg</file>
-    <file>feather/clock.svg</file>
-    <file>feather/command.svg</file>
-    <file>feather/copy.svg</file>
-    <file>feather/crop.svg</file>
-    <file>feather/droplet.svg</file>
-    <file>feather/edit.svg</file>
-    <file>feather/external-link.svg</file>
-    <file>feather/eye-off.svg</file>
-    <file>feather/eye.svg</file>
-    <file>feather/fast-forward.svg</file>
-    <file>feather/file-minus.svg</file>
-    <file>feather/file-plus.svg</file>
-    <file>feather/file.svg</file>
-    <file>feather/grid.svg</file>
-    <file>feather/help-circle.svg</file>
-    <file>feather/info.svg</file>
-    <file>feather/key.svg</file>
-    <file>feather/lock.svg</file>
-    <file>feather/maximize-2.svg</file>
-    <file>feather/maximize.svg</file>
-    <file>feather/menu.svg</file>
-    <file>feather/mic-off.svg</file>
-    <file>feather/mic.svg</file>
-    <file>feather/minimize-2.svg</file>
-    <file>feather/minimize.svg</file>
-    <file>feather/minus-circle.svg</file>
-    <file>feather/minus-square.svg</file>
-    <file>feather/minus.svg</file>
-    <file>feather/navigation-2.svg</file>
-    <file>feather/octagon.svg</file>
-    <file>feather/paperclip.svg</file>
-    <file>feather/pause-circle.svg</file>
-    <file>feather/pause.svg</file>
-    <file>feather/phone-call.svg</file>
-    <file>feather/phone-forwarded.svg</file>
-    <file>feather/phone-incoming.svg</file>
-    <file>feather/phone-missed.svg</file>
-    <file>feather/phone-off.svg</file>
-    <file>feather/phone-outgoing.svg</file>
-    <file>feather/phone.svg</file>
-    <file>feather/play-circle.svg</file>
-    <file>feather/play.svg</file>
-    <file>feather/plus-circle.svg</file>
-    <file>feather/plus-square.svg</file>
-    <file>feather/plus.svg</file>
-    <file>feather/radio.svg</file>
-    <file>feather/refresh-ccw.svg</file>
-    <file>feather/refresh-cw.svg</file>
-    <file>feather/repeat.svg</file>
-    <file>feather/rewind.svg</file>
-    <file>feather/rotate-ccw.svg</file>
-    <file>feather/rotate-cw.svg</file>
-    <file>feather/settings.svg</file>
-    <file>feather/share.svg</file>
-    <file>feather/shield-off.svg</file>
-    <file>feather/shield.svg</file>
-    <file>feather/shuffle.svg</file>
-    <file>feather/skip-back.svg</file>
-    <file>feather/skip-forward.svg</file>
-    <file>feather/sliders.svg</file>
-    <file>feather/speaker.svg</file>
-    <file>feather/square.svg</file>
-    <file>feather/stop-circle.svg</file>
-    <file>feather/sun.svg</file>
-    <file>feather/thermometer.svg</file>
-    <file>feather/trash-2.svg</file>
-    <file>feather/trash.svg</file>
-    <file>feather/trending-up.svg</file>
-    <file>feather/triangle.svg</file>
-    <file>feather/umbrella.svg</file>
-    <file>feather/unlock.svg</file>
-    <file>feather/user.svg</file>
-    <file>feather/voicemail.svg</file>
-    <file>feather/volume-1.svg</file>
-    <file>feather/volume-2.svg</file>
-    <file>feather/volume-x.svg</file>
-    <file>feather/volume.svg</file>
-    <file>feather/wind.svg</file>
-    <file>feather/x-circle.svg</file>
-    <file>feather/x-octagon.svg</file>
-    <file>feather/x-square.svg</file>
-    <file>feather/x.svg</file>
-    <file>feather/zap-off.svg</file>
-    <file>feather/zap.svg</file>
-    <file>feather/zoom-in.svg</file>
-    <file>feather/zoom-out.svg</file>
+  <qresource prefix="Carbon_Icons">
+    <file>carbon icons/add.svg</file>
+    <file>carbon icons/information.svg</file>
+    <file>carbon icons/add--alt.svg</file>
+    <file>carbon icons/meter.svg</file>
+    <file>carbon icons/misuse--outline.svg</file>
+    <file>carbon icons/phone--filled.svg</file>
+    <file>carbon icons/phone--off--filled.svg</file>
+    <file>carbon icons/settings.svg</file>
+    <file>carbon icons/skip--back--filled.svg</file>
+    <file>carbon icons/skip--forward--filled.svg</file>
+    <file>carbon icons/subtract.svg</file>
+    <file>carbon icons/subtract--alt.svg</file>
+    <file>carbon icons/temperature--frigid.svg</file>
+    <file>carbon icons/temperature--hot.svg</file>
+    <file>carbon icons/volume--down--filled--alt.svg</file>
+    <file>carbon icons/volume--mute--filled.svg</file>
+    <file>carbon icons/volume--up--filled--alt.svg</file>
+    <file>carbon icons/workspace.svg</file>
+    <file>carbon icons/voice.svg</file>
+    <file>carbon icons/play.svg</file>
+    <file>carbon icons/renew.svg</file>
+    <file>carbon icons/view--off.svg</file>
+    <file>carbon icons/view.svg</file>
+    <file>carbon icons/scale.svg</file>
+    <file>carbon icons/close.svg</file>
+    <file>carbon icons/rain-drop.svg</file>
+    <file>carbon icons/temperature--water.svg</file>
+    <file>carbon icons/security-services.svg</file>
+    <file>carbon icons/windy--strong.svg</file>
   </qresource>
   <qresource prefix="Images">
+    <file>Images/HMI_HVAC_Fan_Icon.svg</file>
+    <file>Images/AGL_Icons_LaneDeparture_white.svg</file>
+    <file>Images/AGL_Icons_CruiseControl_white.svg</file>
     <file>Images/cruise-distance.svg</file>
     <file>Images/steering-wheel.svg</file>
-    <file>Images/voice.svg</file>
     <file>Images/low-beam.png</file>
-    <file>Images/lane.png</file>
     <file>Images/high-beam.png</file>
-    <file>Images/cruise.png</file>
-    <file>Images/fan.svg</file>
-    <file>Images/tempUp.svg</file>
-    <file>Images/tempDown.svg</file>
-    <file>Images/IC.svg</file>
     <file>Images/fuel-icon.png</file>
     <file>Images/hazard.png</file>
     <file>Images/Automotive_Grade_Linux_logo.svg</file>
