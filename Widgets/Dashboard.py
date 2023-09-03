@@ -17,6 +17,8 @@
 import os
 import sys
 from PyQt5 import uic
+from PyQt5 import QtWidgets 
+from PyQt5.QtCore import pyqtSignal
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -31,8 +33,35 @@ Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/Dashboard.ui"))
 # ========================================
 
 class Dashboard(Base, Form):
+
+    tileClickedSignal = pyqtSignal()
+
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
 
         self.feed_kuksa = FeedKuksa()
+
+        Dashboard_tiles = (self.DB_IC_Tile,
+                             self.DB_HVAC_Tile,
+                             self.DB_Steering_Tile,
+                             self.DB_Settings_Tile)
+        
+        DashboardTiles = QtWidgets.QButtonGroup(self)
+
+        for i, tile in enumerate(Dashboard_tiles):
+            DashboardTiles.addButton(tile)
+        
+        DashboardTiles.buttonClicked.connect(self.tile_clicked)
+
+    def tile_clicked(self, tile):
+        if tile == self.DB_IC_Tile:
+            self.parent().setCurrentIndex(1)
+        elif tile == self.DB_HVAC_Tile:
+            self.parent().setCurrentIndex(2)
+        elif tile == self.DB_Steering_Tile:
+            self.parent().setCurrentIndex(3)
+        elif tile == self.DB_Settings_Tile:
+            self.parent().setCurrentIndex(4)
+
+        self.tileClickedSignal.emit()

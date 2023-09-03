@@ -25,6 +25,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 Form, Base = uic.loadUiType(os.path.join(current_dir, "Main_Window.ui"))
 
 from extras.UI_Handeler import *
+from Widgets.Dashboard import Dashboard
 
 class MainWindow(Base, Form):
 
@@ -48,7 +49,7 @@ class MainWindow(Base, Form):
 
         self.leftMenuSubContainer = self.findChild(QWidget, 'leftMenuSubContainer')
         self.dashboardButton = self.findChild(QPushButton, 'dashboardButton')
-        self.dashboardButton.clicked.connect(lambda: UI_Handeler.toggleNavigationBar(self, 250, True))
+        UI_Handeler.Hide_Navbar(self,bool_arg=True)
 
         self.notificationContent = self.findChild(QWidget, 'notificationContent')
 
@@ -63,16 +64,16 @@ class MainWindow(Base, Form):
         maximizeButton.clicked.connect(lambda: UI_Handeler.toggleMaximized(self))
 
         # Widget Navigation
-        buttons = ( self.dashboardButton,
+        Navigation_buttons = ( self.dashboardButton,
                     self.icButton, 
                     self.hvacButton, 
                     self.steeringCtrlButton,
-                    self.settingsBtn)
+                    self.settingsBtn) 
         
         NavigationButtons = QtWidgets.QButtonGroup(self)
         NavigationButtons.setExclusive(True)
 
-        for i, button in enumerate(buttons):
+        for i, button in enumerate(Navigation_buttons):
             button.setCheckable(True)
             NavigationButtons.addButton(button)
             button.clicked.connect(partial(UI_Handeler.animateSwitch, self, i))
@@ -84,10 +85,20 @@ class MainWindow(Base, Form):
         self.stackedWidget.setCurrentIndex(0)
         self.dashboardButton.setChecked(True)
 
+        self.Dashboard = Dashboard()
+        self.Dashboard.tileClickedSignal.connect(self.handleTileClicked)
+
         self.current_page = self.stackedWidget.currentIndex()
+
+    def handleTileClicked(self):
+        UI_Handeler.Hide_Navbar(self,bool_arg=False)
 
     def handleChangedPage(self, index):
         # stop the previous thread and start the new one
+        if index == 0:
+            UI_Handeler.Hide_Navbar(self,bool_arg=False)
+        else:
+            UI_Handeler.Hide_Navbar(self,bool_arg=True)
         try:
             self.stop_thread_signal.connect(self.stackedWidget.widget(self.current_page).feed_kuksa.stop)
             self.stop_thread_signal.emit()
