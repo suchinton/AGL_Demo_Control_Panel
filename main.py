@@ -82,7 +82,7 @@ class MainWindow(Base, Form):
         self.stop_thread_signal.connect(self.stackedWidget.widget(0).feed_kuksa.stop)
 
         self.stackedWidget.setCurrentIndex(0)
-        self.icButton.setChecked(True)
+        self.dashboardButton.setChecked(True)
 
         self.current_page = self.stackedWidget.currentIndex()
 

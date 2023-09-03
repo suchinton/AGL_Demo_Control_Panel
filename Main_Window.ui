@@ -496,6 +496,10 @@
     background-color: #4BD7D6 ; /* light blue */
 }
 
+#BottomMenuSubContainer QPushButton:checked {
+    background-color: #965D62 ; /* red */
+}
+
 #headerContainer{
 	border-radius: 10px;
 	background-color: #041F2B ; /* dark blue */
@@ -509,30 +513,6 @@
 }
 
 #headerContainer QPushButton:pressed {
-    background-color: #4BD7D6 ; /* light blue */
-}
-
-#navigationFrame QPushButton:checked {
-    background-color: #965D62 ; /* red */
-}
-
-#settingsFrame QPushButton:checked {
-    background-color: #965D62 ; /* red */
-}
-
-#notificationContent{
-	border-radius: 10px;
-	background-color:  #041F2B ; /* dark blue */
-}
-
-#notificationContent QPushButton{
-	background-color: #6C6C85 ; /* pastel purple */
-	text-align: left;
-	padding: 5px 10px;
-	border-radius: 10px;
-}
-
-#notificationContent QPushButton:pressed {
     background-color: #4BD7D6 ; /* light blue */
 }
 
