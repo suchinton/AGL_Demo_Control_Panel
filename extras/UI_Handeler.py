@@ -1,29 +1,21 @@
 from main import *
+from PyQt5 import QtCore
 from PyQt5.QtCore import QPropertyAnimation
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtGui import QPixmap, QPainter
-from PyQt5.QtCore import QTimeLine
-from PyQt5.QtWidgets import QWidget, QStackedWidget, QPushButton
-from functools import partial
+from PyQt5.QtWidgets import QWidget
+from PyQt5.QtCore import QEasingCurve
+from PyQt5.QtWidgets import QGraphicsOpacityEffect
 
 class UI_Handeler(MainWindow):
-    def toggleNavigationBar(self, maxWidth, enable):
-        if enable:
-            width = self.leftMenuSubContainer.width()
-            maxExtend = maxWidth
-            standard = 80
+    def Hide_Navbar(self, bool_arg):
+        height = self.BottomMenuSubContainer.height()
+        heightExtended = 60 if bool_arg else 0
 
-            if width == 80:
-                widthExtended = maxExtend
-            else:
-                widthExtended = standard
-
-            self.animation = QPropertyAnimation(self.leftMenuSubContainer, b"minimumWidth")
-            self.animation.setDuration(400)
-            self.animation.setStartValue(width)
-            self.animation.setEndValue(widthExtended)
-            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
-            self.animation.start()
+        self.animation = QPropertyAnimation(self.BottomMenuSubContainer, b"minimumHeight")
+        self.animation.setDuration(400)
+        self.animation.setStartValue(height)
+        self.animation.setEndValue(heightExtended)
+        self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
+        self.animation.start()
 
     # animate switching pages for QstackedWidget with the animation being a fade in and out
     def animateSwitch(self, index):
@@ -56,26 +48,28 @@ class UI_Handeler(MainWindow):
         event.accept()
 
 class FaderWidget(QWidget):
-    def __init__(self, old_widget, new_widget): 
-        QWidget.__init__(self, new_widget)    
-        self.old_pixmap = QPixmap(new_widget.size())
-        old_widget.render(self.old_pixmap)
-        self.pixmap_opacity = 1.0  
-        self.timeline = QTimeLine()
-        self.timeline.valueChanged.connect(self.animate)
-        self.timeline.finished.connect(self.close)
-        self.timeline.setDuration(250)
-        self.timeline.start()  
-        self.resize(new_widget.size())
-        self.show()
-    
-    def paintEvent(self, event):
-        painter = QPainter()
-        painter.begin(self)
-        painter.setOpacity(self.pixmap_opacity)
-        painter.drawPixmap(0, 0, self.old_pixmap)
-        painter.end()
-    
-    def animate(self, value):
-        self.pixmap_opacity = 1.0 - value
-        self.repaint()
+    def __init__(self, old_widget, new_widget):
+        super().__init__(new_widget)
+        
+        self.old_widget = old_widget
+        self.new_widget = new_widget
+
+        self.effect = QGraphicsOpacityEffect()
+        self.new_widget.setGraphicsEffect(self.effect)
+
+        self.animation = QPropertyAnimation(self.effect, b"opacity")
+        self.animation.setDuration(300)
+        self.animation.setStartValue(0)
+        self.animation.setEndValue(1)
+        self.animation.setEasingCurve(QEasingCurve.OutCubic)
+        self.animation.finished.connect(self.close)
+
+        self.animate()
+
+    def animate(self):
+        self.animation.start()
+
+    def close(self):
+        self.old_widget.close()
+        self.new_widget.show()
+        super().close()
