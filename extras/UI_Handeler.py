@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QGraphicsOpacityEffect
 class UI_Handeler(MainWindow):
     def Hide_Navbar(self, bool_arg):
         height = self.BottomMenuSubContainer.height()
-        heightExtended = 60 if bool_arg else 0
+        heightExtended = 75 if bool_arg else 0
 
         self.animation = QPropertyAnimation(self.BottomMenuSubContainer, b"minimumHeight")
         self.animation.setDuration(400)

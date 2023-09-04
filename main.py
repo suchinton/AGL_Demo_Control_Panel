@@ -84,6 +84,7 @@ class MainWindow(Base, Form):
 
         self.stackedWidget.setCurrentIndex(0)
         self.dashboardButton.setChecked(True)
+        UI_Handeler.Hide_Navbar(self,bool_arg=False)
 
         self.Dashboard = Dashboard()
         self.Dashboard.tileClickedSignal.connect(self.handleTileClicked)
