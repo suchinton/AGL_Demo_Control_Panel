@@ -21,7 +21,8 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QSlider, QLCDNumber, QPushButton
 from PyQt5.QtGui import QIcon, QPixmap, QPainter
 import time
-from PyQt5.QtCore import QThread
+from PyQt5.QtWidgets import QWidget
+from qtwidgets import AnimatedToggle
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -58,12 +59,16 @@ class ICWidget(Base, Form):
         self.feed_kuksa = FeedKuksa()
         self.feed_kuksa.start()
 
-        # # load the stylesheet
-        # theme = open(os.path.join(current_dir, "../ui/styles/Tron/ICPage.qss"), 'r')
-        # self.setStyleSheet(theme.read())
-        # theme.close()
+        header_frame = self.findChild(QWidget, "header_frame")
+        layout = header_frame.layout()
 
-        self.scriptBtn = self.findChild(QPushButton, "scriptBtn")
+        self.Script_toggle = AnimatedToggle(
+            checked_color="#4BD7D6",
+            pulse_checked_color="#00ffff"
+        )
+
+        layout.replaceWidget(self.demoToggle, self.Script_toggle)
+        self.demoToggle.deleteLater()
 
         self.Speed_slider = self.findChild(QSlider, "Speed_slider")
         self.Speed_monitor = self.findChild(QLCDNumber, "Speed_monitor")
@@ -93,8 +98,6 @@ class ICWidget(Base, Form):
 
         self.driveGroupBtns.buttonClicked.connect(self.driveBtnClicked)
 
-        self.scriptBtn.clicked.connect(self.scriptBtnClicked)
-
         self.Speed_slider.valueChanged.connect(self.update_Speed_monitor)
         self.Speed_slider.setMinimum(0)
         self.Speed_slider.setMaximum(240)
@@ -119,13 +122,6 @@ class ICWidget(Base, Form):
         self.leftIndicatorBtn.clicked.connect(self.leftIndicatorBtnClicked)
         self.rightIndicatorBtn.clicked.connect(self.rightIndicatorBtnClicked)
         self.hazardBtn.clicked.connect(self.hazardBtnClicked)
-
-    def scriptBtnClicked(self):
-        if self.scriptBtn.isChecked():
-            ICScript.start_script()
-
-        if not self.ScriptBtn.isChecked():
-            ICScript.stop_script()
 
     def update_Speed_monitor(self):
         speed = int(self.Speed_slider.value())
