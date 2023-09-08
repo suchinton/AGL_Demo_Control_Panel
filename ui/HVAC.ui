@@ -239,7 +239,7 @@ QListWidget::item:hover {
            <x>0</x>
            <y>0</y>
            <width>697</width>
-           <height>370</height>
+           <height>382</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -474,7 +474,7 @@ QListWidget::item:hover {
                   </property>
                   <property name="icon">
                    <iconset resource="../assets/res.qrc">
-                    <normaloff>:/Carbon_Icons/carbon icons/temperature--hot.svg</normaloff>:/Carbon_Icons/carbon icons/temperature--hot.svg</iconset>
+                    <normaloff>:/Carbon_Icons/carbon_icons/temperature--hot.svg</normaloff>:/Carbon_Icons/carbon_icons/temperature--hot.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -491,7 +491,7 @@ QListWidget::item:hover {
                   </property>
                   <property name="icon">
                    <iconset resource="../assets/res.qrc">
-                    <normaloff>:/Carbon_Icons/carbon icons/temperature--frigid.svg</normaloff>:/Carbon_Icons/carbon icons/temperature--frigid.svg</iconset>
+                    <normaloff>:/Carbon_Icons/carbon_icons/temperature--frigid.svg</normaloff>:/Carbon_Icons/carbon_icons/temperature--frigid.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -625,7 +625,7 @@ QListWidget::item:hover {
                   </property>
                   <property name="icon">
                    <iconset resource="../assets/res.qrc">
-                    <normaloff>:/Carbon_Icons/carbon icons/temperature--hot.svg</normaloff>:/Carbon_Icons/carbon icons/temperature--hot.svg</iconset>
+                    <normaloff>:/Carbon_Icons/carbon_icons/temperature--hot.svg</normaloff>:/Carbon_Icons/carbon_icons/temperature--hot.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -782,7 +782,7 @@ QListWidget::item:hover {
                   </property>
                   <property name="icon">
                    <iconset resource="../assets/res.qrc">
-                    <normaloff>:/Carbon_Icons/carbon icons/temperature--frigid.svg</normaloff>:/Carbon_Icons/carbon icons/temperature--frigid.svg</iconset>
+                    <normaloff>:/Carbon_Icons/carbon_icons/temperature--frigid.svg</normaloff>:/Carbon_Icons/carbon_icons/temperature--frigid.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>

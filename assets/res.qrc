@@ -1,34 +1,34 @@
 <RCC>
   <qresource prefix="Carbon_Icons">
-    <file>carbon icons/add.svg</file>
-    <file>carbon icons/information.svg</file>
-    <file>carbon icons/add--alt.svg</file>
-    <file>carbon icons/meter.svg</file>
-    <file>carbon icons/misuse--outline.svg</file>
-    <file>carbon icons/phone--filled.svg</file>
-    <file>carbon icons/phone--off--filled.svg</file>
-    <file>carbon icons/settings.svg</file>
-    <file>carbon icons/skip--back--filled.svg</file>
-    <file>carbon icons/skip--forward--filled.svg</file>
-    <file>carbon icons/subtract.svg</file>
-    <file>carbon icons/subtract--alt.svg</file>
-    <file>carbon icons/temperature--frigid.svg</file>
-    <file>carbon icons/temperature--hot.svg</file>
-    <file>carbon icons/volume--down--filled--alt.svg</file>
-    <file>carbon icons/volume--mute--filled.svg</file>
-    <file>carbon icons/volume--up--filled--alt.svg</file>
-    <file>carbon icons/workspace.svg</file>
-    <file>carbon icons/voice.svg</file>
-    <file>carbon icons/play.svg</file>
-    <file>carbon icons/renew.svg</file>
-    <file>carbon icons/view--off.svg</file>
-    <file>carbon icons/view.svg</file>
-    <file>carbon icons/scale.svg</file>
-    <file>carbon icons/close.svg</file>
-    <file>carbon icons/rain-drop.svg</file>
-    <file>carbon icons/temperature--water.svg</file>
-    <file>carbon icons/security-services.svg</file>
-    <file>carbon icons/windy--strong.svg</file>
+    <file>carbon_icons/add.svg</file>
+    <file>carbon_icons/information.svg</file>
+    <file>carbon_icons/add--alt.svg</file>
+    <file>carbon_icons/meter.svg</file>
+    <file>carbon_icons/misuse--outline.svg</file>
+    <file>carbon_icons/phone--filled.svg</file>
+    <file>carbon_icons/phone--off--filled.svg</file>
+    <file>carbon_icons/settings.svg</file>
+    <file>carbon_icons/skip--back--filled.svg</file>
+    <file>carbon_icons/skip--forward--filled.svg</file>
+    <file>carbon_icons/subtract.svg</file>
+    <file>carbon_icons/subtract--alt.svg</file>
+    <file>carbon_icons/temperature--frigid.svg</file>
+    <file>carbon_icons/temperature--hot.svg</file>
+    <file>carbon_icons/volume--down--filled--alt.svg</file>
+    <file>carbon_icons/volume--mute--filled.svg</file>
+    <file>carbon_icons/volume--up--filled--alt.svg</file>
+    <file>carbon_icons/workspace.svg</file>
+    <file>carbon_icons/voice.svg</file>
+    <file>carbon_icons/play.svg</file>
+    <file>carbon_icons/renew.svg</file>
+    <file>carbon_icons/view--off.svg</file>
+    <file>carbon_icons/view.svg</file>
+    <file>carbon_icons/scale.svg</file>
+    <file>carbon_icons/close.svg</file>
+    <file>carbon_icons/rain-drop.svg</file>
+    <file>carbon_icons/temperature--water.svg</file>
+    <file>carbon_icons/security-services.svg</file>
+    <file>carbon_icons/windy--strong.svg</file>
   </qresource>
   <qresource prefix="Images">
     <file>Images/HMI_HVAC_Fan_Icon.svg</file>

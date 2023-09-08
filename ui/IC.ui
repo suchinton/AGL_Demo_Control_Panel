@@ -462,7 +462,7 @@ QLCDNumber {
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon icons/rain-drop.svg</pixmap>
+                <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon_icons/rain-drop.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>false</bool>
@@ -594,7 +594,7 @@ QLCDNumber {
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon icons/temperature--water.svg</pixmap>
+                <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon_icons/temperature--water.svg</pixmap>
                </property>
               </widget>
              </item>

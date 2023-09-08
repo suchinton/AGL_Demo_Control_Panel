@@ -705,7 +705,7 @@ QStackedWidget{
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
-                 <normaloff>:/Carbon_Icons/carbon icons/subtract.svg</normaloff>:/Carbon_Icons/carbon icons/subtract.svg</iconset>
+                 <normaloff>:/Carbon_Icons/carbon_icons/subtract.svg</normaloff>:/Carbon_Icons/carbon_icons/subtract.svg</iconset>
                </property>
                <property name="flat">
                 <bool>false</bool>
@@ -719,7 +719,7 @@ QStackedWidget{
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
-                 <normaloff>:/Carbon_Icons/carbon icons/scale.svg</normaloff>:/Carbon_Icons/carbon icons/scale.svg</iconset>
+                 <normaloff>:/Carbon_Icons/carbon_icons/scale.svg</normaloff>:/Carbon_Icons/carbon_icons/scale.svg</iconset>
                </property>
               </widget>
              </item>
@@ -730,7 +730,7 @@ QStackedWidget{
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
-                 <normaloff>:/Carbon_Icons/carbon icons/close.svg</normaloff>:/Carbon_Icons/carbon icons/close.svg</iconset>
+                 <normaloff>:/Carbon_Icons/carbon_icons/close.svg</normaloff>:/Carbon_Icons/carbon_icons/close.svg</iconset>
                </property>
               </widget>
              </item>
@@ -975,7 +975,7 @@ QStackedWidget{
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
-                 <normaloff>:/Carbon_Icons/carbon icons/workspace.svg</normaloff>:/Carbon_Icons/carbon icons/workspace.svg</iconset>
+                 <normaloff>:/Carbon_Icons/carbon_icons/workspace.svg</normaloff>:/Carbon_Icons/carbon_icons/workspace.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1044,7 +1044,7 @@ QStackedWidget{
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
-                 <normaloff>:/Carbon_Icons/carbon icons/meter.svg</normaloff>:/Carbon_Icons/carbon icons/meter.svg</iconset>
+                 <normaloff>:/Carbon_Icons/carbon_icons/meter.svg</normaloff>:/Carbon_Icons/carbon_icons/meter.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1070,7 +1070,7 @@ QStackedWidget{
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
-                 <normaloff>:/Carbon_Icons/carbon icons/windy--strong.svg</normaloff>:/Carbon_Icons/carbon icons/windy--strong.svg</iconset>
+                 <normaloff>:/Carbon_Icons/carbon_icons/windy--strong.svg</normaloff>:/Carbon_Icons/carbon_icons/windy--strong.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1149,7 +1149,7 @@ QStackedWidget{
                </property>
                <property name="icon">
                 <iconset resource="assets/res.qrc">
-                 <normaloff>:/Carbon_Icons/carbon icons/settings.svg</normaloff>:/Carbon_Icons/carbon icons/settings.svg</iconset>
+                 <normaloff>:/Carbon_Icons/carbon_icons/settings.svg</normaloff>:/Carbon_Icons/carbon_icons/settings.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
