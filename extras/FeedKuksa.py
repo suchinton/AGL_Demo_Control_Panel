@@ -15,6 +15,7 @@
 """
 
 import time
+import logging
 from PyQt5.QtCore import QThread
 from . import Kuksa_Instance as kuksa_instance
 
@@ -22,34 +23,33 @@ class FeedKuksa(QThread):
     def __init__(self, parent=None):
         QThread.__init__(self,parent)
         self.stop_flag = False
-        self.set_instance()
 
     def run(self):
-        print("Starting thread")
+        logging.info("Starting thread")
         self.set_instance()
         while not self.stop_flag:
             self.send_values()
 
     def stop(self):
         self.stop_flag = True
-        print("Stopping thread")
+        logging.info("Stopping thread")
 
     def set_instance(self):
-        self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
-        self.client = self.kuksa.get_client()
+        self.kuksa = kuksa_instance.KuksaClientSingleton.instance()
+        self.client = self.kuksa.client
 
-    def send_values(self, Path=None, Value=None, Attribute=None):
+    def send_values(self, path=None, value=None, attribute=None):
         if self.client is not None:
-            if self.client.checkConnection() is True:
+            if self.client.checkConnection():
 
-                if Attribute is not None:
-                    self.client.setValue(Path, Value, Attribute)
+                if attribute is not None:
+                    self.client.setValue(path, value, attribute)
                 else:
-                    self.client.setValue(Path, Value)
+                    self.client.setValue(path, value)
             else:
-                print("Could not connect to Kuksa")
+                logging.error("Could not connect to Kuksa")
                 self.set_instance()
         else:
-            print("Kuksa client is None, try reconnecting")
+            logging.error("Kuksa client is None, try reconnecting")
             time.sleep(2)
             self.set_instance()
