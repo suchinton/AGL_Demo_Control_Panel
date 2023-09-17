@@ -27,8 +27,6 @@ class FeedKuksa(QThread):
     def run(self):
         logging.info("Starting thread")
         self.set_instance()
-        while not self.stop_flag:
-            self.send_values()
 
     def stop(self):
         self.stop_flag = True
@@ -41,14 +39,14 @@ class FeedKuksa(QThread):
     def send_values(self, path=None, value=None, attribute=None):
         if self.client is not None:
             if self.client.checkConnection():
-
-                if attribute is not None:
-                    self.client.setValue(path, value, attribute)
-                else:
-                    self.client.setValue(path, value)
-            else:
-                logging.error("Could not connect to Kuksa")
-                self.set_instance()
+                try:
+                    if attribute is not None:
+                        self.client.setValue(path, str(value), attribute)
+                    else:
+                        self.client.setValue(path, str(value))
+                except Exception as e:
+                    logging.error(f"Error sending values to kuksa {e}")
+                    self.set_instance()
         else:
             logging.error("Kuksa client is None, try reconnecting")
             time.sleep(2)
