@@ -18,7 +18,6 @@ import os
 import sys
 from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QSlider, QLCDNumber, QPushButton
 from PyQt5.QtGui import QIcon, QPixmap, QPainter
 import time
 from PyQt5.QtWidgets import QWidget
@@ -70,20 +69,6 @@ class ICWidget(Base, Form):
         layout.replaceWidget(self.demoToggle, self.Script_toggle)
         self.demoToggle.deleteLater()
 
-        self.Speed_slider = self.findChild(QSlider, "Speed_slider")
-        self.Speed_monitor = self.findChild(QLCDNumber, "Speed_monitor")
-        self.RPM_slider = self.findChild(QSlider, "RPM_slider")
-        self.RPM_monitor = self.findChild(QLCDNumber, "RPM_monitor")
-
-        self.coolantTemp_slider = self.findChild(QSlider, "coolantTemp_slider")
-        self.fuelLevel_slider = self.findChild(QSlider, "fuelLevel_slider")
-
-        self.accelerationBtn = self.findChild(QPushButton, "accelerationBtn")
-
-        self.leftIndicatorBtn = self.findChild(QPushButton, "leftIndicatorBtn")
-        self.rightIndicatorBtn = self.findChild(QPushButton, "rightIndicatorBtn")
-        self.hazardBtn = self.findChild(QPushButton, "hazardBtn")
-
         buttons = [self.parkBtn,
                    self.reverseBtn,
                    self.neutralBtn,
@@ -119,94 +104,99 @@ class ICWidget(Base, Form):
         self.rightIndicatorBtn.setCheckable(True)
         self.hazardBtn.setCheckable(True)
 
-        self.leftIndicatorBtn.clicked.connect(self.leftIndicatorBtnClicked)
-        self.rightIndicatorBtn.clicked.connect(self.rightIndicatorBtnClicked)
-        self.hazardBtn.clicked.connect(self.hazardBtnClicked)
+        self.leftIndicatorBtn.toggled.connect(self.leftIndicatorBtnClicked)
+        self.rightIndicatorBtn.toggled.connect(self.rightIndicatorBtnClicked)
+        self.hazardBtn.toggled.connect(self.hazardBtnClicked)
 
     def update_Speed_monitor(self):
         speed = int(self.Speed_slider.value())
         self.Speed_monitor.display(speed)
-        self.feed_kuksa.send_values(self.IC.speed, str(speed), 'value')
+        try: self.feed_kuksa.send_values(self.IC.speed, str(speed), 'value')
+        except Exception as e: print(e)
 
     def update_RPM_monitor(self):
         rpm = int(self.RPM_slider.value())
         self.RPM_monitor.display(rpm)
-        self.feed_kuksa.send_values(self.IC.engineRPM, str(rpm), 'value')
+        try: self.feed_kuksa.send_values(self.IC.engineRPM, str(rpm), 'value')
+        except Exception as e: print(e)
 
     def update_coolantTemp_monitor(self):
         coolantTemp = int(self.coolantTemp_slider.value())
-        self.feed_kuksa.send_values(self.IC.coolantTemp, str(coolantTemp), 'value')
+        try: self.feed_kuksa.send_values(self.IC.coolantTemp, str(coolantTemp), 'value')
+        except Exception as e: print(e)
 
     def update_fuelLevel_monitor(self):
         fuelLevel = int(self.fuelLevel_slider.value())
-        self.feed_kuksa.send_values(self.IC.fuelLevel, str(fuelLevel))
+        try: self.feed_kuksa.send_values(self.IC.fuelLevel, str(fuelLevel))
+        except Exception as e: print(e)
 
     def hazardBtnClicked(self):
         hazardIcon = QPixmap(":/Images/Images/hazard.png")
+        painter = QPainter(hazardIcon)
+        painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
+
         if self.hazardBtn.isChecked():
-            painter = QPainter(hazardIcon)
-            painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
-            painter.fillRect(hazardIcon.rect(), QtCore.Qt.yellow)
-            painter.end()
-            self.hazardBtn.setIcon(QIcon(hazardIcon))
-
-            self.leftIndicatorBtn.setChecked(True)
-            self.rightIndicatorBtn.setChecked(True)
-            self.feed_kuksa.send_values(self.IC.leftIndicator, "true")
-            self.feed_kuksa.send_values(self.IC.rightIndicator, "true")
-            self.feed_kuksa.send_values(self.IC.hazard, "true")
+            color = QtCore.Qt.yellow
+            value = "true"
         else:
-            painter = QPainter(hazardIcon)
-            painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
-            painter.fillRect(hazardIcon.rect(), QtCore.Qt.black)
-            painter.end()
-            self.hazardBtn.setIcon(QIcon(hazardIcon))
+            color = QtCore.Qt.black
+            value = "false"
 
-            self.leftIndicatorBtn.setChecked(False)
-            self.rightIndicatorBtn.setChecked(False)
-            self.feed_kuksa.send_values(self.IC.leftIndicator, "false")
-            self.feed_kuksa.send_values(self.IC.rightIndicator, "false")
-            self.feed_kuksa.send_values(self.IC.hazard, "false")
+        painter.fillRect(hazardIcon.rect(), color)
+        painter.end()
+        self.hazardBtn.setIcon(QIcon(hazardIcon))
+
+        self.leftIndicatorBtn.setChecked(self.hazardBtn.isChecked())
+        self.rightIndicatorBtn.setChecked(self.hazardBtn.isChecked())
+
+        try: 
+            self.feed_kuksa.send_values(self.IC.leftIndicator, value)
+            self.feed_kuksa.send_values(self.IC.rightIndicator, value)
+            self.feed_kuksa.send_values(self.IC.hazard, value)
+        except Exception as e:
+            print(e)
+
 
     def leftIndicatorBtnClicked(self):
         leftIndicatorIcon = QPixmap(":/Images/Images/left.png")
+        painter = QPainter(leftIndicatorIcon)
+        painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
+
         if self.leftIndicatorBtn.isChecked():
-
-            painter = QPainter(leftIndicatorIcon)
-            painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
-            painter.fillRect(leftIndicatorIcon.rect(), QtCore.Qt.green)
-            painter.end()
-
-            self.leftIndicatorBtn.setIcon(QIcon(leftIndicatorIcon))
-            self.feed_kuksa.send_values(self.IC.leftIndicator, "true")
+            color = QtCore.Qt.green
+            value = "true"
         else:
+            color = QtCore.Qt.black
+            value = "false"
 
-            painter = QPainter(leftIndicatorIcon)
-            painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
-            painter.fillRect(leftIndicatorIcon.rect(), QtCore.Qt.black)
-            painter.end()
+        painter.fillRect(leftIndicatorIcon.rect(), color)
+        painter.end()
+        self.leftIndicatorBtn.setIcon(QIcon(leftIndicatorIcon))
 
-            self.leftIndicatorBtn.setIcon(QIcon(leftIndicatorIcon))
-            self.feed_kuksa.send_values(self.IC.leftIndicator, "false")
+        try: self.feed_kuksa.send_values(self.IC.leftIndicator, value)
+        except Exception as e: print(e)
 
     def rightIndicatorBtnClicked(self):
         rightIndicatorIcon = QPixmap(":/Images/Images/right.png")
+        painter = QPainter(rightIndicatorIcon)
+        painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
+
         if self.rightIndicatorBtn.isChecked():
-
-            painter = QPainter(rightIndicatorIcon)
-            painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
-            painter.fillRect(rightIndicatorIcon.rect(), QtCore.Qt.green)
-            painter.end()
-            self.rightIndicatorBtn.setIcon(QIcon(rightIndicatorIcon))
-            self.feed_kuksa.send_values(self.IC.rightIndicator, "true")
+            color = QtCore.Qt.green
+            value = "true"
         else:
+            color = QtCore.Qt.black
+            value = "false"
 
-            painter = QPainter(rightIndicatorIcon)
-            painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
-            painter.fillRect(rightIndicatorIcon.rect(), QtCore.Qt.black)
-            painter.end()
-            self.rightIndicatorBtn.setIcon(QIcon(rightIndicatorIcon))
-            self.feed_kuksa.send_values(self.IC.rightIndicator, "false")
+        painter.fillRect(rightIndicatorIcon.rect(), color)
+        painter.end()
+        self.rightIndicatorBtn.setIcon(QIcon(rightIndicatorIcon))
+
+        try: 
+            self.feed_kuksa.send_values(self.IC.rightIndicator, value)
+        except Exception as e:
+            print(e)
+
 
     def accelerationBtnPressed(self):
         self.startTime = QtCore.QTime.currentTime()
@@ -252,34 +242,27 @@ class ICWidget(Base, Form):
         self.update_Speed_monitor()
         self.update_RPM_monitor()
 
-    def driveBtnClicked(self):
-        #   // Selected Gear output = > 0 = Neutral, 1/2/.. = Forward, -1/.. = Reverse, 126 = Park, 127 = Drive
-        # #859287 ; /* light green */
+def driveBtnClicked(self):
+    gear_mapping = {
+        self.driveBtn: "127",
+        self.parkBtn: "126",
+        self.reverseBtn: "-1",
+        self.neutralBtn: "0"
+    }
 
-        if self.driveGroupBtns.checkedButton() == self.driveBtn:
-            self.accelerationBtn.setEnabled(True)
-            self.Speed_slider.setEnabled(True)
-            self.RPM_slider.setEnabled(True)
-            self.feed_kuksa.send_values(self.IC.selectedGear, "127")
+    checked_button = self.driveGroupBtns.checkedButton()
 
-        if self.driveGroupBtns.checkedButton() == self.parkBtn:
-            self.accelerationBtn.setEnabled(False)
-            self.Speed_slider.setEnabled(False)
-            self.RPM_slider.setEnabled(False)
-            self.feed_kuksa.send_values(self.IC.selectedGear, "126")
-
-        if self.driveGroupBtns.checkedButton() == self.reverseBtn:
-            self.accelerationBtn.setEnabled(True)
-            self.Speed_slider.setEnabled(True)
-            self.RPM_slider.setEnabled(True)
-            self.feed_kuksa.send_values(self.IC.selectedGear, "-1")
-
-        if self.driveGroupBtns.checkedButton() == self.neutralBtn:
-            self.accelerationBtn.setEnabled(False)
-            self.Speed_slider.setEnabled(False)
-            self.RPM_slider.setEnabled(True)
-            self.feed_kuksa.send_values(self.IC.selectedGear, "0")
-
+    if checked_button in gear_mapping:
+        gear_value = gear_mapping[checked_button]
+        self.accelerationBtn.setEnabled(True)
+        self.Speed_slider.setEnabled(checked_button != self.neutralBtn)
+        self.RPM_slider.setEnabled(True)
+        try:
+            self.feed_kuksa.send_values(self.IC.selectedGear, gear_value)
+        except Exception as e:
+            print(e)
+    else:
+        print("Unknown button checked!")
 
 class AccelerationFns():
     def calculate_speed(time, acceleration) -> int:
