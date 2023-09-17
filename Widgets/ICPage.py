@@ -242,27 +242,27 @@ class ICWidget(Base, Form):
         self.update_Speed_monitor()
         self.update_RPM_monitor()
 
-def driveBtnClicked(self):
-    gear_mapping = {
-        self.driveBtn: "127",
-        self.parkBtn: "126",
-        self.reverseBtn: "-1",
-        self.neutralBtn: "0"
-    }
-
-    checked_button = self.driveGroupBtns.checkedButton()
-
-    if checked_button in gear_mapping:
-        gear_value = gear_mapping[checked_button]
-        self.accelerationBtn.setEnabled(True)
-        self.Speed_slider.setEnabled(checked_button != self.neutralBtn)
-        self.RPM_slider.setEnabled(True)
-        try:
-            self.feed_kuksa.send_values(self.IC.selectedGear, gear_value)
-        except Exception as e:
-            print(e)
-    else:
-        print("Unknown button checked!")
+    def driveBtnClicked(self):
+        gear_mapping = {
+            self.driveBtn: "127",
+            self.parkBtn: "126",
+            self.reverseBtn: "-1",
+            self.neutralBtn: "0"
+        }
+    
+        checked_button = self.driveGroupBtns.checkedButton()
+    
+        if checked_button in gear_mapping:
+            gear_value = gear_mapping[checked_button]
+            self.accelerationBtn.setEnabled(True)
+            self.Speed_slider.setEnabled(checked_button != self.neutralBtn)
+            self.RPM_slider.setEnabled(True)
+            try:
+                self.feed_kuksa.send_values(self.IC.selectedGear, gear_value)
+            except Exception as e:
+                print(e)
+        else:
+            print("Unknown button checked!")
 
 class AccelerationFns():
     def calculate_speed(time, acceleration) -> int:
