@@ -32,16 +32,15 @@ should_execute_callback = True
 
 class UI_Handeler(MainWindow):
     """
-    This class handles the UI of the AGL Demo Control Panel. It contains methods for hiding the navbar, animating page switches,
-    toggling window maximization, moving the window by dragging the header, setting the Kuksa client instance, subscribing to VSS signals,
-    and handling VSS signal callbacks.
+    This class handles the UI of the AGL Demo Control Panel application.
     """
+
     def Hide_Navbar(self, bool_arg):
         """
-        This method hides the navbar by animating its height to 0 if bool_arg is False, or to 75 if bool_arg is True.
+        This method hides the navigation bar of the UI.
 
         Args:
-        - bool_arg (bool): A boolean value that determines whether the navbar should be hidden or not.
+        - bool_arg: A boolean value indicating whether to hide the navigation bar or not.
         """
         height = self.BottomMenuSubContainer.height()
         heightExtended = 75 if bool_arg else 0
@@ -55,17 +54,17 @@ class UI_Handeler(MainWindow):
 
     def animateSwitch(self, index):
         """
-        This method animates the switch between pages in the QStackedWidget by fading out the current widget and fading in the new widget.
+        This method animates the switching of pages for QstackedWidget with the animation being a fade in and out.
 
         Args:
-        - index (int): The index of the widget to switch to.
+        - index: The index of the page to switch to.
         """
         self.fader_widget = FaderWidget(self.stackedWidget.currentWidget(), self.stackedWidget.widget(index))
         self.stackedWidget.setCurrentIndex(index)
 
     def toggleMaximized(self):
         """
-        This method toggles the window between maximized and normal size.
+        This method toggles the maximized state of the window.
         """
         if self.isMaximized():
             self.showNormal()
@@ -77,7 +76,7 @@ class UI_Handeler(MainWindow):
         This method moves the window by dragging the header.
 
         Args:
-        - event (QEvent): The event object that contains information about the mouse event.
+        - event: The event object containing information about the mouse event.
         """
         if event.buttons() == QtCore.Qt.LeftButton:
             self.move(self.pos() + event.globalPos() - self.clickPosition)
@@ -86,10 +85,10 @@ class UI_Handeler(MainWindow):
 
     def set_instance(self):
         """
-        This method sets the Kuksa client instance and checks if there is a connection to Kuksa.
+        This method sets the instance of the Kuksa client.
 
         Returns:
-        - bool: True if there is a connection to Kuksa, False otherwise.
+        - True if the client is connected to Kuksa, False otherwise.
         """
         self.kuksa = kuksa_instance.KuksaClientSingleton.instance()
         self.client = self.kuksa.get_client()
@@ -101,7 +100,7 @@ class UI_Handeler(MainWindow):
 
     def subscribe_VSS_Signals(self):
         """
-        This method subscribes to VSS signals and sets a callback function to handle the received data.
+        This method subscribes to the VSS signals from Kuksa.
         """
         global subscribed
         if not subscribed:
@@ -122,7 +121,6 @@ class UI_Handeler(MainWindow):
                     "Vehicle.Cabin.HVAC.Station.Row1.Right.Temperature",
                     "Vehicle.Cabin.HVAC.Station.Row1.Right.FanSpeed"]
 
-                # run the callback function on a se
                 for signal in signals:
                     self.client.subscribe(signal, lambda data: UI_Handeler.VSS_callback(self,data), 'value')
                 subscribed = True
@@ -132,10 +130,10 @@ class UI_Handeler(MainWindow):
 
     def VSS_callback(self,data):
         """
-        This method handles the received VSS signal data and updates the UI accordingly.
+        This method is the callback function for the VSS signals from Kuksa.
 
         Args:
-        - data (str): The received VSS signal data in JSON format.
+        - data: The data received from the signal.
         """
         global should_execute_callback
         if should_execute_callback is False:
@@ -150,85 +148,49 @@ class UI_Handeler(MainWindow):
         print(f"Received subscription event: {path} {value}")
 
         if path == "Vehicle.Speed":
-            try:
-                IC_Page.Speed_slider.setValue(int(value))
-                IC_Page.Speed_monitor.display(int(IC_Page.Speed_slider.value()))
-            except Exception as e:
-                logging.error(f"Error setting speed value {e}")
+            IC_Page.Speed_monitor.display(int(IC_Page.Speed_slider.value()))
+            IC_Page.Speed_slider.setValue(int(value))
 
         if path == "Vehicle.Powertrain.CombustionEngine.Speed":
-            try:
-                IC_Page.RPM_slider.setValue(int(value))
-                IC_Page.RPM_monitor.display(int(IC_Page.RPM_slider.value()))
-            except Exception as e:
-                logging.error(f"Error setting RPM value {e}")
+            IC_Page.RPM_slider.setValue(int(value))
+            IC_Page.RPM_monitor.display(int(IC_Page.RPM_slider.value()))
 
         if path == "Vehicle.Body.Lights.DirectionIndicator.Left.IsSignaling":
-            try:
-                IC_Page.leftIndicatorBtn.setChecked(bool(value))
-            except Exception as e:
-                logging.error(f"Error setting left signal value {e}")
+            IC_Page.leftIndicatorBtn.setChecked(bool(value))
 
         if path == "Vehicle.Body.Lights.DirectionIndicator.Right.IsSignaling":
-            try:
-                IC_Page.rightIndicatorBtn.setChecked(bool(value))
-            except Exception as e:
-                logging.error(f"Error setting right signal value {e}")
+            IC_Page.rightIndicatorBtn.setChecked(bool(value))
 
         if path == "Vehicle.Body.Lights.Hazard.IsSignaling":
-            try:
-                IC_Page.hazardBtn.setChecked(bool(value))
-            except Exception as e:
-                logging.error(f"Error setting hazard signal value {e}")
+            IC_Page.hazardBtn.setChecked(bool(value))
 
-        if path == "Vehicle.Powertrain.FuelSystem.Level":  
-            try:
-                IC_Page.fuelLevel_slider.setValue(int(value))
-            except Exception as e:
-                logging.error(f"Error setting fuel level value {e}")
+        if path == "Vehicle.Powertrain.FuelSystem.Level":
+            IC_Page.fuelLevel_slider.setValue(int(value))
 
         if path == "Vehicle.Powertrain.CombustionEngine.ECT":
-            try:
-                IC_Page.coolantTemp_slider.setValue(int(value))
-            except Exception as e:
-                logging.error(f"Error setting coolant temp value {e}")
+            IC_Page.coolantTemp_slider.setValue(int(value))
 
         if path == "Vehicle.Powertrain.Transmission.SelectedGear":
-            try:
-                if int(value) == 127:
-                    IC_Page.driveBtn.setChecked(True)
-                elif int(value) == 126:
-                    IC_Page.parkBtn.setChecked(True)
-                elif int(value) == -1:
-                    IC_Page.reverseBtn.setChecked(True)
-                elif int(value) == 0:
-                    IC_Page.neutralBtn.setChecked(True)
-            except Exception as e:
-                logging.error(f"Error setting gear value {e}")
+            if int(value) == 127:
+                IC_Page.driveBtn.setChecked(True)
+            elif int(value) == 126:
+                IC_Page.parkBtn.setChecked(True)
+            elif int(value) == -1:
+                IC_Page.reverseBtn.setChecked(True)
+            elif int(value) == 0:
+                IC_Page.neutralBtn.setChecked(True)
 
         if path == "Vehicle.Cabin.HVAC.Station.Row1.Left.Temperature":
-            try:
-                HVAC_Page.left_temp.setValue(int(value))
-            except Exception as e:
-                logging.error(f"Error setting left temp value {e}")
+            HVAC_Page.left_temp.setValue(int(value))
 
         if path == "Vehicle.Cabin.HVAC.Station.Row1.Left.FanSpeed":
-            try:
-                HVAC_Page.left_fan.setValue(int(value))
-            except Exception as e:
-                logging.error(f"Error setting left fan value {e}")
+            HVAC_Page.left_fan.setValue(int(value))
 
         if path == "Vehicle.Cabin.HVAC.Station.Row1.Right.Temperature":
-            try:
-                HVAC_Page.right_temp.setValue(int(value))
-            except Exception as e:
-                logging.error(f"Error setting right temp value {e}")
+            HVAC_Page.right_temp.setValue(int(value))
 
         if path == "Vehicle.Cabin.HVAC.Station.Row1.Right.FanSpeed":
-            try:
-                HVAC_Page.right_fan.setValue(int(value))
-            except Exception as e:
-                logging.error(f"Error setting right fan value {e}")
+            HVAC_Page.right_fan.setValue(int(value))
 
 
 class FaderWidget(QWidget):

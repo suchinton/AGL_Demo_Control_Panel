@@ -21,14 +21,6 @@ import time
 
 from extras import config
 
-import threading
-import time
-from typing import Optional
-
-import kuksa
-import config
-
-
 class KuksaClientSingleton:
     """
     A singleton class that provides a single instance of KuksaClientThread.
