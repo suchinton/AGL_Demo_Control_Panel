@@ -33,10 +33,26 @@ Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/Dashboard.ui"))
 # ========================================
 
 class Dashboard(Base, Form):
+    """
+    A class representing the dashboard widget.
+
+    Attributes:
+    - tileClickedSignal: A PyQtSignal emitted when a tile is clicked.
+
+    Methods:
+    - __init__(self, parent=None): Initializes the Dashboard widget.
+    - tile_clicked(self, tile): Handles the tile click event.
+    """
 
     tileClickedSignal = pyqtSignal()
 
     def __init__(self, parent=None):
+        """
+        Initializes the Dashboard widget.
+
+        Parameters:
+        - parent: The parent widget. Defaults to None.
+        """
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
 
@@ -55,6 +71,12 @@ class Dashboard(Base, Form):
         DashboardTiles.buttonClicked.connect(self.tile_clicked)
 
     def tile_clicked(self, tile):
+        """
+        Handles the tile click event.
+
+        Parameters:
+        - tile: The tile that was clicked.
+        """
         if tile == self.DB_IC_Tile:
             self.parent().setCurrentIndex(1)
         elif tile == self.DB_HVAC_Tile:
