@@ -17,6 +17,13 @@
 import can
 
 def send_can_signal(frame):
+    """
+    Sends a CAN signal to the CAN bus using the given frame.
+    Args:
+        frame (str): The frame to be sent to the CAN bus.
+    Returns:
+        None
+    """
     msg = separate_can_frame(frame)
     bus = can.interface.Bus(channel='can0', bustype='socketcan')
     #msg = can.Message(arbitration_id=can_id, data=data, is_extended_id=False)
@@ -35,8 +42,15 @@ def send_can_signal(frame):
         bus.shutdown()
 
 def separate_can_frame(frame):
+    """
+    Separates a CAN frame into its arbitration ID and data parts.
     
-    # split the frame into arbitration ID and data parts
+    Args:
+    frame (str): A string representing the CAN frame in the format "ARBID#DATA".
+    
+    Returns:
+    can.Message: A can.Message object with the arbitration ID and data extracted from the input frame.
+    """
     arb_id, data = frame.split("#")
     arb_id = int(arb_id, 16)
     data = bytes.fromhex(data)

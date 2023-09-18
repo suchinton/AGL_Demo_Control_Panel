@@ -36,6 +36,21 @@ Form, Base = uic.loadUiType(os.path.join(
 
 Steering_Signal_Type = "Kuksa"
 
+class settings(Base, Form):
+    """
+    A class representing the settings widget of the AGL Demo Control Panel.
+
+    Attributes:
+    - SSL_toggle: An AnimatedToggle object representing the SSL toggle button.
+    - CAN_Kuksa_toggle: An AnimatedToggle object representing the CAN/Kuksa toggle button.
+    - connectionStatus: A QLabel object representing the connection status label.
+    - connectionLogo: A QLabel object representing the connection logo label.
+    - IPAddrInput: A QLineEdit object representing the IP address input field.
+    - tokenPathInput: A QLineEdit object representing the token path input field.
+    - reconnectBtn: A QPushButton object representing the reconnect button.
+    - refreshBtn: A QPushButton object representing the refresh button.
+    - startClientBtn: A QPushButton object representing the start client button.
+    """
 class settings(Base, Form):    
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
@@ -91,7 +106,7 @@ class settings(Base, Form):
             Steering_Signal_Type = "Kuksa"
 
     def set_instance(self):
-        self.kuksa = kuksa_instance.KuksaClientSingleton.get_instance()
+        self.kuksa = kuksa_instance.KuksaClientSingleton.instance()
         self.client = self.kuksa.get_client()
 
         self.config = self.kuksa.get_config()
@@ -136,7 +151,7 @@ class settings(Base, Form):
             self.config["ip"] = self.IPAddrInput.text()
             self.config["insecure"] = self.SSL_toggle.isChecked()
             self.token = self.tokenPathInput.text()
-            self.client = self.kuksa.reconnect_client(self.config, self.token)
+            self.client = self.kuksa.reconnect(self.config, self.token)
             self.client.start()
             self.refreshStatus()
         except Exception as e:

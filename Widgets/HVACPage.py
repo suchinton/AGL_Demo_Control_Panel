@@ -42,7 +42,20 @@ class HVAC_Paths():
         self.temperatureList = [str(i) + "°C" for i in range(32, 15, -1)]
 
 class HVACWidget(Base, Form):
+    """
+    A widget for controlling HVAC settings.
+
+    Inherits from Base and Form.
+    """
+
     def __init__(self, parent=None):
+        """
+        Initializes the HVACWidget.
+
+        Args:
+        - parent: The parent widget. Defaults to None.
+        """
+
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
         
@@ -83,23 +96,43 @@ class HVACWidget(Base, Form):
         self.rightFanSpeed_slider.valueChanged.connect(self.rightFanSpeed_sliderChanged)
 
     def leftTempListClicked(self):
+        """
+        Handles the event when an item in the left temperature list is clicked.
+        Sends the selected temperature value to the feed_kuksa object.
+        """
+
         item = self.leftTempList.currentItem()
         self.leftTempList.scrollToItem(item, 1)
         self.feed_kuksa.send_values(self.HVAC.leftTemp, item.text()[:-2])
         print(item.text())
 
     def rightTempListClicked(self):
+        """
+        Handles the event when an item in the right temperature list is clicked.
+        Sends the selected temperature value to the feed_kuksa object.
+        """
+
         item = self.rightTempList.currentItem()
         self.rightTempList.scrollToItem(item, 1)
         self.feed_kuksa.send_values(self.HVAC.rightTemp, item.text()[:-2])
         print(item.text())
 
     def leftFanSpeed_sliderChanged(self):
+        """
+        Handles the event when the left fan speed slider is changed.
+        Sends the selected fan speed value to the feed_kuksa object.
+        """
+
         value = self.leftFanSpeed_slider.value()
         self.feed_kuksa.send_values(self.HVAC.leftFanSpeed, str(value))
         print(value)
 
     def rightFanSpeed_sliderChanged(self):
+        """
+        Handles the event when the right fan speed slider is changed.
+        Sends the selected fan speed value to the feed_kuksa object.
+        """
+
         value = self.rightFanSpeed_slider.value()
         self.feed_kuksa.send_values(self.HVAC.rightFanSpeed, str(value))
         print(value)

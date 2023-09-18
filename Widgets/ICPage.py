@@ -49,7 +49,18 @@ class IC_Paths():
 
 
 class ICWidget(Base, Form):
+    """
+    This class represents the ICWidget which is a widget for the AGL Demo Control Panel.
+    It inherits from the Base and Form classes.
+    """
+
     def __init__(self, parent=None):
+        """
+        Initializes the ICWidget object.
+
+        Args:
+        - parent: The parent widget. Defaults to None.
+        """
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
         
@@ -109,28 +120,43 @@ class ICWidget(Base, Form):
         self.hazardBtn.toggled.connect(self.hazardBtnClicked)
 
     def update_Speed_monitor(self):
+        """
+        Updates the speed monitor with the current speed value.
+        """
         speed = int(self.Speed_slider.value())
         self.Speed_monitor.display(speed)
         try: self.feed_kuksa.send_values(self.IC.speed, str(speed), 'value')
         except Exception as e: print(e)
 
     def update_RPM_monitor(self):
+        """
+        Updates the RPM monitor with the current RPM value.
+        """
         rpm = int(self.RPM_slider.value())
         self.RPM_monitor.display(rpm)
         try: self.feed_kuksa.send_values(self.IC.engineRPM, str(rpm), 'value')
         except Exception as e: print(e)
 
     def update_coolantTemp_monitor(self):
+        """
+        Updates the coolant temperature monitor with the current coolant temperature value.
+        """
         coolantTemp = int(self.coolantTemp_slider.value())
         try: self.feed_kuksa.send_values(self.IC.coolantTemp, str(coolantTemp), 'value')
         except Exception as e: print(e)
 
     def update_fuelLevel_monitor(self):
+        """
+        Updates the fuel level monitor with the current fuel level value.
+        """
         fuelLevel = int(self.fuelLevel_slider.value())
         try: self.feed_kuksa.send_values(self.IC.fuelLevel, str(fuelLevel))
         except Exception as e: print(e)
 
     def hazardBtnClicked(self):
+        """
+        Handles the hazard button click event.
+        """
         hazardIcon = QPixmap(":/Images/Images/hazard.png")
         painter = QPainter(hazardIcon)
         painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
@@ -158,6 +184,9 @@ class ICWidget(Base, Form):
 
 
     def leftIndicatorBtnClicked(self):
+        """
+        Handles the left indicator button click event.
+        """
         leftIndicatorIcon = QPixmap(":/Images/Images/left.png")
         painter = QPainter(leftIndicatorIcon)
         painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
@@ -177,6 +206,9 @@ class ICWidget(Base, Form):
         except Exception as e: print(e)
 
     def rightIndicatorBtnClicked(self):
+        """
+        Handles the right indicator button click event.
+        """
         rightIndicatorIcon = QPixmap(":/Images/Images/right.png")
         painter = QPainter(rightIndicatorIcon)
         painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
@@ -199,6 +231,9 @@ class ICWidget(Base, Form):
 
 
     def accelerationBtnPressed(self):
+        """
+        Handles the acceleration button press event.
+        """
         self.startTime = QtCore.QTime.currentTime()
         self.acceleration_timer = QtCore.QTimer()
         self.acceleration_timer.timeout.connect(

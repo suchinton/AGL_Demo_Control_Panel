@@ -20,6 +20,8 @@ import os
 from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QApplication, QPushButton, QWidget
 from functools import partial
+from PyQt5 import QtGui
+from PyQt5.QtCore import Qt
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 Form, Base = uic.loadUiType(os.path.join(current_dir, "Main_Window.ui"))
@@ -28,12 +30,22 @@ from extras.UI_Handeler import *
 from Widgets.Dashboard import Dashboard
 
 class MainWindow(Base, Form):
+    """
+    The main window of the AGL Demo Control Panel application.
+    Inherits from the Base and Form classes.
+    """
 
     # signal to stop the thread
     stop_thread_signal = QtCore.pyqtSignal()
     start_thread_signal = QtCore.pyqtSignal()
 
     def __init__(self, parent=None):
+        """
+        Initializes the MainWindow object.
+        Sets up the UI, window flags, and geometry.
+        Connects signals and slots for window controls and widget navigation.
+        Initializes the Dashboard object and connects its signals.
+        """
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
@@ -50,6 +62,8 @@ class MainWindow(Base, Form):
         self.leftMenuSubContainer = self.findChild(QWidget, 'leftMenuSubContainer')
         self.dashboardButton = self.findChild(QPushButton, 'dashboardButton')
         UI_Handeler.Hide_Navbar(self,bool_arg=True)
+
+        self.stackedWidget.currentChanged.connect(lambda: UI_Handeler.subscribe_VSS_Signals(self) if UI_Handeler.set_instance(self) else None)
 
         self.notificationContent = self.findChild(QWidget, 'notificationContent')
 
@@ -92,10 +106,18 @@ class MainWindow(Base, Form):
         self.current_page = self.stackedWidget.currentIndex()
 
     def handleTileClicked(self):
+        """
+        Handles the tile clicked signal from the Dashboard object.
+        Shows the navbar.
+        """
         UI_Handeler.Hide_Navbar(self,bool_arg=False)
 
     def handleChangedPage(self, index):
-        # stop the previous thread and start the new one
+        """
+        Handles the change of pages in the stacked widget.
+        Stops the previous thread and starts the new one.
+        If the index is 0, the navbar is not hidden. Otherwise, it is hidden.
+        """
         if index == 0:
             UI_Handeler.Hide_Navbar(self,bool_arg=False)
         else:
@@ -116,6 +138,8 @@ class MainWindow(Base, Form):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    app.setApplicationName("AGL Demo Control Panel")
+    app.setWindowIcon(QtGui.QIcon(':/Images/Images/Automotive_Grade_Linux_logo.svg'))
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
