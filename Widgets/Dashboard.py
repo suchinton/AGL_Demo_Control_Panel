@@ -35,9 +35,6 @@ Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/Dashboard.ui"))
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import pyqtSignal
-from .Base import Base
-from .Form import Form
-from .FeedKuksa import FeedKuksa
 
 class Dashboard(Base, Form):
     """
