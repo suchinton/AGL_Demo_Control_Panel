@@ -19,6 +19,7 @@ import sys
 from PyQt5 import uic
 from PyQt5 import QtWidgets 
 from PyQt5.QtCore import pyqtSignal
+from PyQt5 import QtCore, QtGui
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -32,6 +33,12 @@ Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/Dashboard.ui"))
 
 # ========================================
 
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import pyqtSignal
+from .Base import Base
+from .Form import Form
+from .FeedKuksa import FeedKuksa
+
 class Dashboard(Base, Form):
     """
     A class representing the dashboard widget.
@@ -41,6 +48,7 @@ class Dashboard(Base, Form):
 
     Methods:
     - __init__(self, parent=None): Initializes the Dashboard widget.
+    - set_icon(self, tile, size): Sets the icon for the given tile.
     - tile_clicked(self, tile): Handles the tile click event.
     """
 
@@ -62,13 +70,27 @@ class Dashboard(Base, Form):
                              self.DB_HVAC_Tile,
                              self.DB_Steering_Tile,
                              self.DB_Settings_Tile)
-        
-        DashboardTiles = QtWidgets.QButtonGroup(self)
 
-        for i, tile in enumerate(Dashboard_tiles):
-            DashboardTiles.addButton(tile)
+        DashboardTiles = QtWidgets.QButtonGroup(self)
         
         DashboardTiles.buttonClicked.connect(self.tile_clicked)
+
+        for i, tile in enumerate(Dashboard_tiles):
+            self.set_icon(tile, 55)
+            DashboardTiles.addButton(tile)
+
+    def set_icon(self, tile, size):
+        """
+        Sets the icon for the given tile.
+
+        Parameters:
+        - tile: The tile for which the icon needs to be set.
+        - size: The size of the icon.
+        """
+        icon = tile.icon()
+        scaled_pixmap = icon.pixmap(icon.availableSizes()[0]).scaled(size, size, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+        tile.setIcon(QtGui.QIcon(scaled_pixmap))
+        tile.setIconSize(QtCore.QSize(size, size))
 
     def tile_clicked(self, tile):
         """
