@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="Carbon_Icons">
+    <file>carbon_icons/connection-signal.svg</file>
+    <file>carbon_icons/connection-signal--off.svg</file>
+    <file>carbon_icons/x-axis.svg</file>
     <file>carbon_icons/add.svg</file>
     <file>carbon_icons/information.svg</file>
     <file>carbon_icons/add--alt.svg</file>
