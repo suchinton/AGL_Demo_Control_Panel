@@ -30,7 +30,7 @@ class KuksaClientSingleton:
     Attributes:
         _instance (Optional[KuksaClientSingleton]): The instance of the class.
         _lock (threading.Lock): A lock to ensure thread-safety.
-        config (dict): The configuration for KuksaClientThread.
+        kuksa_config (dict): The configuration for KuksaClientThread.
         token (str): The path to the token file.
         client (KuksaClientThread): The instance of KuksaClientThread.
 
@@ -73,11 +73,17 @@ class KuksaClientSingleton:
         if KuksaClientSingleton._instance is not None:
             raise Exception("This class is a singleton!")
 
-        self.config = config.KUKSA_CONFIG
-        self.token = config.TOKEN_PATH
+        self.kuksa_config = config.KUKSA_CONFIG
+        self.ws_token = config.WS_TOKEN
+        self.grpc_token = config.GRPC_TOKEN
+        
+        if self.kuksa_config["protocol"] == 'ws':
+            self.token = self.ws_token
+        if self.kuksa_config["protocol"] == 'grpc':
+            self.token = self.grpc_token
 
         try:
-            self.client = kuksa.KuksaClientThread(self.config)
+            self.client = kuksa.KuksaClientThread(self.kuksa_config)
             self.client.authorize(self.token)
             time.sleep(2)
             if not self.client.checkConnection():
@@ -87,7 +93,7 @@ class KuksaClientSingleton:
 
         KuksaClientSingleton._instance = self
 
-    def reconnect(self, config, token):
+    def reconnect(self, config):
         """
         Reconnects the client with the given configuration and token.
 
@@ -100,8 +106,14 @@ class KuksaClientSingleton:
         """
         if self.client:
             self.client.stop()
+
+        if self.kuksa_config["protocol"] == 'ws':
+            self.token = self.ws_token
+        if self.kuksa_config["protocol"] == 'grpc':
+            self.token = self.grpc_token
+            
         self.client = kuksa.KuksaClientThread(config)
-        self.client.authorize(token)
+        self.client.authorize(self.token)
         return self.client
 
     def get_client(self):
@@ -123,16 +135,7 @@ class KuksaClientSingleton:
         Returns:
             dict: The configuration for KuksaClientThread.
         """
-        return self.config
-    
-    def get_token(self):
-        """
-        Returns the path to the token file.
-
-        Returns:
-            str: The path to the token file.
-        """
-        return self.token
+        return self.kuksa_config
 
     def status(self):
         """

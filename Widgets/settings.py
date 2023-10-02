@@ -20,6 +20,8 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton, QLabel
 from qtwidgets import AnimatedToggle
 from PyQt5.QtWidgets import QWidget
+from PyQt5.QtCore import QThread
+from PyQt5 import QtGui
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -46,21 +48,28 @@ class settings(Base, Form):
     - connectionStatus: A QLabel object representing the connection status label.
     - connectionLogo: A QLabel object representing the connection logo label.
     - IPAddrInput: A QLineEdit object representing the IP address input field.
-    - tokenPathInput: A QLineEdit object representing the token path input field.
     - reconnectBtn: A QPushButton object representing the reconnect button.
     - refreshBtn: A QPushButton object representing the refresh button.
     - startClientBtn: A QPushButton object representing the start client button.
     """
-class settings(Base, Form):    
+    
     def __init__(self, parent=None):
+        """
+        Initializes the settings widget of the AGL Demo Control Panel.
+        """
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
 
         self.SSL_toggle = AnimatedToggle(
             checked_color="#4BD7D6",
-            pulse_checked_color="#00ffff"
+            pulse_checked_color="#00ffff",
         )
 
+        self.Protocol_toggle = AnimatedToggle(
+            checked_color="#4BD7D6",
+            pulse_checked_color="#00ffff"
+        )
+        
         self.CAN_Kuksa_toggle = AnimatedToggle(
             checked_color="#4BD7D6",
             pulse_checked_color="#00ffff"
@@ -70,51 +79,64 @@ class settings(Base, Form):
         self.connectionLogo = self.findChild(QLabel, "connectionLogo")
 
         self.IPAddrInput = self.findChild(QLineEdit, "IPAddrInput")
-        self.tokenPathInput = self.findChild(QLineEdit, "tokenPathInput")
 
         self.reconnectBtn = self.findChild(QPushButton, "reconnectBtn")
-        self.refreshBtn = self.findChild(QPushButton, "refreshBtn")
         self.startClientBtn = self.findChild(QPushButton, "startClientBtn")
 
         self.startClientBtn.clicked.connect(self.set_instance)
         self.reconnectBtn.clicked.connect(self.reconnectClient)
-        self.refreshBtn.clicked.connect(self.refreshStatus)
         self.SSL_toggle.clicked.connect(self.toggleSSL)
         self.CAN_Kuksa_toggle.clicked.connect(self.toggle_CAN_Kuksa)
     
-        Frame3 = self.findChild(QWidget, "frame_3")
-        layout = Frame3.layout()
+        Frame_GS = self.findChild(QWidget, "frame_general_settings")
+        Frame_PS = self.findChild(QWidget, "frame_page_settings")
+        GS_layout = Frame_GS.layout()
+        PS_layout = Frame_PS.layout()
         
-        layout.replaceWidget(self.place_holder_toggle_1, self.SSL_toggle)
-        layout.replaceWidget(self.place_holder_toggle_2, self.CAN_Kuksa_toggle)
+        GS_layout.replaceWidget(self.place_holder_toggle_1, self.SSL_toggle)
+        GS_layout.replaceWidget(self.place_holder_toggle_2, self.Protocol_toggle)
+        PS_layout.replaceWidget(self.place_holder_toggle_3, self.CAN_Kuksa_toggle)
         
         self.place_holder_toggle_1.deleteLater()
         self.place_holder_toggle_2.deleteLater()
+        self.place_holder_toggle_3.deleteLater()
 
         self.refreshStatus()
-        #self.show()
 
     def toggleSSL(self):
-        self.config["insecure"] = self.SSL_toggle.isChecked()
-        print(self.config)
+        """
+        Toggles the SSL connection.
+        """
+        self.kuksa_config["insecure"] = not self.SSL_toggle.isChecked()
+        print(self.kuksa_config)
 
     def toggle_CAN_Kuksa(self):
+        """
+        Toggles the CAN/Kuksa connection.
+        """
         global Steering_Signal_Type
         if (self.CAN_Kuksa_toggle.isChecked()):
             Steering_Signal_Type = "CAN"
         else:
             Steering_Signal_Type = "Kuksa"
 
+    def get_protocol(self):
+        if (not self.Protocol_toggle.isChecked()):
+            return "ws"
+        else:
+            return "grpc"
+
     def set_instance(self):
+        """
+        Sets the instance of the Kuksa client.
+        """
         self.kuksa = kuksa_instance.KuksaClientSingleton.instance()
         self.client = self.kuksa.get_client()
 
-        self.config = self.kuksa.get_config()
-        self.token = self.kuksa.get_token()
+        self.kuksa_config = self.kuksa.get_config()
 
-        self.IPAddrInput.setText(self.config["ip"])
-        self.SSL_toggle.setChecked(self.config["insecure"])
-        self.tokenPathInput.setText(self.token)
+        self.IPAddrInput.setText(self.kuksa_config["ip"])
+        self.SSL_toggle.setChecked(not self.kuksa_config["insecure"])
 
         time.sleep(2)
 
@@ -125,16 +147,21 @@ class settings(Base, Form):
         self.refreshStatus()
 
     def refreshStatus(self):
+        """
+        Refreshes the connection status.
+        """
         try:
             if (self.client is None):
                 self.connectionStatus.setText('Not Connected')
                 self.connectionLogo.setStyleSheet("background-color: red")
+                self.connectionLogo.setPixmap(QtGui.QPixmap(":/Carbon_Icons/carbon_icons/connection-signal--off.svg"))
                 return None
 
             if (self.client.checkConnection() == True):
                 self.connectionStatus.setText('Connected')
-                self.connectionLogo.setPixmap(":/icons/feather/check-circle.svg")
                 self.connectionLogo.setStyleSheet("background-color: green")
+                # change cnnection logo pixmap to connected.svf from resources
+                self.connectionLogo.setPixmap(QtGui.QPixmap(":/Carbon_Icons/carbon_icons/connection-signal.svg"))
                 self.client.start()
                 return True
 
@@ -142,20 +169,37 @@ class settings(Base, Form):
                 self.client.stop()
                 self.connectionStatus.setText('Disconnected')
                 self.connectionLogo.setStyleSheet("background-color: yellow")
+                self.connectionLogo.setPixmap(QtGui.QPixmap(":/Carbon_Icons/carbon_icons/connection-signal--off.svg"))
                 return False
         except:
             pass
 
     def reconnectClient(self):
+        """
+        Reconnects the client.
+        """
         try:
-            self.config["ip"] = self.IPAddrInput.text()
-            self.config["insecure"] = self.SSL_toggle.isChecked()
-            self.token = self.tokenPathInput.text()
-            self.client = self.kuksa.reconnect(self.config, self.token)
+            self.kuksa_config["ip"] = self.IPAddrInput.text()
+            self.kuksa_config["insecure"] = not self.SSL_toggle.isChecked()
+            self.kuksa_config["protocol"] = self.get_protocol()
+            self.client = self.kuksa.reconnect(self.kuksa_config)
             self.client.start()
             self.refreshStatus()
+
+            self.refreshThread = RefreshThread(self)
+            self.refreshThread.start()
+
         except Exception as e:
             print(e)
+
+class RefreshThread(QThread):
+    def __init__(self, settings):
+        QThread.__init__(self)
+        self.settings = settings
+
+    def run(self):
+        time.sleep(2)
+        self.settings.refreshStatus()
 
 if __name__ == '__main__':
     import sys
