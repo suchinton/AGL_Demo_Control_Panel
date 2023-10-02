@@ -65,7 +65,7 @@ class FeedKuksa(QThread):
         Sets the instance of the Kuksa client.
         """
         self.kuksa = kuksa_instance.KuksaClientSingleton.instance()
-        self.client = self.kuksa.client
+        self.client = self.kuksa.get_client()
 
     def send_values(self, path=None, value=None, attribute=None):
         """

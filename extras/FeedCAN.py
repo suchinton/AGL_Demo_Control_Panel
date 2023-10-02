@@ -15,6 +15,7 @@
 """
 
 import can
+import logging
 
 def send_can_signal(frame):
     """
@@ -25,8 +26,13 @@ def send_can_signal(frame):
         None
     """
     msg = separate_can_frame(frame)
-    bus = can.interface.Bus(channel='can0', bustype='socketcan')
-    #msg = can.Message(arbitration_id=can_id, data=data, is_extended_id=False)
+    
+    try:
+        bus = can.interface.Bus(channel='can0', bustype='socketcan')
+    except Exception as e:
+        logging.error(f"Failed to initialize bus with channel 'can0': {e}")
+        return
+
     try:
         bus.send(msg)
         print("CAN signal sent successfully:")
