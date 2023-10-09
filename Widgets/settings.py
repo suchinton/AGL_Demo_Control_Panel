@@ -22,6 +22,7 @@ from qtwidgets import AnimatedToggle
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QThread
 from PyQt5 import QtGui
+import logging
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -137,6 +138,7 @@ class settings(Base, Form):
 
         self.IPAddrInput.setText(self.kuksa_config["ip"])
         self.SSL_toggle.setChecked(not self.kuksa_config["insecure"])
+        self.Protocol_toggle.setChecked(self.kuksa_config["protocol"] == 'grpc')
 
         time.sleep(2)
 
@@ -182,6 +184,10 @@ class settings(Base, Form):
             self.kuksa_config["ip"] = self.IPAddrInput.text()
             self.kuksa_config["insecure"] = not self.SSL_toggle.isChecked()
             self.kuksa_config["protocol"] = self.get_protocol()
+            if self.kuksa_config["protocol"] == 'ws':
+                 self.kuksa_config["port"] = "8090"
+            if self.kuksa_config["protocol"] == 'grpc':
+                 self.kuksa_config["port"] = "55555"
             self.client = self.kuksa.reconnect(self.kuksa_config)
             self.client.start()
             self.refreshStatus()
@@ -190,7 +196,7 @@ class settings(Base, Form):
             self.refreshThread.start()
 
         except Exception as e:
-            print(e)
+            logging.error(e)
 
 class RefreshThread(QThread):
     def __init__(self, settings):

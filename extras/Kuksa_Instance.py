@@ -85,6 +85,7 @@ class KuksaClientSingleton:
         try:
             self.client = kuksa.KuksaClientThread(self.kuksa_config)
             self.client.authorize(self.token)
+            self.client.start()
             time.sleep(2)
             if not self.client.checkConnection():
                 self.client = None
@@ -109,10 +110,12 @@ class KuksaClientSingleton:
 
         if self.kuksa_config["protocol"] == 'ws':
             self.token = self.ws_token
+            self.kuksa_config["port"] = "8090"
         if self.kuksa_config["protocol"] == 'grpc':
             self.token = self.grpc_token
+            self.kuksa_config["port"] = "55555"
             
-        self.client = kuksa.KuksaClientThread(config)
+        self.client = kuksa.KuksaClientThread(self.kuksa_config)
         self.client.authorize(self.token)
         return self.client
 
