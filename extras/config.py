@@ -23,8 +23,8 @@ CA = os.path.abspath(os.path.join(os.path.dirname(__file__), "../assets/cert/CA.
 
 KUKSA_CONFIG = {
     "ip": '10.42.0.95',
-    "port": "8090",
-    'protocol': 'ws',
+    "port": "55555",
+    'protocol': 'grpc',
     'insecure': False,
     'cacertificate': CA,
     'tls_server_name': "Server",

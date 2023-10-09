@@ -391,6 +391,12 @@ QLCDNumber {
              </item>
              <item row="1" column="8" alignment="Qt::AlignHCenter">
               <widget class="QSlider" name="fuelLevel_slider">
+               <property name="minimumSize">
+                <size>
+                 <width>60</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <kerning>true</kerning>
@@ -415,6 +421,12 @@ QLCDNumber {
              </item>
              <item row="1" column="1" alignment="Qt::AlignHCenter">
               <widget class="QSlider" name="coolantTemp_slider">
+               <property name="minimumSize">
+                <size>
+                 <width>60</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -513,6 +525,12 @@ QLCDNumber {
              </item>
              <item row="3" column="3">
               <widget class="QSlider" name="Speed_slider">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>60</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <weight>50</weight>
@@ -567,6 +585,12 @@ QLCDNumber {
              </item>
              <item row="3" column="6">
               <widget class="QSlider" name="RPM_slider">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>60</height>
+                </size>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>

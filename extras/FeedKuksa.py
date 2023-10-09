@@ -95,6 +95,9 @@ class FeedKuksa(QThread):
                 except Exception as e:
                     logging.error(f"Error sending values to kuksa {e}")
                     self.set_instance()
+            else:
+                logging.error("Kuksa client is not connected, try reconnecting")
+                self.set_instance()
         else:
             logging.error("Kuksa client is None, try reconnecting")
             time.sleep(2)

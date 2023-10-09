@@ -117,6 +117,7 @@ class KuksaClientSingleton:
             
         self.client = kuksa.KuksaClientThread(self.kuksa_config)
         self.client.authorize(self.token)
+        self.client.start()
         return self.client
 
     def get_client(self):

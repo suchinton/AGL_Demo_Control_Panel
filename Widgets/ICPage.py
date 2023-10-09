@@ -19,9 +19,11 @@ import sys
 from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon, QPixmap, QPainter
+from PyQt5.QtCore import QObject, pyqtSignal
 import time
 from PyQt5.QtWidgets import QWidget
 from qtwidgets import AnimatedToggle
+import threading
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -65,12 +67,16 @@ class ICWidget(Base, Form):
         self.setupUi(self)
         
         self.IC = IC_Paths()
+        #self.vehicle_simulator = VehicleSimulator(self)
 
         self.feed_kuksa = FeedKuksa()
         self.feed_kuksa.start()
+        self.vehicle_simulator = VehicleSimulator()
 
         header_frame = self.findChild(QWidget, "header_frame")
         layout = header_frame.layout()
+
+        self.IC_Frame = self.findChild(QWidget, "frame_1")
 
         self.Script_toggle = AnimatedToggle(
             checked_color="#4BD7D6",
@@ -86,6 +92,10 @@ class ICWidget(Base, Form):
                    self.driveBtn]
 
         # group for the buttons for mutual exclusion
+
+        self.vehicle_simulator.speed_changed.connect(self.set_Vehicle_Speed)
+        self.vehicle_simulator.rpm_changed.connect(self.set_Vehicle_RPM)
+
         self.driveGroupBtns = QtWidgets.QButtonGroup(self)
         self.driveGroupBtns.setExclusive(True)
 
@@ -111,6 +121,7 @@ class ICWidget(Base, Form):
         self.accelerationBtn.released.connect(self.accelerationBtnReleased)
 
         # make both buttons checkable
+        self.Script_toggle.clicked.connect(self.handle_Script_toggle)
         self.leftIndicatorBtn.setCheckable(True)
         self.rightIndicatorBtn.setCheckable(True)
         self.hazardBtn.setCheckable(True)
@@ -118,6 +129,12 @@ class ICWidget(Base, Form):
         self.leftIndicatorBtn.toggled.connect(self.leftIndicatorBtnClicked)
         self.rightIndicatorBtn.toggled.connect(self.rightIndicatorBtnClicked)
         self.hazardBtn.toggled.connect(self.hazardBtnClicked)
+
+    def set_Vehicle_Speed(self, speed):
+        self.Speed_slider.setValue(speed)
+
+    def set_Vehicle_RPM(self, rpm):
+        self.RPM_slider.setValue(rpm)
 
     def update_Speed_monitor(self):
         """
@@ -248,6 +265,14 @@ class ICWidget(Base, Form):
                 lambda: self.updateSpeedAndEngineRpm("Decelerate"))
             self.acceleration_timer.start(100)
 
+    def handle_Script_toggle(self):
+        if self.Script_toggle.isChecked():
+            self.set_Vehicle_RPM(1000)
+            self.set_Vehicle_Speed(0)
+            self.vehicle_simulator.start()
+        else:
+            self.vehicle_simulator.stop()
+
     def updateSpeedAndEngineRpm(self, action, acceleration=(60/5)):
         if action == "Accelerate":
             pass
@@ -328,37 +353,105 @@ class AccelerationFns():
         engine_rpm = wheel_rps * gear_ratios[current_gear - 1] * 60
 
         return int(engine_rpm)
+    
+class VehicleSimulator(QObject):
+    # Define signals for updating speed and rpm
+    speed_changed = pyqtSignal(int)
+    rpm_changed = pyqtSignal(int)
 
+    DEFAULT_IDLE_RPM = 1000
 
-class ICScript(ICWidget):
-    def start_script(self):
-        ICWidget.reset()
+    def __init__(self):
+        super().__init__()
+        self.freq = 10
+        self.vehicle_speed = 0
+        self.engine_speed = self.DEFAULT_IDLE_RPM
+        self.running = False
+        self.lock = threading.Lock()
+        self.thread = threading.Thread(target=self.run, daemon=True)
 
-        # disable all widgets in the scroll area
-        for widget in ICWidget.scrollAreaWidgetContents.children():
-            widget.setEnabled(False)
+    def start(self):
+        if not self.running:
+            self.reset()
+            self.running = True
+            self.thread.start()
 
-        rates = [(60/5), (60/4), (60/3)]
+    def stop(self):
+        self.running = False
 
-        # start assigning values to the  speed and rpm sliders and send them to the IC do this in a loop for each rate
-        for rate in rates:
-            ICWidget.accelerationBtnPressed()
-            ICWidget.acceleration_timer.timeout.connect(
-                lambda: ICWidget.updateSpeedAndEngineRpm("Accelerate"), rate)
-            ICWidget.acceleration_timer.start(100)
+    def reset(self):
+        with self.lock:
+            self.vehicle_speed = 0
+            self.engine_speed = self.DEFAULT_IDLE_RPM
+
+    def run(self):
+        while self.running:
+            if not self.running:
+                break
+
+            # Simulate acceleration and update speed and rpm
+            self.accelerate(60, 1800, 3)
+            self.accelerate(65, 1700, 1)
+            self.accelerate(80, 2500, 6)
+            self.accelerate(100, 3000, 4)
+            self.brake(80, 3000, 3)
+            self.accelerate(104, 4000, 6)
+            self.brake(40, 2000, 4)
+            self.accelerate(90, 3000, 5)
+            self.brake(1, 650, 5)
+            
+            # Ensure reset is called when not in cruise mode
+            if not self.running:
+                self.reset()
+            
             time.sleep(5)
-            ICWidget.accelerationBtnReleased()
-            ICWidget.acceleration_timer.timeout.connect(
-                lambda: ICWidget.updateSpeedAndEngineRpm("Decelerate"), rate)
-            ICWidget.acceleration_timer.start(100)
-            time.sleep(5)
 
-    def stop_script(self):
-        ICWidget.reset()
+    def accelerate(self, target_speed, target_rpm, duration):
+        if target_speed <= self.vehicle_speed:
+            return
+        v = (target_speed - self.vehicle_speed) / (duration * self.freq)
+        r = (target_rpm - self.engine_speed) / (duration * self.freq)
+        while self.vehicle_speed < target_speed and self.running:
+            with self.lock:
+                self.vehicle_speed += v
+                self.engine_speed += r
+                self.speed_changed.emit(int(self.vehicle_speed))
+                self.rpm_changed.emit(int(self.engine_speed))
+            time.sleep(1 / self.freq)
 
-        # enable all widgets in the scroll area
-        for widget in ICWidget.scrollAreaWidgetContents.children():
-            widget.setEnabled(True)
+    def brake(self, target_speed, target_rpm, duration):
+        if target_speed >= self.vehicle_speed:
+            return
+        v = (self.vehicle_speed - target_speed) / (duration * self.freq)
+        r = (self.engine_speed - target_rpm) / (duration * self.freq)
+        while self.vehicle_speed > target_speed and self.running:
+            with self.lock:
+                self.vehicle_speed -= v
+                self.engine_speed -= r
+                self.speed_changed.emit(int(self.vehicle_speed))
+                self.rpm_changed.emit(int(self.engine_speed))
+            time.sleep(1 / self.freq)
+
+    def increase(self, bycruise = True):
+        if self.CRUISEACTIVE:
+            target_speed = self.vehicle_speed + 5
+            target_rpm = self.engine_speed * 1.1
+            self.accelerate(target_speed, target_rpm, 2, bycruise)
+
+    def decrease(self, bycruise = True):
+        if self.CRUISEACTIVE:
+            target_speed = self.vehicle_speed - 5
+            target_rpm = self.engine_speed * 0.9
+            self.brake(target_speed, target_rpm, 2, bycruise)
+
+    def resume(self, bycruise = True):
+        target_speed = self.CRUISESPEED
+        target_rpm = self.CRUISERPM
+        current_speed = self.get_vehicle_speed()
+        if target_speed > current_speed:
+            self.accelerate(target_speed, target_rpm, 2, bycruise)
+        else:
+            self.brake(target_speed, target_rpm, 2, bycruise)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

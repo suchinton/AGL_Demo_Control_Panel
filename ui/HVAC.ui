@@ -239,7 +239,7 @@ QListWidget::item:hover {
            <x>0</x>
            <y>0</y>
            <width>697</width>
-           <height>382</height>
+           <height>409</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -462,6 +462,12 @@ QListWidget::item:hover {
                 </item>
                 <item row="2" column="3" rowspan="4" alignment="Qt::AlignHCenter">
                  <widget class="QSlider" name="rightFanSpeed_slider">
+                  <property name="minimumSize">
+                   <size>
+                    <width>40</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -571,6 +577,12 @@ QListWidget::item:hover {
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>40</width>
+                    <height>0</height>
+                   </size>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
