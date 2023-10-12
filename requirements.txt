@@ -1,5 +1,5 @@
 pyqt5==5.15
-kuksa-client==0.3.0
+kuksa-client==0.4.0
 python-can>=4.2.2
 qtpy==2.3.1
 qtwidgets==1.1

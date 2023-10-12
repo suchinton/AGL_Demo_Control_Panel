@@ -82,7 +82,15 @@ class UI_Handeler(MainWindow):
             self.move(self.pos() + event.globalPos() - self.clickPosition)
             self.clickPosition = event.globalPos()
             event.accept()
-
+    
+    def mousePressEvent(self, event):
+        self.clickPosition = event.globalPos()
+        event.accept()
+    
+    def mouseReleaseEvent(self, event):
+        self.clickPosition = None
+        event.accept()
+        
     def set_instance(self):
         """
         This method sets the instance of the Kuksa client.

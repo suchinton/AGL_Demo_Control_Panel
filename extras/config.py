@@ -22,7 +22,7 @@ python_version = f"python{'.'.join(platform.python_version_tuple()[:2])}"
 CA = os.path.abspath(os.path.join(os.path.dirname(__file__), "../assets/cert/CA.pem"))
 
 KUKSA_CONFIG = {
-    "ip": '10.42.0.95',
+    "ip": '127.0.0.1',
     "port": "55555",
     'protocol': 'grpc',
     'insecure': False,

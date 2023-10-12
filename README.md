@@ -4,30 +4,47 @@ A PyQt5 application to simulate CAN Bus signals using Kuksa.val for the AGL Demo
 
 ## # Installation
 
-Clone the repository
-```bash
-git clone https://github.com/suchinton/AGL_Demo_Control_Panel.git && cd ./AGL_Demo_Control_Panel
-```
-Install the Python dependencies by running
-```
-pip install -r requirements.txt
-```
+- Clone repository:
+    ```bash
+    # Gerrit (Recommended)
+    $ git clone "https://gerrit.automotivelinux.org/gerrit/src/agl-demo-control-panel"
+
+    # Or GitHub
+    $ git clone https://github.com/suchinton/AGL_Demo_Control_Panel.git
+    ```
+- Install the Python dependencies:
+
+    - _Note_: 
+        If errors occure in Debian based/Rasbian OS during installation:  
+        ```bash
+        $ nano requirements.txt
+        # -> Comment pyqt5 dependency using "#"
+        $ sudo apt install python3-pyqt5 python3-qtpy pyqt5-dev-tools
+        ```
+        and skip to step 2
+
+    - Step 1
+    ```bash
+    $ python3 -m venv control-panel
+    $ source control-panel/bin/activate
+    ```
+    - Step 2
+    ```bash
+    $ pip3 install -r requirements.txt
+    $ pyrcc5 assets/res.qrc -o res_rc.py
+    ```
+
+
+
 
 
 ## # Usage
 
-First, we run the kuksa-val-server on the machine, you can also run the [docker image](https://github.com/eclipse/kuksa.val/tree/master/kuksa-val-server#quick-start) for the same. 
+First, we run the kuksa-val-server on the machine, you can also run the [docker image](https://github.com/eclipse/kuksa.val/tree/master/kuksa-val-server#quick-start) for the same. It is important to note that `kuksa-val-server` uses websockets and `databroker` uses grpc, so adjust settings accordingly.
 
-### 1. Running the Docker Image for Kuksa-val-server:
+### 1. Running the Docker Image for Kuksa-val-server/ kuksa databroker:
 
-By default, the server runs on localhost, so the settings mentioned below can be used,
-
-```
-#--- Settings for AGL Demo Control Panel ---#
-
-IP Address: localhost
-Insecure Mode: False (Unchecked)
-```
+By default, the server runs on `localhost`, so the settings mentioned below can be used,
 
 ### 2. AGL Image
 
@@ -38,38 +55,53 @@ sudo bash AGL_Demo_Control_Panel/Scripts/setup_tap_wireless_int.sh
 ```
 
 
-#### Start the QEMU instance with elevated privileges with these arguments,
+#### Start the QEMU instance with elevated privileges
 
 ```bash
 sudo qemu-system-x86_64 ... netdev=net0, -netdev bridge, br=br0, id=net0
 
 ## for example ##
-
-sudo qemu-system-x86_64 -device virtio-net-pci,netdev=net0,mac=52:54:00:12:35:02 -netdev bridge,br=br0,id=net0 -drive file=agl-cluster-demo-platform-flutter-qemux86-64.ext4,if=virtio,format=raw -usb -usbdevice tablet -device virtio-rng-pci -snapshot -vga virtio -soundhw hda -machine q35 -cpu kvm64 -cpu qemu64,+ssse3,+sse4.1,+sse4.2,+popcnt -enable-kvm -m 2048 -serial mon:vc -serial mon:stdio -serial null -kernel bzImage -append 'root=/dev/vda rw console=tty0 mem=2048M ip=dhcp oprofile.timer=1 console=ttyS0,115200n8 verbose fstab=no'
+$ sudo qemu-system-x86_64 -device virtio-net-pci,netdev=net0,mac=52:54:00:12:35:02 -netdev bridge,br=br0,id=net0 \
+    -drive file=agl-cluster-demo-platform-flutter-qemux86-64.ext4,if=virtio,format=raw -usb -usbdevice tablet -device virtio-rng-pci \
+    -snapshot -vga virtio \
+    -soundhw hda -machine q35 -cpu kvm64 -cpu qemu64,+ssse3,+sse4.1,+sse4.2,+popcnt -enable-kvm \
+    -m 2048 -serial mon:vc -serial mon:stdio -serial null -kernel bzImage \
+    -append 'root=/dev/vda rw console=tty0 mem=2048M ip=dhcp oprofile.timer=1 console=ttyS0,115200n8 verbose fstab=no'
 ```
 _Note_: Make sure to update the `file=` argument accordingly.
 
 
-Run the server in AGL with the following commands,
+- Run the server in AGL with the following command,
 
-```bash
-kuksa-val-server --address 0.0.0.0 --insecure
-```
+    ```bash
+    $ pkill kuksa
+    $ kuksa-val-server --address 0.0.0.0
+
+    $ pkill databroker
+    $ databroker --address 0.0.0.0 --tls-cert /etc/kuksa-val/Server.pem --tls-private-key /etc/kuksa-val/Server.key --jwt-public-key /usr/lib/python3.10/site-packages/kuksa_certificates/jwt/jwt.key.pub --vss /usr/share/vss/vss.json
+
+    # To make the launch persistant  edit /etc/default/kuksa-databroker.agl
+    $ vi /etc/default/kuksa-databroker.agl
+    # now add `--address 0.0.0.0` to the series of arguments
+    ```
 
 
 ## Running the `AGL_Demo_Control_Panel`
 
+As `AGl demo control panel` defaults to grpc (databroker), you can edit the default `ip` addres in `extras/config.py` to the address of the server for faster connection. (Optional)
+
 ```bash
-cd AGL_Demo_Control_Panel
-python -u main.py
+$ cd AGL_Demo_Control_Panel
+$ source control-panel/bin/activate # If using python venv
+$ python -u main.py
 ```
 
 Once the main window is visible, we go to the settings page
 
-1. Start Client
-2. Enter IP address and JWT token path _(Use default values if running kuksa-val-server locally)_
+1. Start Client _(Loads default config values)_
+2. Enter IP address _(if running databroker locally use `localhost` or `127.0.0.1`)_
 3. Reconnect
-4. Refresh Status
+4. Connection Status
     - Red: Couldn't find the server at the specified address
     - Yellow: Faulty settings
     - Green: Connected
@@ -80,7 +112,7 @@ Once the main window is visible, we go to the settings page
 
 ### Building for RPi 4
 
-For building the `agl-cluster-demo-platform-flutter` image for the Raspberry Pi 4 I followed the following steps after setting up my [build environment](https://docs.automotivelinux.org/en/master/#01_Getting_Started/02_Building_AGL_Image/03_Downloading_AGL_Software/).
+For building the `agl-cluster-demo-platform-flutter` image for the Raspberry Pi 4 please follow the steps after setting up your [build environment](https://docs.automotivelinux.org/en/master/#01_Getting_Started/02_Building_AGL_Image/03_Downloading_AGL_Software/).
 
 ```bash
 source meta-agl/scripts/aglsetup.sh -f \
@@ -90,6 +122,7 @@ source agl-init-build-env
 
 bitbake agl-cluster-demo-platform-flutter
 ```
+_Note_: you can also add `agl-demo-preload` as a feature to the build to make databroker (or) kuksa-val-server run on `0.0.0.0` by default (optional)
 
 ### Flashing Image to SD Card
 
@@ -120,20 +153,15 @@ ssh root@<ip-address-raspberrypi>
 After successfully `ssh`-ing into the session, we kill the existing `kuksa` service (since it runs on localhost) and restart `kuksa-val-server` on special ip address `0.0.0.0`.
 
 ```bash
-pkill kuksa
-kuksa-val-server --address 0.0.0.0 --insecure 
+$ pkill databroker
+$ databroker --address 0.0.0.0
 
-# optional flag "--log-level VERBOSE"
+# To make databroker persistantly run on `0.0.0.0`
+
+$ vi /etc/default/kuksa-databroker
 ```
 
-_Note_: Make sure that IP address entered is that of the PI4, and make sure to check `Insecure Mode` before connecting.
 
 ## # Demo Video
 
 https://github.com/suchinton/AGL_Demo_Control_Panel/assets/75079303/b1d08461-f39b-42d4-97d8-ed7307df1fa2
-
-## # Supported Applications
-
-- [IC](https://github.com/aakash-s45/ic): Instrument Cluster for AGL flutter build
-- 🚧 **(WIP)** [HVAC_dashboard](https://github.com/hritik-chouhan/HVAC_dashboard): A Flutter-based HVAC application made for AGL IVI dashboard
-- more to come!
