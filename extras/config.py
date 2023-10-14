@@ -30,7 +30,7 @@ GRPC_TOKEN = os.path.abspath(os.path.join(os.path.dirname(__file__), "../assets/
 def reload_config():
     KUKSA_CONFIG.clear()
     config = ConfigParser()
-    config.read('/home/suchinton/Repos/AGL_Demo_Control_Panel/extras/config.ini')
+    config.read(os.path.abspath(os.path.join(os.path.dirname(__file__), 'config.ini')))
     print(config.sections())
 
     try:
@@ -46,8 +46,9 @@ def reload_config():
             KUKSA_CONFIG['insecure'] = False if config[preferred_config]['insecure'] == 'false' else True
             KUKSA_CONFIG['cacertificate'] = CA if config[preferred_config]['cacert'] == 'true' else None
             KUKSA_CONFIG['tls_server_name'] = config[preferred_config]['tls_server_name'] if config[preferred_config]['tls_server_name'] else None
-        except KeyError:
-            pass
+        except KeyError as e:
+            print(f"Error: {e}")
+            return None, None
 
     return KUKSA_CONFIG, GRPC_TOKEN if KUKSA_CONFIG['protocol'] == 'grpc' else WS_TOKEN
 
