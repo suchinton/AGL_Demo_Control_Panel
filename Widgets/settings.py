@@ -60,7 +60,9 @@ class settings(Base, Form):
         """
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
-
+        
+        default_config = kuksa_instance.get_default_config()
+        
         self.SSL_toggle = AnimatedToggle(
             checked_color="#4BD7D6",
             pulse_checked_color="#00ffff",
@@ -80,6 +82,7 @@ class settings(Base, Form):
         self.connectionLogo = self.findChild(QLabel, "connectionLogo")
 
         self.IPAddrInput = self.findChild(QLineEdit, "IPAddrInput")
+        self.PortInput = self.findChild(QLineEdit, "PortInput")
 
         self.reconnectBtn = self.findChild(QPushButton, "reconnectBtn")
         self.startClientBtn = self.findChild(QPushButton, "startClientBtn")
@@ -102,7 +105,12 @@ class settings(Base, Form):
         self.place_holder_toggle_2.deleteLater()
         self.place_holder_toggle_3.deleteLater()
 
-        self.refreshStatus()
+        self.IPAddrInput.setText(default_config["ip"])
+        self.PortInput.setText(default_config["port"])
+        self.SSL_toggle.setChecked(not default_config["insecure"])
+        self.Protocol_toggle.setChecked(default_config["protocol"] == 'grpc')
+
+        # self.refreshStatus()
 
     def toggleSSL(self):
         """
@@ -132,13 +140,8 @@ class settings(Base, Form):
         Sets the instance of the Kuksa client.
         """
         self.kuksa = kuksa_instance.KuksaClientSingleton.instance()
+        self.kuksa.reconnect(self.make_new_config())
         self.client = self.kuksa.get_client()
-
-        self.kuksa_config = self.kuksa.get_config()
-
-        self.IPAddrInput.setText(self.kuksa_config["ip"])
-        self.SSL_toggle.setChecked(not self.kuksa_config["insecure"])
-        self.Protocol_toggle.setChecked(self.kuksa_config["protocol"] == 'grpc')
 
         time.sleep(2)
 
@@ -162,7 +165,6 @@ class settings(Base, Form):
             if (self.client.checkConnection() == True):
                 self.connectionStatus.setText('Connected')
                 self.connectionLogo.setStyleSheet("background-color: green")
-                # change cnnection logo pixmap to connected.svf from resources
                 self.connectionLogo.setPixmap(QtGui.QPixmap(":/Carbon_Icons/carbon_icons/connection-signal.svg"))
                 self.client.start()
                 return True
@@ -181,14 +183,8 @@ class settings(Base, Form):
         Reconnects the client.
         """
         try:
-            self.kuksa_config["ip"] = self.IPAddrInput.text()
-            self.kuksa_config["insecure"] = not self.SSL_toggle.isChecked()
-            self.kuksa_config["protocol"] = self.get_protocol()
-            if self.kuksa_config["protocol"] == 'ws':
-                 self.kuksa_config["port"] = "8090"
-            if self.kuksa_config["protocol"] == 'grpc':
-                 self.kuksa_config["port"] = "55555"
-            self.client = self.kuksa.reconnect(self.kuksa_config)
+            config = self.make_new_config()
+            self.client = self.kuksa.reconnect(config)
             self.client.start()
             self.refreshStatus()
 
@@ -197,6 +193,19 @@ class settings(Base, Form):
 
         except Exception as e:
             logging.error(e)
+
+    def make_new_config(self):
+        """
+        Makes a new configuration using fields in the settings widget.
+        """
+        new_config = {}
+        new_config["ip"] = self.IPAddrInput.text()
+        new_config["port"] = self.PortInput.text()
+        new_config["protocol"] = self.get_protocol()
+        new_config["insecure"] = not self.SSL_toggle.isChecked()
+        new_config["cacertificate"] = None
+        new_config["tls_server_name"] = None
+        return new_config
 
 class RefreshThread(QThread):
     def __init__(self, settings):

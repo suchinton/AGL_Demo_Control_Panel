@@ -16,19 +16,39 @@
 
 import os
 import platform
+from configparser import ConfigParser
 
 python_version = f"python{'.'.join(platform.python_version_tuple()[:2])}"
 
 CA = os.path.abspath(os.path.join(os.path.dirname(__file__), "../assets/cert/CA.pem"))
 
-KUKSA_CONFIG = {
-    "ip": '127.0.0.1',
-    "port": "55555",
-    'protocol': 'grpc',
-    'insecure': False,
-    'cacertificate': CA,
-    'tls_server_name': "Server",
-}
+KUKSA_CONFIG = {}
 
 WS_TOKEN = os.path.join(os.path.expanduser("~"), f".local/lib/{python_version}/site-packages/kuksa_certificates/jwt/super-admin.json.token")
 GRPC_TOKEN = os.path.abspath(os.path.join(os.path.dirname(__file__), "../assets/token/grpc/actuate-provide-all.token"))
+
+def reload_config():
+    KUKSA_CONFIG.clear()
+    config = ConfigParser()
+    config.read('/home/suchinton/Repos/AGL_Demo_Control_Panel/extras/config.ini')
+    print(config.sections())
+
+    try:
+        preferred_config = config['default']['preferred-config']
+    except KeyError:
+        preferred_config = None
+
+    if preferred_config:
+        try:
+            KUKSA_CONFIG['ip'] = config[preferred_config]['ip']
+            KUKSA_CONFIG['port'] = config[preferred_config]['port']
+            KUKSA_CONFIG['protocol'] = config[preferred_config]['protocol']
+            KUKSA_CONFIG['insecure'] = False if config[preferred_config]['insecure'] == 'false' else True
+            KUKSA_CONFIG['cacertificate'] = CA if config[preferred_config]['cacert'] == 'true' else None
+            KUKSA_CONFIG['tls_server_name'] = config[preferred_config]['tls_server_name'] if config[preferred_config]['tls_server_name'] else None
+        except KeyError:
+            pass
+
+    return KUKSA_CONFIG, GRPC_TOKEN if KUKSA_CONFIG['protocol'] == 'grpc' else WS_TOKEN
+
+print(reload_config())

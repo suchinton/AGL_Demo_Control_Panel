@@ -33,6 +33,7 @@ QPushButton{
 	padding: 5px 10px;
 	border: 1px solid #4BD7D6 ; /* light blue */
 	border-radius: 10px;
+	margin: 3px;
 }
 
 QPushButton:pressed {
@@ -44,6 +45,7 @@ QPushButton:pressed {
 	padding: 5px 10px;
 	border: 1px solid #4BD7D6 ; /* light blue */
 	border-radius: 10px;
+	margin: 3px;
 }
 
 QCheckBox {
@@ -67,32 +69,27 @@ QCheckBox:disabled {
 
 QCheckBox:indicator:disabled {
   background-color: #cccccc; /* Grayed out background */
+}
+
+#divider{
+  background-color: #00ffff; /* Neon blue */
+  border: 1px solid; 
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="4">
-     <spacer name="verticalSpacer_3">
+    <item row="5" column="1" colspan="2">
+     <spacer name="verticalSpacer">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Expanding</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
         <width>20</width>
         <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="0" rowspan="5">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
        </size>
       </property>
      </spacer>
@@ -106,124 +103,38 @@ QCheckBox:indicator:disabled {
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="5" colspan="2" alignment="Qt::AlignLeft">
-        <widget class="QLabel" name="connectionLogo">
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_16">
          <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon_icons/connection-signal--off.svg</pixmap>
+          <string>Port</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="4">
-        <widget class="QLabel" name="IPAddr">
+       <item row="5" column="4" alignment="Qt::AlignRight">
+        <widget class="QLabel" name="label_12">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <italic>true</italic>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
-          <string>IP Address *</string>
+          <string>ws</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="7" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="place_holder_toggle_2">
-         <property name="toolTip">
-          <string>Default: WS</string>
-         </property>
-         <property name="text">
+       <item row="3" column="4" colspan="5">
+        <widget class="QLineEdit" name="PortInput"/>
+       </item>
+       <item row="2" column="4" colspan="6">
+        <widget class="QLineEdit" name="IPAddrInput">
+         <property name="placeholderText">
           <string/>
          </property>
         </widget>
        </item>
        <item row="4" column="0" colspan="3">
-        <widget class="QLabel" name="label_11">
-         <property name="toolTip">
-          <string>Default: WS</string>
-         </property>
-         <property name="text">
-          <string>Protocol</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="10" alignment="Qt::AlignLeft">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>grpc</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="4">
-        <widget class="QLabel" name="status">
-         <property name="text">
-          <string>Status</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="7">
-        <widget class="QLabel" name="connectionStatus">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Disconnected</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1" rowspan="2">
-        <widget class="QFrame" name="PageIcons">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="5">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon_icons/security-services.svg</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4" rowspan="4">
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="0" colspan="4">
         <widget class="QLabel" name="label">
          <property name="toolTip">
           <string>Default: Secure</string>
@@ -233,61 +144,7 @@ QCheckBox:indicator:disabled {
          </property>
         </widget>
        </item>
-       <item row="5" column="2" rowspan="2">
-        <widget class="QFrame" name="PageLabels">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-         </layout>
-        </widget>
-       </item>
-       <item row="4" column="5" alignment="Qt::AlignRight">
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>ws</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="5" colspan="7">
-        <widget class="QLineEdit" name="IPAddrInput">
-         <property name="placeholderText">
-          <string>Default: localhost</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="6" colspan="3" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="place_holder_toggle_1">
-         <property name="toolTip">
-          <string>Default: Secure</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="11">
+       <item row="0" column="0" colspan="9">
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -303,8 +160,158 @@ QCheckBox:indicator:disabled {
          </property>
         </spacer>
        </item>
+       <item row="1" column="3" rowspan="7">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="5" colspan="3" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="place_holder_toggle_1">
+         <property name="toolTip">
+          <string>Default: Secure</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="3">
+        <widget class="QLabel" name="IPAddr">
+         <property name="text">
+          <string>IP Address *</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="8" alignment="Qt::AlignLeft">
+        <widget class="QLabel" name="label_13">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <italic>true</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>grpc</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QLabel" name="label_11">
+         <property name="toolTip">
+          <string>Default: WS</string>
+         </property>
+         <property name="text">
+          <string>Protocol</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="6" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="place_holder_toggle_2">
+         <property name="toolTip">
+          <string>Default: WS</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon_icons/security-services.svg</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4" colspan="2" alignment="Qt::AlignLeft">
+        <widget class="QLabel" name="connectionLogo">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon_icons/connection-signal--off.svg</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <widget class="QLabel" name="status">
+         <property name="text">
+          <string>Status</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="6">
+        <widget class="QLabel" name="connectionStatus">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Disconnected</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>Use (AGL) CA cert</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="6" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="AGL_CA">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
+    </item>
+    <item row="1" column="3" rowspan="5">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="0" colspan="4">
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
     </item>
     <item row="1" column="1" colspan="2">
      <widget class="QFrame" name="frame_2">
@@ -358,24 +365,8 @@ QCheckBox:indicator:disabled {
       </layout>
      </widget>
     </item>
-    <item row="5" column="1" colspan="2">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Expanding</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="3" rowspan="5">
-     <spacer name="horizontalSpacer">
+    <item row="1" column="0" rowspan="5">
+     <spacer name="horizontalSpacer_2">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -402,7 +393,7 @@ QCheckBox:indicator:disabled {
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="7" column="4">
+       <item row="5" column="4">
         <widget class="QPushButton" name="pushButton_3">
          <property name="text">
           <string/>
@@ -419,48 +410,14 @@ QCheckBox:indicator:disabled {
          </property>
         </widget>
        </item>
-       <item row="5" column="4">
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../assets/res.qrc">
-           <normaloff>:/Carbon_Icons/carbon_icons/view.svg</normaloff>:/Carbon_Icons/carbon_icons/view.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="4">
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../assets/res.qrc">
-           <normaloff>:/Carbon_Icons/carbon_icons/view.svg</normaloff>:/Carbon_Icons/carbon_icons/view.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1" colspan="3">
+       <item row="5" column="1" colspan="3">
         <widget class="QLabel" name="label_5">
          <property name="text">
           <string>Steering Controls</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="label_7">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -485,21 +442,41 @@ QCheckBox:indicator:disabled {
          </property>
         </widget>
        </item>
-       <item row="0" column="0" colspan="5" alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Page Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1" colspan="3">
+       <item row="4" column="1" colspan="3">
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>HVAC</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="4" column="4">
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/Carbon_Icons/carbon_icons/view.svg</normaloff>:/Carbon_Icons/carbon_icons/view.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="5" alignment="Qt::AlignHCenter|Qt::AlignBottom">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Page Settings</string>
+         </property>
+         <property name="margin">
+          <number>6</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
         <widget class="QLabel" name="label_6">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Ignored">
@@ -524,14 +501,54 @@ QCheckBox:indicator:disabled {
          </property>
         </widget>
        </item>
-       <item row="5" column="1" colspan="3">
-        <widget class="QLabel" name="label_3">
+       <item row="3" column="4">
+        <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>Instrument Cluster</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/Carbon_Icons/carbon_icons/view.svg</normaloff>:/Carbon_Icons/carbon_icons/view.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
+       <item row="6" column="3" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="place_holder_toggle_3">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="4" alignment="Qt::AlignLeft">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>CAN</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="5">
+        <widget class="QFrame" name="divider">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::HLine</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
         <widget class="QLabel" name="label_8">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -556,34 +573,43 @@ QCheckBox:indicator:disabled {
          </property>
         </widget>
        </item>
-       <item row="8" column="4" alignment="Qt::AlignLeft">
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>CAN</string>
+       <item row="2" column="0" colspan="5">
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-        </widget>
-       </item>
-       <item row="8" column="3" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="place_holder_toggle_3">
-         <property name="text">
-          <string/>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
          </property>
-        </widget>
-       </item>
-       <item row="8" column="2" alignment="Qt::AlignRight|Qt::AlignVCenter">
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>Kuksa</string>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
          </property>
-        </widget>
+        </spacer>
        </item>
-       <item row="8" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+       <item row="6" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
         <widget class="QLabel" name="label_15">
          <property name="text">
           <string/>
          </property>
          <property name="pixmap">
           <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon_icons/x-axis.svg</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2" alignment="Qt::AlignRight|Qt::AlignVCenter">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Kuksa</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" colspan="3">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Instrument Cluster</string>
          </property>
         </widget>
        </item>

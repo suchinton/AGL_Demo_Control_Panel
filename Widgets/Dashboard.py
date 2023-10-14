@@ -85,9 +85,10 @@ class Dashboard(Base, Form):
         - size: The size of the icon.
         """
         icon = tile.icon()
-        scaled_pixmap = icon.pixmap(icon.availableSizes()[0]).scaled(size, size, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
-        tile.setIcon(QtGui.QIcon(scaled_pixmap))
-        tile.setIconSize(QtCore.QSize(size, size))
+        if icon.availableSizes():
+            scaled_pixmap = icon.pixmap(icon.availableSizes()[0]).scaled(size, size, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+            tile.setIcon(QtGui.QIcon(scaled_pixmap))
+            tile.setIconSize(QtCore.QSize(size, size))
 
     def tile_clicked(self, tile):
         """
