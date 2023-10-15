@@ -96,7 +96,7 @@ class MainWindow(Base, Form):
         
         self.stop_thread_signal.connect(self.stackedWidget.widget(0).feed_kuksa.stop)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(0)        
         self.dashboardButton.setChecked(True)
         UI_Handeler.Hide_Navbar(self,bool_arg=False)
 
@@ -110,14 +110,14 @@ class MainWindow(Base, Form):
         self.size_grip.setFixedSize(20, 20)
         #self.size_grip.setStyleSheet("QSizeGrip { background-color: transparent; }")
         self.size_grip.setStyleSheet("""
-    QSizeGrip {
-        background-color: transparent;
-        background-image: url(:/Carbon_Icons/carbon_icons/corner.svg);
-        background-repeat: no-repeat;
-        background-position: center;
-        border: none;
-    }
-        """)
+                                        QSizeGrip {
+                                            background-color: transparent;
+                                            background-image: url(:/Carbon_Icons/carbon_icons/corner.svg);
+                                            background-repeat: no-repeat;
+                                            background-position: center;
+                                            border: none;
+                                        }
+                                    """)
         self.centralwidget.layout().addWidget(self.size_grip, 0, Qt.AlignBottom | Qt.AlignRight)
 
     def handleTileClicked(self):

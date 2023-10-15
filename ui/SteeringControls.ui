@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1388</width>
-    <height>793</height>
+    <width>1034</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,13 +16,13 @@
   <property name="styleSheet">
    <string notr="true">*{
 	border: none;
+	border-radius: 8px;
 	background-color: transparent;
-	background: none; 
+	background: none;
 	padding: 0;
 	margin: 0;
 	color: #fff;
 }
-
 QPushButton {
 	background-color: #6C6C85 ; /* pastel purple */
 	padding: 50px 50px;
@@ -67,12 +67,216 @@ QPushButton:checked {
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="2" rowspan="3">
+    <item row="2" column="1" rowspan="4" alignment="Qt::AlignRight|Qt::AlignVCenter">
+     <widget class="QFrame" name="LeftControls">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+        <widget class="QFrame" name="TopLeftControls">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="2" column="2">
+           <widget class="QPushButton" name="NextTrack">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/res.qrc">
+              <normaloff>:/Carbon_Icons/carbon_icons/skip--forward--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/skip--forward--filled.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="3">
+           <widget class="QPushButton" name="VolumeDown">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/res.qrc">
+              <normaloff>:/Carbon_Icons/carbon_icons/volume--down--filled--alt.svg</normaloff>:/Carbon_Icons/carbon_icons/volume--down--filled--alt.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="Mode">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <italic>true</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>MODE</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="PreviousTrack">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/res.qrc">
+              <normaloff>:/Carbon_Icons/carbon_icons/skip--back--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/skip--back--filled.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="3">
+           <widget class="QPushButton" name="VolumeUp">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/res.qrc">
+              <normaloff>:/Carbon_Icons/carbon_icons/volume--up--filled--alt.svg</normaloff>:/Carbon_Icons/carbon_icons/volume--up--filled--alt.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item alignment="Qt::AlignBottom">
+        <widget class="QFrame" name="BottomLeftControls">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="Info">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/res.qrc">
+              <normaloff>:/Carbon_Icons/carbon_icons/information.svg</normaloff>:/Carbon_Icons/carbon_icons/information.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="VolumeMute">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/res.qrc">
+              <normaloff>:/Carbon_Icons/carbon_icons/volume--mute--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/volume--mute--filled.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="2" column="2" rowspan="3" alignment="Qt::AlignVCenter">
      <widget class="QFrame" name="frame">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="minimumSize">
        <size>
-        <width>500</width>
-        <height>500</height>
+        <width>0</width>
+        <height>0</height>
        </size>
       </property>
       <property name="frameShape">
@@ -97,10 +301,10 @@ QPushButton:checked {
        <property name="spacing">
         <number>0</number>
        </property>
-       <item row="1" column="0">
+       <item row="1" column="0" alignment="Qt::AlignVCenter">
         <widget class="QPushButton" name="Horn">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -114,7 +318,7 @@ QPushButton:checked {
          </property>
          <property name="iconSize">
           <size>
-           <width>200</width>
+           <width>250</width>
            <height>250</height>
           </size>
          </property>
@@ -123,20 +327,7 @@ QPushButton:checked {
       </layout>
      </widget>
     </item>
-    <item row="2" column="5" rowspan="4">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="2" column="4" rowspan="4" alignment="Qt::AlignVCenter">
+    <item row="2" column="3" rowspan="4" alignment="Qt::AlignVCenter">
      <widget class="QFrame" name="RightControls">
       <property name="minimumSize">
        <size>
@@ -204,9 +395,12 @@ QPushButton:checked {
             </property>
             <property name="iconSize">
              <size>
-              <width>50</width>
-              <height>50</height>
+              <width>45</width>
+              <height>45</height>
              </size>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -240,9 +434,12 @@ QPushButton:checked {
             </property>
             <property name="iconSize">
              <size>
-              <width>50</width>
-              <height>50</height>
+              <width>45</width>
+              <height>45</height>
              </size>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -264,9 +461,12 @@ QPushButton:checked {
             </property>
             <property name="iconSize">
              <size>
-              <width>50</width>
-              <height>50</height>
+              <width>45</width>
+              <height>45</height>
              </size>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -281,14 +481,20 @@ QPushButton:checked {
             </property>
             <property name="iconSize">
              <size>
-              <width>50</width>
-              <height>50</height>
+              <width>45</width>
+              <height>45</height>
              </size>
             </property>
            </widget>
           </item>
           <item row="1" column="2">
            <widget class="QPushButton" name="CruiseCancel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="font">
              <font>
               <weight>75</weight>
@@ -305,9 +511,12 @@ QPushButton:checked {
             </property>
             <property name="iconSize">
              <size>
-              <width>50</width>
-              <height>50</height>
+              <width>45</width>
+              <height>45</height>
              </size>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -333,6 +542,118 @@ QPushButton:checked {
       </layout>
      </widget>
     </item>
+    <item row="2" column="4" rowspan="4">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="6" column="0" colspan="5">
+     <spacer name="verticalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="5" column="2" alignment="Qt::AlignBottom">
+     <widget class="QFrame" name="ExtraControls">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item alignment="Qt::AlignBottom">
+        <widget class="QPushButton" name="PhoneCall">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/Carbon_Icons/carbon_icons/phone--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/phone--filled.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignBottom">
+        <widget class="QPushButton" name="PhoneHangup">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/Carbon_Icons/carbon_icons/phone--off--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/phone--off--filled.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignBottom">
+        <widget class="QPushButton" name="Voice">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/Carbon_Icons/carbon_icons/voice.svg</normaloff>:/Carbon_Icons/carbon_icons/voice.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignBottom">
+        <widget class="QPushButton" name="LaneDeparture">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/Images/Images/AGL_Icons_LaneDeparture_white.svg</normaloff>:/Images/Images/AGL_Icons_LaneDeparture_white.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="2" column="0" rowspan="4">
      <spacer name="horizontalSpacer">
       <property name="orientation">
@@ -346,289 +667,13 @@ QPushButton:checked {
       </property>
      </spacer>
     </item>
-    <item row="5" column="2">
-     <widget class="QFrame" name="ExtraControls">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QPushButton" name="PhoneCall">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../assets/res.qrc">
-           <normaloff>:/Carbon_Icons/carbon_icons/phone--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/phone--filled.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="PhoneHangup">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../assets/res.qrc">
-           <normaloff>:/Carbon_Icons/carbon_icons/phone--off--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/phone--off--filled.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Voice">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../assets/res.qrc">
-           <normaloff>:/Carbon_Icons/carbon_icons/voice.svg</normaloff>:/Carbon_Icons/carbon_icons/voice.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="LaneDeparture">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../assets/res.qrc">
-           <normaloff>:/Images/Images/AGL_Icons_LaneDeparture_white.svg</normaloff>:/Images/Images/AGL_Icons_LaneDeparture_white.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="1" colspan="4">
+    <item row="0" column="0" colspan="5">
      <spacer name="verticalSpacer_3">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="2" column="1" rowspan="4" alignment="Qt::AlignVCenter">
-     <widget class="QFrame" name="LeftControls">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QFrame" name="TopLeftControls">
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0" colspan="3">
-           <widget class="QPushButton" name="VolumeUp">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../assets/res.qrc">
-              <normaloff>:/Carbon_Icons/carbon_icons/volume--up--filled--alt.svg</normaloff>:/Carbon_Icons/carbon_icons/volume--up--filled--alt.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>50</width>
-              <height>50</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QPushButton" name="PreviousTrack">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../assets/res.qrc">
-              <normaloff>:/Carbon_Icons/carbon_icons/skip--back--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/skip--back--filled.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>50</width>
-              <height>50</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="Mode">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>70</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>MODE</string>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>50</width>
-              <height>50</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="NextTrack">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../assets/res.qrc">
-              <normaloff>:/Carbon_Icons/carbon_icons/skip--forward--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/skip--forward--filled.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>50</width>
-              <height>50</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="3">
-           <widget class="QPushButton" name="VolumeDown">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../assets/res.qrc">
-              <normaloff>:/Carbon_Icons/carbon_icons/volume--down--filled--alt.svg</normaloff>:/Carbon_Icons/carbon_icons/volume--down--filled--alt.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>50</width>
-              <height>50</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item alignment="Qt::AlignBottom">
-        <widget class="QFrame" name="BottomLeftControls">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QPushButton" name="Info">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../assets/res.qrc">
-              <normaloff>:/Carbon_Icons/carbon_icons/information.svg</normaloff>:/Carbon_Icons/carbon_icons/information.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>50</width>
-              <height>50</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="VolumeMute">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../assets/res.qrc">
-              <normaloff>:/Carbon_Icons/carbon_icons/volume--mute--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/volume--mute--filled.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>50</width>
-              <height>50</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="6" column="0" colspan="6">
-     <spacer name="verticalSpacer_4">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
+      <property name="sizeType">
+       <enum>QSizePolicy::Expanding</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
@@ -637,17 +682,6 @@ QPushButton:checked {
        </size>
       </property>
      </spacer>
-    </item>
-    <item row="0" column="0" colspan="6">
-     <widget class="QWidget" name="Header" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>70</height>
-       </size>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4"/>
-     </widget>
     </item>
    </layout>
   </widget>

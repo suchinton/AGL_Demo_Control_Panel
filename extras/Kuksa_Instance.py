@@ -72,15 +72,6 @@ class KuksaClientSingleton:
             raise Exception("This class is a singleton!")
 
         self.client = None
-        # try:
-        #     self.client = kuksa.KuksaClientThread(self.kuksa_config)
-        #     self.client.authorize(self.token)
-        #     self.client.start()
-        #     time.sleep(2)
-        #     if not self.client.checkConnection():
-        #         self.client = None
-        # except Exception as e:
-        #     print(e)
 
         KuksaClientSingleton._instance = self
 
@@ -101,7 +92,6 @@ class KuksaClientSingleton:
         self.client = kuksa.KuksaClientThread(config)
         self.client.authorize(token)
         self.client.start()
-        #return self.client
 
     def get_client(self):
         """
