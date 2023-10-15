@@ -17,7 +17,7 @@ import os
 import sys
 import time
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton, QLabel
+from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton, QLabel, QComboBox, QStyledItemDelegate
 from qtwidgets import AnimatedToggle
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QThread
@@ -31,6 +31,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(current_dir))
 
 import extras.Kuksa_Instance as kuksa_instance
+from extras import config
 
 Form, Base = uic.loadUiType(os.path.join(
     current_dir, "../ui/Settings_Window.ui"))
@@ -38,6 +39,12 @@ Form, Base = uic.loadUiType(os.path.join(
 # ========================================
 
 Steering_Signal_Type = "Kuksa"
+
+def create_animated_toggle():
+    return AnimatedToggle(
+        checked_color="#4BD7D6",
+        pulse_checked_color="#00ffff",
+    )
 
 class settings(Base, Form):
     """
@@ -61,25 +68,22 @@ class settings(Base, Form):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
         
-        default_config = kuksa_instance.get_default_config()
-        
-        self.SSL_toggle = AnimatedToggle(
-            checked_color="#4BD7D6",
-            pulse_checked_color="#00ffff",
-        )
-
-        self.Protocol_toggle = AnimatedToggle(
-            checked_color="#4BD7D6",
-            pulse_checked_color="#00ffff"
-        )
-        
-        self.CAN_Kuksa_toggle = AnimatedToggle(
-            checked_color="#4BD7D6",
-            pulse_checked_color="#00ffff"
-        )
+        self.SSL_toggle = create_animated_toggle()
+        self.Protocol_toggle = create_animated_toggle()
+        self.AGL_CAFile_toggle = create_animated_toggle()
+        self.CAN_Kuksa_toggle = create_animated_toggle()
 
         self.connectionStatus = self.findChild(QLabel, "connectionStatus")
         self.connectionLogo = self.findChild(QLabel, "connectionLogo")
+
+        list_of_configs = config.get_list_configs()
+        default_config_name = config.get_default_config()
+
+        self.List_Configs_ComboBox = self.findChild(QComboBox, "List_Configs_ComboBox")
+        self.List_Configs_ComboBox.setItemDelegate(QStyledItemDelegate())
+        self.List_Configs_ComboBox.addItems(list_of_configs)
+        self.List_Configs_ComboBox.setCurrentText(default_config_name)
+        self.List_Configs_ComboBox.currentTextChanged.connect(lambda: self.set_settings(self.List_Configs_ComboBox.currentText()))
 
         self.IPAddrInput = self.findChild(QLineEdit, "IPAddrInput")
         self.PortInput = self.findChild(QLineEdit, "PortInput")
@@ -99,16 +103,15 @@ class settings(Base, Form):
         
         GS_layout.replaceWidget(self.place_holder_toggle_1, self.SSL_toggle)
         GS_layout.replaceWidget(self.place_holder_toggle_2, self.Protocol_toggle)
+        GS_layout.replaceWidget(self.place_holder_toggle_4, self.AGL_CAFile_toggle)
         PS_layout.replaceWidget(self.place_holder_toggle_3, self.CAN_Kuksa_toggle)
         
         self.place_holder_toggle_1.deleteLater()
         self.place_holder_toggle_2.deleteLater()
         self.place_holder_toggle_3.deleteLater()
+        self.place_holder_toggle_4.deleteLater()
 
-        self.IPAddrInput.setText(default_config["ip"])
-        self.PortInput.setText(default_config["port"])
-        self.SSL_toggle.setChecked(not default_config["insecure"])
-        self.Protocol_toggle.setChecked(default_config["protocol"] == 'grpc')
+        self.set_settings(default_config_name)
 
         # self.refreshStatus()
 
@@ -140,7 +143,7 @@ class settings(Base, Form):
         Sets the instance of the Kuksa client.
         """
         self.kuksa = kuksa_instance.KuksaClientSingleton.instance()
-        self.kuksa.reconnect(self.make_new_config())
+        self.kuksa.reconnect(self.make_new_config(), self.kuksa_token)
         self.client = self.kuksa.get_client()
 
         time.sleep(2)
@@ -182,17 +185,19 @@ class settings(Base, Form):
         """
         Reconnects the client.
         """
-        try:
-            config = self.make_new_config()
-            self.client = self.kuksa.reconnect(config)
-            self.client.start()
-            self.refreshStatus()
+        if (self.client is not None):
+            try:
+                config = self.make_new_config()
+                self.client.stop()
+                self.client = self.kuksa.reconnect(config, self.kuksa_token)
+                self.client.start()
+                self.refreshStatus()
 
-            self.refreshThread = RefreshThread(self)
-            self.refreshThread.start()
+                self.refreshThread = RefreshThread(self)
+                self.refreshThread.start()
 
-        except Exception as e:
-            logging.error(e)
+            except Exception as e:
+                logging.error(e)
 
     def make_new_config(self):
         """
@@ -203,9 +208,25 @@ class settings(Base, Form):
         new_config["port"] = self.PortInput.text()
         new_config["protocol"] = self.get_protocol()
         new_config["insecure"] = not self.SSL_toggle.isChecked()
-        new_config["cacertificate"] = None
-        new_config["tls_server_name"] = None
+        if self.AGL_CAFile_toggle.isChecked():
+            new_config["cacertificate"] = config.CA
+        new_config["tls_server_name"] = "Server" if self.Protocol_toggle.isChecked() else None
         return new_config
+    
+    def set_settings(self, config_name):
+        """
+        Reloads the parameters of settings widget.
+        """
+        new_config = config.select_config(config_name)
+        self.kuksa_config_name = new_config[0]
+        self.kuksa_config = new_config[1]
+        self.kuksa_token = new_config[2]
+
+        self.IPAddrInput.setText(self.kuksa_config["ip"])
+        self.PortInput.setText(self.kuksa_config["port"])
+        self.SSL_toggle.setChecked(not self.kuksa_config["insecure"])
+        self.Protocol_toggle.setChecked(self.kuksa_config["protocol"] == 'grpc')
+        self.AGL_CAFile_toggle.setChecked(self.kuksa_config["cacertificate"])
 
 class RefreshThread(QThread):
     def __init__(self, settings):

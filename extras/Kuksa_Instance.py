@@ -19,11 +19,6 @@ import kuksa_client as kuksa
 import threading
 import time
 
-from extras import config
-
-def get_default_config():
-    return config.reload_config()[0]
-
 class KuksaClientSingleton:
     """
     A singleton class that provides a single instance of KuksaClientThread.
@@ -76,7 +71,6 @@ class KuksaClientSingleton:
         if KuksaClientSingleton._instance is not None:
             raise Exception("This class is a singleton!")
 
-        self.kuksa_config, self.token = config.reload_config()
         self.client = None
         # try:
         #     self.client = kuksa.KuksaClientThread(self.kuksa_config)
@@ -90,7 +84,7 @@ class KuksaClientSingleton:
 
         KuksaClientSingleton._instance = self
 
-    def reconnect(self, config):
+    def reconnect(self, config, token):
         """
         Reconnects the client with the given configuration and token.
 
@@ -104,8 +98,8 @@ class KuksaClientSingleton:
         if self.client:
             self.client.stop()
             
-        self.client = kuksa.KuksaClientThread(self.kuksa_config)
-        self.client.authorize(self.token)
+        self.client = kuksa.KuksaClientThread(config)
+        self.client.authorize(token)
         self.client.start()
         #return self.client
 

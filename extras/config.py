@@ -27,29 +27,32 @@ KUKSA_CONFIG = {}
 WS_TOKEN = os.path.join(os.path.expanduser("~"), f".local/lib/{python_version}/site-packages/kuksa_certificates/jwt/super-admin.json.token")
 GRPC_TOKEN = os.path.abspath(os.path.join(os.path.dirname(__file__), "../assets/token/grpc/actuate-provide-all.token"))
 
-def reload_config():
+CONFIG_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), 'config.ini'))
+
+config = ConfigParser()
+config.read(CONFIG_PATH)
+
+KUKSA_CONFIG = {}
+KUKSA_TOKEN = None
+
+def select_config(preferred_config):
     KUKSA_CONFIG.clear()
-    config = ConfigParser()
-    config.read(os.path.abspath(os.path.join(os.path.dirname(__file__), 'config.ini')))
-    print(config.sections())
 
-    try:
-        preferred_config = config['default']['preferred-config']
-    except KeyError:
-        preferred_config = None
+    if config.has_section(preferred_config):
+        KUKSA_CONFIG['ip'] = config[preferred_config]['ip']
+        KUKSA_CONFIG['port'] = config[preferred_config]['port']
+        KUKSA_CONFIG['protocol'] = config[preferred_config]['protocol']
+        KUKSA_CONFIG['insecure'] = False if config[preferred_config]['insecure'] == 'false' else True
+        KUKSA_CONFIG['cacertificate'] = (config.has_option(preferred_config, 'cacert') and config[preferred_config]['cacert'] == 'true')
+        KUKSA_TOKEN = GRPC_TOKEN if KUKSA_CONFIG['protocol'] == 'grpc' else WS_TOKEN
+    else:
+        raise ValueError(f"Config section {preferred_config} not found in config.ini")
 
-    if preferred_config:
-        try:
-            KUKSA_CONFIG['ip'] = config[preferred_config]['ip']
-            KUKSA_CONFIG['port'] = config[preferred_config]['port']
-            KUKSA_CONFIG['protocol'] = config[preferred_config]['protocol']
-            KUKSA_CONFIG['insecure'] = False if config[preferred_config]['insecure'] == 'false' else True
-            KUKSA_CONFIG['cacertificate'] = CA if config[preferred_config]['cacert'] == 'true' else None
-            KUKSA_CONFIG['tls_server_name'] = config[preferred_config]['tls_server_name'] if config[preferred_config]['tls_server_name'] else None
-        except KeyError as e:
-            print(f"Error: {e}")
-            return None, None
+    return preferred_config, KUKSA_CONFIG , KUKSA_TOKEN
 
-    return KUKSA_CONFIG, GRPC_TOKEN if KUKSA_CONFIG['protocol'] == 'grpc' else WS_TOKEN
+def get_list_configs():
+    return config.sections()[1:]
 
-print(reload_config())
+def get_default_config():
+    defaultConfigName = config.get('default', 'preferred-config')
+    return defaultConfigName

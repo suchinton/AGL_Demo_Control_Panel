@@ -52,7 +52,7 @@ class MainWindow(Base, Form):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
         self.setStyle(QtWidgets.QStyleFactory.create('Fusion'))
-        self.resize(1400,840)
+        #self.resize(1400,840)
         self.headerContainer = self.findChild(QWidget, 'headerContainer')
         self.headerContainer.DoubleClickMaximize = lambda: UI_Handeler.toggleMaximized(self)
         self.headerContainer.mouseMoveEvent = lambda event: UI_Handeler.moveWindow(self, event)
