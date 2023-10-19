@@ -24,16 +24,30 @@ from PyQt5.QtWidgets import QDesktopWidget
 import logging
 import json
 
+from . import FeedKuksa as feed_kuksa
 from . import Kuksa_Instance as kuksa_instance
 
 # Global variables
 subscribed = False
 should_execute_callback = True
+block_subscription_updates = False
 
 class UI_Handeler(MainWindow):
     """
     This class handles the UI of the AGL Demo Control Panel application.
     """
+    def __init__(self):
+        self.feed_kuksa = feed_kuksa.FeedKuksa()
+        self.feed_kuksa.sending_values.connect(self.block_updates)
+        self.feed_kuksa.finished_sending_values.connect(self.unblock_updates)
+
+    def block_updates(self):
+        global block_subscription_updates
+        block_subscription_updates = True
+
+    def unblock_updates(self):
+        global block_subscription_updates
+        block_subscription_updates = False
 
     def Hide_Navbar(self, bool_arg):
         """
@@ -143,9 +157,10 @@ class UI_Handeler(MainWindow):
         Args:
         - data: The data received from the signal.
         """
-        global should_execute_callback
-        if should_execute_callback is False:
+        global block_subscription_updates
+        if block_subscription_updates:
             return
+        
         IC_Page = self.stackedWidget.widget(1)
         HVAC_Page = self.stackedWidget.widget(2)
 

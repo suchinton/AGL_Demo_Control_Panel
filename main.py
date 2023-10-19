@@ -120,6 +120,9 @@ class MainWindow(Base, Form):
                                     """)
         self.centralwidget.layout().addWidget(self.size_grip, 0, Qt.AlignBottom | Qt.AlignRight)
 
+    def VSS_callback(self,data):
+        pass
+
     def handleTileClicked(self):
         """
         Handles the tile clicked signal from the Dashboard object.

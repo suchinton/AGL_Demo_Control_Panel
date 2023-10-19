@@ -18,9 +18,6 @@ import os
 import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QButtonGroup
-from PyQt5.QtCore import QThread
-
-import time
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -120,6 +117,7 @@ class SteeringCtrlWidget(Base, Form):
                         self.PhoneHangup,
                         self.Voice, 
                         self.LaneDeparture,
+                        self.Horn,
                         self.CruiseEnable,
                         self.CruiseSet,
                         self.CruiseResume,
@@ -138,13 +136,12 @@ class SteeringCtrlWidget(Base, Form):
         button_clicked = button.objectName()
         signal_type = settings.Steering_Signal_Type
         if signal_type == "Kuksa":
-            self.feed_kuksa.send_values(self.Steering.switches[button_clicked]["Kuksa"], 1)
-            self.feed_kuksa.send_values(self.Steering.switches[button_clicked]["Kuksa"], 0)
+            self.feed_kuksa.send_values(self.Steering.switches[button_clicked]["Kuksa"], "1")
+            self.feed_kuksa.send_values(self.Steering.switches[button_clicked]["Kuksa"], "0")
         elif signal_type == "CAN":
             feed_can.send_can_signal(self.Steering.switches[button_clicked]["CAN"])
             # Making sure button state goes back to off
             feed_can.send_can_signal("021#FFFFFFFF00000000")
-        print(button_clicked + " button clicked")
 
 if __name__ == '__main__':
     import sys

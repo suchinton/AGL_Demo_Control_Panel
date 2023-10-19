@@ -73,7 +73,7 @@ class Dashboard(Base, Form):
         DashboardTiles.buttonClicked.connect(self.tile_clicked)
 
         for i, tile in enumerate(Dashboard_tiles):
-            self.set_icon(tile, 55)
+            #self.set_icon(tile, 55)
             DashboardTiles.addButton(tile)
 
     def set_icon(self, tile, size):
@@ -84,11 +84,15 @@ class Dashboard(Base, Form):
         - tile: The tile for which the icon needs to be set.
         - size: The size of the icon.
         """
-        icon = tile.icon()
-        if icon.availableSizes():
-            scaled_pixmap = icon.pixmap(icon.availableSizes()[0]).scaled(size, size, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
-            tile.setIcon(QtGui.QIcon(scaled_pixmap))
-            tile.setIconSize(QtCore.QSize(size, size))
+        try:
+            icon = tile.icon()
+            if icon.availableSizes():
+                pixmap = icon.pixmap(icon.availableSizes()[0])
+                scaled_pixmap = pixmap.scaled(size, size, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+                tile.setIcon(QtGui.QIcon(scaled_pixmap))
+                tile.setIconSize(QtCore.QSize(size, size))
+        except Exception as e:
+            print(f"Failed to set icon: {e}")
 
     def tile_clicked(self, tile):
         """

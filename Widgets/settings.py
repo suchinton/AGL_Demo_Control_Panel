@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QThread
 from PyQt5 import QtGui
 import logging
+import can
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -70,7 +71,6 @@ class settings(Base, Form):
         
         self.SSL_toggle = create_animated_toggle()
         self.Protocol_toggle = create_animated_toggle()
-        self.AGL_CAFile_toggle = create_animated_toggle()
         self.CAN_Kuksa_toggle = create_animated_toggle()
 
         self.connectionStatus = self.findChild(QLabel, "connectionStatus")
@@ -87,11 +87,15 @@ class settings(Base, Form):
 
         self.IPAddrInput = self.findChild(QLineEdit, "IPAddrInput")
         self.PortInput = self.findChild(QLineEdit, "PortInput")
+        self.TLS_Server_Name = self.findChild(QLineEdit, "TLS_Server_Name")
+        self.Auth_Token = self.findChild(QLineEdit, "Auth_Token")
+        self.CA_File = self.findChild(QLineEdit, "CA_File")
 
         self.reconnectBtn = self.findChild(QPushButton, "reconnectBtn")
         self.startClientBtn = self.findChild(QPushButton, "startClientBtn")
+        self.startClientBtn.setCheckable(True)
 
-        self.startClientBtn.clicked.connect(self.set_instance)
+        self.startClientBtn.clicked.connect(self.start_stop_client)
         self.reconnectBtn.clicked.connect(self.reconnectClient)
         self.SSL_toggle.clicked.connect(self.toggleSSL)
         self.CAN_Kuksa_toggle.clicked.connect(self.toggle_CAN_Kuksa)
@@ -103,17 +107,33 @@ class settings(Base, Form):
         
         GS_layout.replaceWidget(self.place_holder_toggle_1, self.SSL_toggle)
         GS_layout.replaceWidget(self.place_holder_toggle_2, self.Protocol_toggle)
-        GS_layout.replaceWidget(self.place_holder_toggle_4, self.AGL_CAFile_toggle)
         PS_layout.replaceWidget(self.place_holder_toggle_3, self.CAN_Kuksa_toggle)
         
         self.place_holder_toggle_1.deleteLater()
         self.place_holder_toggle_2.deleteLater()
         self.place_holder_toggle_3.deleteLater()
-        self.place_holder_toggle_4.deleteLater()
 
         self.set_settings(default_config_name)
 
-        # self.refreshStatus()
+    def start_stop_client(self):
+        if self.startClientBtn.isChecked():
+            # turn button red and change icon to stop from resources
+            self.set_instance()
+            if self.client is not None:
+                self.startClientBtn.setStyleSheet("border: 1px solid red;")
+                self.startClientBtn.setIcon(QtGui.QIcon(":/Carbon_Icons/carbon_icons/stop.svg"))
+                self.startClientBtn.setText("Stop Client")
+            else:
+                self.startClientBtn.setChecked(False)
+        else:
+            # turn button green and change icon to start from resources
+            if self.client is not None:
+                self.client.stop()
+
+            self.startClientBtn.setStyleSheet("border: 1px solid green;")
+            self.startClientBtn.setIcon(QtGui.QIcon(":/Carbon_Icons/carbon_icons/play.svg"))
+            self.startClientBtn.setText("Start Client")
+                
 
     def toggleSSL(self):
         """
@@ -128,7 +148,14 @@ class settings(Base, Form):
         """
         global Steering_Signal_Type
         if (self.CAN_Kuksa_toggle.isChecked()):
-            Steering_Signal_Type = "CAN"
+            # check if can0 is available
+            try:
+                can_bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
+                can_bus.shutdown()
+                Steering_Signal_Type = "CAN"
+            except:
+                self.CAN_Kuksa_toggle.setChecked(False)
+                logging.error("CAN Bus not available")
         else:
             Steering_Signal_Type = "Kuksa"
 
@@ -143,8 +170,12 @@ class settings(Base, Form):
         Sets the instance of the Kuksa client.
         """
         self.kuksa = kuksa_instance.KuksaClientSingleton.instance()
-        self.kuksa.reconnect(self.make_new_config(), self.kuksa_token)
-        self.client = self.kuksa.get_client()
+        new_config = self.make_new_config()
+        if (new_config is None):
+            logging.error("Invalid configuration")
+        else:
+            self.kuksa.reconnect(new_config, self.kuksa_token)
+            self.client = self.kuksa.get_client()
 
         time.sleep(2)
 
@@ -198,19 +229,35 @@ class settings(Base, Form):
 
             except Exception as e:
                 logging.error(e)
+        self.set_instance()
 
     def make_new_config(self):
         """
         Makes a new configuration using fields in the settings widget.
         """
+
+        def validate_and_set_style(self, widget, key=None):
+            text = widget.text()
+            if text:
+                if os.path.exists(text):
+                    widget.setStyleSheet("border: 1px solid #4BD7D6 ; /* light blue */")
+                    if key:
+                        self.new_config[key] = text
+                    else:
+                        self.kuksa_token = text
+                else:
+                    widget.setStyleSheet("border: 1px solid red;")
+                    return None
+                
         new_config = {}
         new_config["ip"] = self.IPAddrInput.text()
         new_config["port"] = self.PortInput.text()
         new_config["protocol"] = self.get_protocol()
         new_config["insecure"] = not self.SSL_toggle.isChecked()
-        if self.AGL_CAFile_toggle.isChecked():
-            new_config["cacertificate"] = config.CA
-        new_config["tls_server_name"] = "Server" if self.Protocol_toggle.isChecked() else None
+        new_config["tls_server_name"] = self.TLS_Server_Name.text() if self.Protocol_toggle.isChecked() else None
+        validate_and_set_style(self, self.CA_File, "cacertificate")
+        validate_and_set_style(self, self.Auth_Token)
+
         return new_config
     
     def set_settings(self, config_name):
@@ -226,7 +273,9 @@ class settings(Base, Form):
         self.PortInput.setText(self.kuksa_config["port"])
         self.SSL_toggle.setChecked(not self.kuksa_config["insecure"])
         self.Protocol_toggle.setChecked(self.kuksa_config["protocol"] == 'grpc')
-        self.AGL_CAFile_toggle.setChecked(self.kuksa_config["cacertificate"])
+        self.CA_File.setText(self.kuksa_config["cacertificate"])
+        self.TLS_Server_Name.setText(self.kuksa_config["tls_server_name"] if self.kuksa_config["tls_server_name"] is not None else "")
+        self.Auth_Token.setText(self.kuksa_token)
 
 class RefreshThread(QThread):
     def __init__(self, settings):
