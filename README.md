@@ -19,7 +19,7 @@ A PyQt5 application to simulate CAN Bus signals using Kuksa.val for the AGL Demo
         ```bash
         $ nano requirements.txt
         # -> Comment pyqt5 dependency using "#"
-        $ sudo apt install python3-pyqt5 python3-qtpy pyqt5-dev-tools
+        $ sudo apt install python3-pyqt5 python3-qtpy pyqt5-dev-tools python3-pyqt5.qtsvg -y
         ```
         and skip to step 2
 

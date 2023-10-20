@@ -22,6 +22,9 @@ from PyQt5.QtWidgets import QApplication, QPushButton, QWidget
 from functools import partial
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
+from PyQt5 import QtSvg
+from PyQt5.QtSvg import *
+from PyQt5.QtGui import QIcon
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 Form, Base = uic.loadUiType(os.path.join(current_dir, "Main_Window.ui"))
@@ -82,7 +85,14 @@ class MainWindow(Base, Form):
                     self.icButton, 
                     self.hvacButton, 
                     self.steeringCtrlButton,
-                    self.settingsBtn) 
+                    self.settingsBtn)
+        
+        steering_icon = ":/Images/Images/steering-wheel.svg"
+        getsize = QtSvg.QSvgRenderer(steering_icon)
+        svg_widget = QtSvg.QSvgWidget(steering_icon)
+        svg_widget.setFixedSize(getsize.defaultSize())
+        svg_widget.setStyleSheet("background-color: transparent;")
+        self.steeringCtrlButton.setIcon(QIcon(svg_widget.grab()))
         
         NavigationButtons = QtWidgets.QButtonGroup(self)
         NavigationButtons.setExclusive(True)

@@ -22,8 +22,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtSvg import *
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
-from PyQt5 import QtCore, QtGui
+from PyQt5 import QtCore
 from PyQt5 import QtSvg
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
