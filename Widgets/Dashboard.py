@@ -82,7 +82,7 @@ class Dashboard(Base, Form):
         
         DashboardTiles.buttonClicked.connect(self.tile_clicked)
 
-        for tile in enumerate(Dashboard_tiles):
+        for i, tile in enumerate(Dashboard_tiles):
             self.set_icon(tile, 90)
             DashboardTiles.addButton(tile)
 
