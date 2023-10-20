@@ -17,9 +17,14 @@
 import os
 import sys
 from PyQt5 import uic
-from PyQt5 import QtWidgets 
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import *
+from PyQt5.QtSvg import *
 from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
 from PyQt5 import QtCore, QtGui
+from PyQt5 import QtSvg
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -63,6 +68,11 @@ class Dashboard(Base, Form):
 
         self.feed_kuksa = FeedKuksa()
 
+        file = ":/Carbon_Icons/carbon_icons/play.svg"
+        getsize = QtSvg.QSvgRenderer(file)
+        svg_widget = QtSvg.QSvgWidget(file)
+        svg_widget.setFixedSize(getsize.defaultSize())
+
         Dashboard_tiles = (self.DB_IC_Tile,
                              self.DB_HVAC_Tile,
                              self.DB_Steering_Tile,
@@ -72,25 +82,26 @@ class Dashboard(Base, Form):
         
         DashboardTiles.buttonClicked.connect(self.tile_clicked)
 
-        for i, tile in enumerate(Dashboard_tiles):
-            #self.set_icon(tile, 55)
+        for tile in enumerate(Dashboard_tiles):
+            self.set_icon(tile, 90)
             DashboardTiles.addButton(tile)
 
-    def set_icon(self, tile, size):
-        """
-        Sets the icon for the given tile.
-
-        Parameters:
-        - tile: The tile for which the icon needs to be set.
-        - size: The size of the icon.
-        """
+    def set_icon(self, tile, icon_size):
         try:
-            icon = tile.icon()
-            if icon.availableSizes():
-                pixmap = icon.pixmap(icon.availableSizes()[0])
-                scaled_pixmap = pixmap.scaled(size, size, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
-                tile.setIcon(QtGui.QIcon(scaled_pixmap))
-                tile.setIconSize(QtCore.QSize(size, size))
+            if tile == self.DB_IC_Tile:
+                file = ":/Carbon_Icons/carbon_icons/meter.svg"
+            if tile == self.DB_HVAC_Tile:
+                file = ":/Carbon_Icons/carbon_icons/windy--strong.svg"
+            if tile == self.DB_Steering_Tile:
+                file = ":/Images/Images/steering-wheel.svg"
+            if tile == self.DB_Settings_Tile:
+                file = ":/Carbon_Icons/carbon_icons/settings.svg"
+            getsize = QtSvg.QSvgRenderer(file)
+            svg_widget = QtSvg.QSvgWidget(file)
+            svg_widget.setFixedSize(getsize.defaultSize()*2)
+            svg_widget.setStyleSheet("background-color: transparent;")
+            tile.setIcon(QIcon(svg_widget.grab()))
+            tile.setIconSize(QtCore.QSize(icon_size, icon_size))
         except Exception as e:
             print(f"Failed to set icon: {e}")
 
@@ -111,3 +122,10 @@ class Dashboard(Base, Form):
             self.parent().setCurrentIndex(4)
 
         self.tileClickedSignal.emit()
+
+if __name__ == '__main__':
+    import sys
+    app = QApplication(sys.argv)
+    w = Dashboard()
+    w.show()
+    sys.exit(app.exec_())
