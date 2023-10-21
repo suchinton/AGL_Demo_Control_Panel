@@ -19,6 +19,7 @@ import kuksa_client as kuksa
 import threading
 import time
 
+
 class KuksaClientSingleton:
     """
     A singleton class that provides a single instance of KuksaClientThread.
@@ -88,7 +89,7 @@ class KuksaClientSingleton:
         """
         if self.client:
             self.client.stop()
-            
+
         self.client = kuksa.KuksaClientThread(config)
         self.client.authorize(token)
         self.client.start()
@@ -104,7 +105,7 @@ class KuksaClientSingleton:
             return self.client
         else:
             return None
-        
+
     def get_config(self):
         """
         Returns the configuration.

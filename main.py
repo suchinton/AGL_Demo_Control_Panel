@@ -14,6 +14,8 @@
    limitations under the License.
 """
 
+from Widgets.Dashboard import Dashboard
+from extras.UI_Handeler import *
 import sys
 import os
 
@@ -29,8 +31,6 @@ from PyQt5.QtGui import QIcon
 current_dir = os.path.dirname(os.path.abspath(__file__))
 Form, Base = uic.loadUiType(os.path.join(current_dir, "Main_Window.ui"))
 
-from extras.UI_Handeler import *
-from Widgets.Dashboard import Dashboard
 
 class MainWindow(Base, Form):
     """
@@ -53,22 +53,28 @@ class MainWindow(Base, Form):
         self.setupUi(self)
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
         self.setStyle(QtWidgets.QStyleFactory.create('Fusion'))
-        #self.resize(1400,840)
+
         self.headerContainer = self.findChild(QWidget, 'headerContainer')
-        self.headerContainer.DoubleClickMaximize = lambda: UI_Handeler.toggleMaximized(self)
-        self.headerContainer.mouseMoveEvent = lambda event: UI_Handeler.moveWindow(self, event)
-        self.headerContainer.mousePressEvent = lambda event: UI_Handeler.mousePressEvent(self, event)
-        self.headerContainer.mouseReleaseEvent = lambda event: UI_Handeler.mouseReleaseEvent(self, event)
+        self.headerContainer.DoubleClickMaximize = lambda: UI_Handeler.toggleMaximized(
+            self)
+        self.headerContainer.mouseMoveEvent = lambda event: UI_Handeler.moveWindow(
+            self, event)
+        self.headerContainer.mousePressEvent = lambda event: UI_Handeler.mousePressEvent(
+            self, event)
+        self.headerContainer.mouseReleaseEvent = lambda event: UI_Handeler.mouseReleaseEvent(
+            self, event)
 
-        self.leftMenuSubContainer = self.findChild(QWidget, 'leftMenuSubContainer')
+        self.leftMenuSubContainer = self.findChild(
+            QWidget, 'leftMenuSubContainer')
         self.dashboardButton = self.findChild(QPushButton, 'dashboardButton')
-        UI_Handeler.Hide_Navbar(self,bool_arg=True)
+        UI_Handeler.Hide_Navbar(self, bool_arg=True)
 
-        self.stackedWidget.currentChanged.connect(lambda: UI_Handeler.subscribe_VSS_Signals(self) if UI_Handeler.set_instance(self) else None)
+        self.stackedWidget.currentChanged.connect(lambda: UI_Handeler.subscribe_VSS_Signals(
+            self) if UI_Handeler.set_instance(self) else None)
 
-        self.notificationContent = self.findChild(QWidget, 'notificationContent')
+        self.notificationContent = self.findChild(
+            QWidget, 'notificationContent')
 
         # Window Controls
         closeButton = self.findChild(QPushButton, 'closeBtn')
@@ -76,24 +82,26 @@ class MainWindow(Base, Form):
         maximizeButton = self.findChild(QPushButton, 'maximizeBtn')
 
         # make the close button also end all threads
-        closeButton.clicked.connect(lambda: [self.close(), self.stop_thread_signal.emit()])
+        closeButton.clicked.connect(
+            lambda: [self.close(), self.stop_thread_signal.emit()])
         minimizeButton.clicked.connect(self.showMinimized)
-        maximizeButton.clicked.connect(lambda: UI_Handeler.toggleMaximized(self))
+        maximizeButton.clicked.connect(
+            lambda: UI_Handeler.toggleMaximized(self))
 
         # Widget Navigation
-        Navigation_buttons = ( self.dashboardButton,
-                    self.icButton, 
-                    self.hvacButton, 
-                    self.steeringCtrlButton,
-                    self.settingsBtn)
-        
+        Navigation_buttons = (self.dashboardButton,
+                              self.icButton,
+                              self.hvacButton,
+                              self.steeringCtrlButton,
+                              self.settingsBtn)
+
         steering_icon = ":/Images/Images/steering-wheel.svg"
         getsize = QtSvg.QSvgRenderer(steering_icon)
         svg_widget = QtSvg.QSvgWidget(steering_icon)
         svg_widget.setFixedSize(getsize.defaultSize())
         svg_widget.setStyleSheet("background-color: transparent;")
         self.steeringCtrlButton.setIcon(QIcon(svg_widget.grab()))
-        
+
         NavigationButtons = QtWidgets.QButtonGroup(self)
         NavigationButtons.setExclusive(True)
 
@@ -103,12 +111,13 @@ class MainWindow(Base, Form):
             button.clicked.connect(partial(UI_Handeler.animateSwitch, self, i))
 
         self.stackedWidget.currentChanged.connect(self.handleChangedPage)
-        
-        self.stop_thread_signal.connect(self.stackedWidget.widget(0).feed_kuksa.stop)
 
-        self.stackedWidget.setCurrentIndex(0)        
+        self.stop_thread_signal.connect(
+            self.stackedWidget.widget(0).feed_kuksa.stop)
+
+        self.stackedWidget.setCurrentIndex(0)
         self.dashboardButton.setChecked(True)
-        UI_Handeler.Hide_Navbar(self,bool_arg=False)
+        UI_Handeler.Hide_Navbar(self, bool_arg=False)
 
         self.Dashboard = Dashboard()
         self.Dashboard.tileClickedSignal.connect(self.handleTileClicked)
@@ -118,7 +127,7 @@ class MainWindow(Base, Form):
         self.centralwidget = self.findChild(QWidget, 'centralwidget')
         self.size_grip = QtWidgets.QSizeGrip(self)
         self.size_grip.setFixedSize(20, 20)
-        #self.size_grip.setStyleSheet("QSizeGrip { background-color: transparent; }")
+        # self.size_grip.setStyleSheet("QSizeGrip { background-color: transparent; }")
         self.size_grip.setStyleSheet("""
                                         QSizeGrip {
                                             background-color: transparent;
@@ -128,9 +137,10 @@ class MainWindow(Base, Form):
                                             border: none;
                                         }
                                     """)
-        self.centralwidget.layout().addWidget(self.size_grip, 0, Qt.AlignBottom | Qt.AlignRight)
+        self.centralwidget.layout().addWidget(
+            self.size_grip, 0, Qt.AlignBottom | Qt.AlignRight)
 
-    def VSS_callback(self,data):
+    def VSS_callback(self, data):
         pass
 
     def handleTileClicked(self):
@@ -138,7 +148,7 @@ class MainWindow(Base, Form):
         Handles the tile clicked signal from the Dashboard object.
         Shows the navbar.
         """
-        UI_Handeler.Hide_Navbar(self,bool_arg=False)
+        UI_Handeler.Hide_Navbar(self, bool_arg=False)
 
     def handleChangedPage(self, index):
         """
@@ -147,11 +157,12 @@ class MainWindow(Base, Form):
         If the index is 0, the navbar is not hidden. Otherwise, it is hidden.
         """
         if index == 0:
-            UI_Handeler.Hide_Navbar(self,bool_arg=False)
+            UI_Handeler.Hide_Navbar(self, bool_arg=False)
         else:
-            UI_Handeler.Hide_Navbar(self,bool_arg=True)
+            UI_Handeler.Hide_Navbar(self, bool_arg=True)
         try:
-            self.stop_thread_signal.connect(self.stackedWidget.widget(self.current_page).feed_kuksa.stop)
+            self.stop_thread_signal.connect(
+                self.stackedWidget.widget(self.current_page).feed_kuksa.stop)
             self.stop_thread_signal.emit()
         except:
             pass
@@ -159,15 +170,18 @@ class MainWindow(Base, Form):
         self.current_page = self.stackedWidget.currentIndex()
 
         try:
-            self.start_thread_signal.connect(self.stackedWidget.widget(self.current_page).feed_kuksa.start)
+            self.start_thread_signal.connect(
+                self.stackedWidget.widget(self.current_page).feed_kuksa.start)
             self.start_thread_signal.emit()
         except:
             pass
 
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setApplicationName("AGL Demo Control Panel")
-    app.setWindowIcon(QtGui.QIcon(':/Images/Images/Automotive_Grade_Linux_logo.svg'))
+    app.setWindowIcon(QtGui.QIcon(
+        ':/Images/Images/Automotive_Grade_Linux_logo.svg'))
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())

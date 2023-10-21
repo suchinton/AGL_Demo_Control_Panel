@@ -14,6 +14,7 @@
     limitations under the License.
 """
 
+from extras.FeedKuksa import FeedKuksa
 import os
 import sys
 from PyQt5 import uic, QtCore, QtWidgets
@@ -24,6 +25,7 @@ import time
 from PyQt5.QtWidgets import QWidget
 from qtwidgets import AnimatedToggle
 import threading
+import logging
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -31,7 +33,6 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(os.path.dirname(current_dir))
 
-from extras.FeedKuksa import FeedKuksa
 
 Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/IC.ui"))
 
@@ -65,9 +66,9 @@ class ICWidget(Base, Form):
         """
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
-        
+
         self.IC = IC_Paths()
-        #self.vehicle_simulator = VehicleSimulator(self)
+        # self.vehicle_simulator = VehicleSimulator(self)
 
         self.feed_kuksa = FeedKuksa()
         self.feed_kuksa.start()
@@ -142,8 +143,10 @@ class ICWidget(Base, Form):
         """
         speed = int(self.Speed_slider.value())
         self.Speed_monitor.display(speed)
-        try: self.feed_kuksa.send_values(self.IC.speed, str(speed), 'value')
-        except Exception as e: print(e)
+        try:
+            self.feed_kuksa.send_values(self.IC.speed, str(speed), 'value')
+        except Exception as e:
+            logging.error(f"Error sending values to kuksa {e}")
 
     def update_RPM_monitor(self):
         """
@@ -151,24 +154,31 @@ class ICWidget(Base, Form):
         """
         rpm = int(self.RPM_slider.value())
         self.RPM_monitor.display(rpm)
-        try: self.feed_kuksa.send_values(self.IC.engineRPM, str(rpm), 'value')
-        except Exception as e: print(e)
+        try:
+            self.feed_kuksa.send_values(self.IC.engineRPM, str(rpm), 'value')
+        except Exception as e:
+            logging.error(f"Error sending values to kuksa {e}")
 
     def update_coolantTemp_monitor(self):
         """
         Updates the coolant temperature monitor with the current coolant temperature value.
         """
         coolantTemp = int(self.coolantTemp_slider.value())
-        try: self.feed_kuksa.send_values(self.IC.coolantTemp, str(coolantTemp), 'value')
-        except Exception as e: print(e)
+        try:
+            self.feed_kuksa.send_values(
+                self.IC.coolantTemp, str(coolantTemp), 'value')
+        except Exception as e:
+            logging.error(f"Error sending values to kuksa {e}")
 
     def update_fuelLevel_monitor(self):
         """
         Updates the fuel level monitor with the current fuel level value.
         """
         fuelLevel = int(self.fuelLevel_slider.value())
-        try: self.feed_kuksa.send_values(self.IC.fuelLevel, str(fuelLevel))
-        except Exception as e: print(e)
+        try:
+            self.feed_kuksa.send_values(self.IC.fuelLevel, str(fuelLevel))
+        except Exception as e:
+            logging.error(f"Error sending values to kuksa {e}")
 
     def hazardBtnClicked(self):
         """
@@ -192,13 +202,12 @@ class ICWidget(Base, Form):
         self.leftIndicatorBtn.setChecked(self.hazardBtn.isChecked())
         self.rightIndicatorBtn.setChecked(self.hazardBtn.isChecked())
 
-        try: 
+        try:
             self.feed_kuksa.send_values(self.IC.leftIndicator, value)
             self.feed_kuksa.send_values(self.IC.rightIndicator, value)
             self.feed_kuksa.send_values(self.IC.hazard, value)
         except Exception as e:
-            print(e)
-
+            logging.error(f"Error sending values to kuksa {e}")
 
     def leftIndicatorBtnClicked(self):
         """
@@ -219,8 +228,10 @@ class ICWidget(Base, Form):
         painter.end()
         self.leftIndicatorBtn.setIcon(QIcon(leftIndicatorIcon))
 
-        try: self.feed_kuksa.send_values(self.IC.leftIndicator, value)
-        except Exception as e: print(e)
+        try:
+            self.feed_kuksa.send_values(self.IC.leftIndicator, value)
+        except Exception as e:
+            logging.error(f"Error sending values to kuksa {e}")
 
     def rightIndicatorBtnClicked(self):
         """
@@ -241,11 +252,10 @@ class ICWidget(Base, Form):
         painter.end()
         self.rightIndicatorBtn.setIcon(QIcon(rightIndicatorIcon))
 
-        try: 
+        try:
             self.feed_kuksa.send_values(self.IC.rightIndicator, value)
         except Exception as e:
-            print(e)
-
+            logging.error(f"Error sending values to kuksa {e}")
 
     def accelerationBtnPressed(self):
         """
@@ -309,9 +319,9 @@ class ICWidget(Base, Form):
             self.reverseBtn: "-1",
             self.neutralBtn: "0"
         }
-    
+
         checked_button = self.driveGroupBtns.checkedButton()
-    
+
         if checked_button in gear_mapping:
             gear_value = gear_mapping[checked_button]
             self.accelerationBtn.setEnabled(True)
@@ -320,9 +330,10 @@ class ICWidget(Base, Form):
             try:
                 self.feed_kuksa.send_values(self.IC.selectedGear, gear_value)
             except Exception as e:
-                print(e)
+                logging.error(f"Error sending values to kuksa {e}")
         else:
             print("Unknown button checked!")
+
 
 class AccelerationFns():
     def calculate_speed(time, acceleration) -> int:
@@ -353,7 +364,8 @@ class AccelerationFns():
         engine_rpm = wheel_rps * gear_ratios[current_gear - 1] * 60
 
         return int(engine_rpm)
-    
+
+
 class VehicleSimulator(QObject):
     # Define signals for updating speed and rpm
     speed_changed = pyqtSignal(int)
@@ -399,11 +411,11 @@ class VehicleSimulator(QObject):
             self.brake(40, 2000, 4)
             self.accelerate(90, 3000, 5)
             self.brake(1, 650, 5)
-            
+
             # Ensure reset is called when not in cruise mode
             if not self.running:
                 self.reset()
-            
+
             time.sleep(5)
 
     def accelerate(self, target_speed, target_rpm, duration):
@@ -432,19 +444,19 @@ class VehicleSimulator(QObject):
                 self.rpm_changed.emit(int(self.engine_speed))
             time.sleep(1 / self.freq)
 
-    def increase(self, bycruise = True):
+    def increase(self, bycruise=True):
         if self.CRUISEACTIVE:
             target_speed = self.vehicle_speed + 5
             target_rpm = self.engine_speed * 1.1
             self.accelerate(target_speed, target_rpm, 2, bycruise)
 
-    def decrease(self, bycruise = True):
+    def decrease(self, bycruise=True):
         if self.CRUISEACTIVE:
             target_speed = self.vehicle_speed - 5
             target_rpm = self.engine_speed * 0.9
             self.brake(target_speed, target_rpm, 2, bycruise)
 
-    def resume(self, bycruise = True):
+    def resume(self, bycruise=True):
         target_speed = self.CRUISESPEED
         target_rpm = self.CRUISERPM
         current_speed = self.get_vehicle_speed()
@@ -452,6 +464,7 @@ class VehicleSimulator(QObject):
             self.accelerate(target_speed, target_rpm, 2, bycruise)
         else:
             self.brake(target_speed, target_rpm, 2, bycruise)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

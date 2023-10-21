@@ -14,6 +14,9 @@
     limitations under the License.
 """
 
+from . import settings
+import extras.FeedCAN as feed_can
+from extras.FeedKuksa import FeedKuksa
 import os
 import sys
 from PyQt5 import uic
@@ -25,78 +28,78 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(os.path.dirname(current_dir))
 
-from extras.FeedKuksa import FeedKuksa
-import extras.FeedCAN as feed_can
-from . import settings
 
-Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/SteeringControls.ui"))
+Form, Base = uic.loadUiType(os.path.join(
+    current_dir, "../ui/SteeringControls.ui"))
 
 # ========================================
+
 
 class Steering_Paths():
     def __init__(self):
         self.switches = {
             "VolumeUp": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.VolumeUp", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.VolumeUp",
                 "CAN": "021#FFFFFFFF40000000"},
             "VolumeDown": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.VolumeDown", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.VolumeDown",
                 "CAN": "021#FFFFFFFF10000000"},
             "VolumeMute": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.VolumeMute", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.VolumeMute",
                 "CAN": "021#FFFFFFFF01000000"},
             "Mode": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Mode", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Mode",
                 "CAN": "021#FFFFFFFF20000000"},
             "NextTrack": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Next", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Next",
                 "CAN": "021#FFFFFFFF08000000"},
             "PreviousTrack": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Previous", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Previous",
                 "CAN": "021#FFFFFFFF80000000"},
             "Info": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Info", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Info",
                 "CAN": "021#FFFFFFFF02000000"},
             "PhoneCall": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.PhoneCall", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.PhoneCall",
                 "CAN": "021#FFFFFFFF00010000"},
             "PhoneHangup": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.PhoneHangup", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.PhoneHangup",
                 "CAN": "021#FFFFFFFF00020000"},
             "Voice": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Voice", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Voice",
                 "CAN": "021#FFFFFFFF00040000"},
             "LaneDeparture": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.LaneDepartureWarning", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.LaneDepartureWarning",
                 "CAN": "021#FFFFFFFF00000001"},
             "Horn": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Horn", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.Horn",
                 "CAN": "021#FFFFFFFF00000080"},
             "CruiseEnable": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseEnable", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseEnable",
                 "CAN": "021#FFFFFFFF00008000"},
             "CruiseSet": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseSet", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseSet",
                 "CAN": "021#FFFFFFFF00001000"},
             "CruiseResume": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseResume", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseResume",
                 "CAN": "021#FFFFFFFF00004000"},
             "CruiseCancel": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseCancel", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseCancel",
                 "CAN": "021#FFFFFFFF00000800"},
             "CruiseLimit": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseLimit", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseLimit",
                 "CAN": "021#FFFFFFFF00000200"},
             "CruiseDistance": {
-                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseDistance", 
+                "Kuksa": "Vehicle.Cabin.SteeringWheel.Switches.CruiseDistance",
                 "CAN": "021#FFFFFFFF00000100"}
         }
-        
+
+
 class SteeringCtrlWidget(Base, Form):
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
-        
+
         self.Steering = Steering_Paths()
         self.feed_kuksa = FeedKuksa()
         self.settings = settings
@@ -113,9 +116,9 @@ class SteeringCtrlWidget(Base, Form):
                         self.NextTrack,
                         self.PreviousTrack,
                         self.Info,
-                        self.PhoneCall, 
+                        self.PhoneCall,
                         self.PhoneHangup,
-                        self.Voice, 
+                        self.Voice,
                         self.LaneDeparture,
                         self.Horn,
                         self.CruiseEnable,
@@ -136,12 +139,16 @@ class SteeringCtrlWidget(Base, Form):
         button_clicked = button.objectName()
         signal_type = settings.Steering_Signal_Type
         if signal_type == "Kuksa":
-            self.feed_kuksa.send_values(self.Steering.switches[button_clicked]["Kuksa"], "1")
-            self.feed_kuksa.send_values(self.Steering.switches[button_clicked]["Kuksa"], "0")
+            self.feed_kuksa.send_values(
+                self.Steering.switches[button_clicked]["Kuksa"], "1")
+            self.feed_kuksa.send_values(
+                self.Steering.switches[button_clicked]["Kuksa"], "0")
         elif signal_type == "CAN":
-            feed_can.send_can_signal(self.Steering.switches[button_clicked]["CAN"])
+            feed_can.send_can_signal(
+                self.Steering.switches[button_clicked]["CAN"])
             # Making sure button state goes back to off
             feed_can.send_can_signal("021#FFFFFFFF00000000")
+
 
 if __name__ == '__main__':
     import sys

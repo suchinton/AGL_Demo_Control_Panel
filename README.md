@@ -34,10 +34,6 @@ A PyQt5 application to simulate CAN Bus signals using Kuksa.val for the AGL Demo
     $ pyrcc5 assets/res.qrc -o res_rc.py
     ```
 
-
-
-
-
 ## # Usage
 
 First, we run the kuksa-val-server on the machine, you can also run the [docker image](https://github.com/eclipse/kuksa.val/tree/master/kuksa-val-server#quick-start) for the same. It is important to note that `kuksa-val-server` uses websockets and `databroker` uses grpc, so adjust settings accordingly.
@@ -53,7 +49,6 @@ If you are using an AGL image (using QEMU/KVM or VirtualBox) to test the applica
 ```bash
 sudo bash AGL_Demo_Control_Panel/Scripts/setup_tap_wireless_int.sh
 ```
-
 
 #### Start the QEMU instance with elevated privileges
 
@@ -160,7 +155,6 @@ $ databroker --address 0.0.0.0
 
 $ vi /etc/default/kuksa-databroker
 ```
-
 
 ## # Demo Video
 

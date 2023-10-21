@@ -14,12 +14,12 @@
     limitations under the License.
 """
 
-import time
 import logging
 from PyQt5.QtCore import QThread
 from PyQt5.QtCore import pyqtSignal
 from . import Kuksa_Instance as kuksa_instance
 import threading
+
 
 class FeedKuksa(QThread):
     sending_values = pyqtSignal()
@@ -46,7 +46,7 @@ class FeedKuksa(QThread):
         parent : QObject
             The parent object of the FeedKuksa object.
         """
-        QThread.__init__(self,parent)
+        QThread.__init__(self, parent)
         self.stop_flag = False
 
     def run(self):
@@ -61,7 +61,7 @@ class FeedKuksa(QThread):
         Stops the thread.
         """
         self.stop_flag = True
-        
+
         logging.info("Stopping thread")
 
     def set_instance(self):
@@ -89,7 +89,7 @@ class FeedKuksa(QThread):
         Exception
             If there is an error sending values to Kuksa.
         """
-        
+
         if self.client is None:
             logging.error("Kuksa client is None, try reconnecting")
             return

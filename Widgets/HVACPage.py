@@ -14,6 +14,7 @@
     limitations under the License.
 """
 
+from extras.FeedKuksa import FeedKuksa
 import os
 import sys
 from PyQt5 import uic
@@ -25,11 +26,11 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(os.path.dirname(current_dir))
 
-from extras.FeedKuksa import FeedKuksa
 
 Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/HVAC.ui"))
 
 # ========================================
+
 
 class HVAC_Paths():
     def __init__(self):
@@ -38,8 +39,9 @@ class HVAC_Paths():
         self.rightTemp = "Vehicle.Cabin.HVAC.Station.Row1.Right.Temperature"
         self.rightFanSpeed = "Vehicle.Cabin.HVAC.Station.Row1.Right.FanSpeed"
 
-        # temperatureList contains values from 32 to 16 
+        # temperatureList contains values from 32 to 16
         self.temperatureList = [str(i) + "°C" for i in range(32, 15, -1)]
+
 
 class HVACWidget(Base, Form):
     """
@@ -58,42 +60,52 @@ class HVACWidget(Base, Form):
 
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
-        
+
         self.HVAC = HVAC_Paths()
 
         self.feed_kuksa = FeedKuksa()
-        
+
         self.leftTempList = self.findChild(QListWidget, "leftTempList")
         self.leftTempList.addItems(self.HVAC.temperatureList)
         self.leftTempList.setCurrentRow(0)
         self.leftTempList.itemClicked.connect(self.leftTempListClicked)
-        self.leftTempList.itemSelectionChanged.connect(self.leftTempListClicked)
+        self.leftTempList.itemSelectionChanged.connect(
+            self.leftTempListClicked)
         self.leftTempList.wheelEvent = lambda event: None
 
         self.rightTempList = self.findChild(QListWidget, "rightTempList")
         self.rightTempList.addItems(self.HVAC.temperatureList)
         self.rightTempList.setCurrentRow(0)
         self.rightTempList.itemClicked.connect(self.rightTempListClicked)
-        self.rightTempList.itemSelectionChanged.connect(self.rightTempListClicked)
+        self.rightTempList.itemSelectionChanged.connect(
+            self.rightTempListClicked)
         self.rightTempList.wheelEvent = lambda event: None
 
         self.leftTempUp = self.findChild(QPushButton, "leftTempUp")
-        self.leftTempUp.clicked.connect(lambda: self.leftTempList.setCurrentRow(self.leftTempList.currentRow() - 1))
+        self.leftTempUp.clicked.connect(
+            lambda: self.leftTempList.setCurrentRow(self.leftTempList.currentRow() - 1))
 
         self.leftTempDown = self.findChild(QPushButton, "leftTempDown")
-        self.leftTempDown.clicked.connect(lambda: self.leftTempList.setCurrentRow(self.leftTempList.currentRow() + 1))
+        self.leftTempDown.clicked.connect(
+            lambda: self.leftTempList.setCurrentRow(self.leftTempList.currentRow() + 1))
 
         self.rightTempUp = self.findChild(QPushButton, "rightTempUp")
-        self.rightTempUp.clicked.connect(lambda: self.rightTempList.setCurrentRow(self.rightTempList.currentRow() - 1))
+        self.rightTempUp.clicked.connect(
+            lambda: self.rightTempList.setCurrentRow(self.rightTempList.currentRow() - 1))
 
         self.rightTempDown = self.findChild(QPushButton, "rightTempDown")
-        self.rightTempDown.clicked.connect(lambda: self.rightTempList.setCurrentRow(self.rightTempList.currentRow() + 1))
+        self.rightTempDown.clicked.connect(
+            lambda: self.rightTempList.setCurrentRow(self.rightTempList.currentRow() + 1))
 
-        self.leftFanSpeed_slider = self.findChild(QSlider, "leftFanSpeed_slider")
-        self.leftFanSpeed_slider.valueChanged.connect(self.leftFanSpeed_sliderChanged)
+        self.leftFanSpeed_slider = self.findChild(
+            QSlider, "leftFanSpeed_slider")
+        self.leftFanSpeed_slider.valueChanged.connect(
+            self.leftFanSpeed_sliderChanged)
 
-        self.rightFanSpeed_slider = self.findChild(QSlider, "rightFanSpeed_slider")
-        self.rightFanSpeed_slider.valueChanged.connect(self.rightFanSpeed_sliderChanged)
+        self.rightFanSpeed_slider = self.findChild(
+            QSlider, "rightFanSpeed_slider")
+        self.rightFanSpeed_slider.valueChanged.connect(
+            self.rightFanSpeed_sliderChanged)
 
     def leftTempListClicked(self):
         """
@@ -136,6 +148,7 @@ class HVACWidget(Base, Form):
         value = self.rightFanSpeed_slider.value()
         self.feed_kuksa.send_values(self.HVAC.rightFanSpeed, str(value))
         print(value)
+
 
 if __name__ == '__main__':
     import sys

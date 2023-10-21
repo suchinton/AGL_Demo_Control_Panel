@@ -14,6 +14,8 @@
     limitations under the License.
 """
 
+from PyQt5 import QtCore, QtGui, QtWidgets
+from extras.FeedKuksa import FeedKuksa
 import os
 import sys
 from PyQt5 import uic
@@ -31,14 +33,11 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(os.path.dirname(current_dir))
 
-from extras.FeedKuksa import FeedKuksa
 
 Form, Base = uic.loadUiType(os.path.join(current_dir, "../ui/Dashboard.ui"))
 
 # ========================================
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import pyqtSignal
 
 class Dashboard(Base, Form):
     """
@@ -67,18 +66,13 @@ class Dashboard(Base, Form):
 
         self.feed_kuksa = FeedKuksa()
 
-        file = ":/Carbon_Icons/carbon_icons/play.svg"
-        getsize = QtSvg.QSvgRenderer(file)
-        svg_widget = QtSvg.QSvgWidget(file)
-        svg_widget.setFixedSize(getsize.defaultSize())
-
         Dashboard_tiles = (self.DB_IC_Tile,
-                             self.DB_HVAC_Tile,
-                             self.DB_Steering_Tile,
-                             self.DB_Settings_Tile)
+                           self.DB_HVAC_Tile,
+                           self.DB_Steering_Tile,
+                           self.DB_Settings_Tile)
 
         DashboardTiles = QtWidgets.QButtonGroup(self)
-        
+
         DashboardTiles.buttonClicked.connect(self.tile_clicked)
 
         for i, tile in enumerate(Dashboard_tiles):
@@ -121,6 +115,7 @@ class Dashboard(Base, Form):
             self.parent().setCurrentIndex(4)
 
         self.tileClickedSignal.emit()
+
 
 if __name__ == '__main__':
     import sys

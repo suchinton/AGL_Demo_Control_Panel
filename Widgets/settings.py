@@ -13,6 +13,8 @@
 #   limitations under the License.
 
 
+from extras import config
+import extras.Kuksa_Instance as kuksa_instance
 import os
 import sys
 import time
@@ -31,8 +33,6 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(os.path.dirname(current_dir))
 
-import extras.Kuksa_Instance as kuksa_instance
-from extras import config
 
 Form, Base = uic.loadUiType(os.path.join(
     current_dir, "../ui/Settings_Window.ui"))
@@ -41,11 +41,13 @@ Form, Base = uic.loadUiType(os.path.join(
 
 Steering_Signal_Type = "Kuksa"
 
+
 def create_animated_toggle():
     return AnimatedToggle(
         checked_color="#4BD7D6",
         pulse_checked_color="#00ffff",
     )
+
 
 class settings(Base, Form):
     """
@@ -61,14 +63,14 @@ class settings(Base, Form):
     - refreshBtn: A QPushButton object representing the refresh button.
     - startClientBtn: A QPushButton object representing the start client button.
     """
-    
+
     def __init__(self, parent=None):
         """
         Initializes the settings widget of the AGL Demo Control Panel.
         """
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
-        
+
         self.SSL_toggle = create_animated_toggle()
         self.Protocol_toggle = create_animated_toggle()
         self.CAN_Kuksa_toggle = create_animated_toggle()
@@ -79,11 +81,13 @@ class settings(Base, Form):
         list_of_configs = config.get_list_configs()
         default_config_name = config.get_default_config()
 
-        self.List_Configs_ComboBox = self.findChild(QComboBox, "List_Configs_ComboBox")
+        self.List_Configs_ComboBox = self.findChild(
+            QComboBox, "List_Configs_ComboBox")
         self.List_Configs_ComboBox.setItemDelegate(QStyledItemDelegate())
         self.List_Configs_ComboBox.addItems(list_of_configs)
         self.List_Configs_ComboBox.setCurrentText(default_config_name)
-        self.List_Configs_ComboBox.currentTextChanged.connect(lambda: self.set_settings(self.List_Configs_ComboBox.currentText()))
+        self.List_Configs_ComboBox.currentTextChanged.connect(
+            lambda: self.set_settings(self.List_Configs_ComboBox.currentText()))
 
         self.IPAddrInput = self.findChild(QLineEdit, "IPAddrInput")
         self.PortInput = self.findChild(QLineEdit, "PortInput")
@@ -99,16 +103,18 @@ class settings(Base, Form):
         self.reconnectBtn.clicked.connect(self.reconnectClient)
         self.SSL_toggle.clicked.connect(self.toggleSSL)
         self.CAN_Kuksa_toggle.clicked.connect(self.toggle_CAN_Kuksa)
-    
+
         Frame_GS = self.findChild(QWidget, "frame_general_settings")
         Frame_PS = self.findChild(QWidget, "frame_page_settings")
         GS_layout = Frame_GS.layout()
         PS_layout = Frame_PS.layout()
-        
+
         GS_layout.replaceWidget(self.place_holder_toggle_1, self.SSL_toggle)
-        GS_layout.replaceWidget(self.place_holder_toggle_2, self.Protocol_toggle)
-        PS_layout.replaceWidget(self.place_holder_toggle_3, self.CAN_Kuksa_toggle)
-        
+        GS_layout.replaceWidget(
+            self.place_holder_toggle_2, self.Protocol_toggle)
+        PS_layout.replaceWidget(
+            self.place_holder_toggle_3, self.CAN_Kuksa_toggle)
+
         self.place_holder_toggle_1.deleteLater()
         self.place_holder_toggle_2.deleteLater()
         self.place_holder_toggle_3.deleteLater()
@@ -121,7 +127,8 @@ class settings(Base, Form):
             self.set_instance()
             if self.client is not None:
                 self.startClientBtn.setStyleSheet("border: 1px solid red;")
-                self.startClientBtn.setIcon(QtGui.QIcon(":/Carbon_Icons/carbon_icons/stop.svg"))
+                self.startClientBtn.setIcon(QtGui.QIcon(
+                    ":/Carbon_Icons/carbon_icons/stop.svg"))
                 self.startClientBtn.setText("Stop Client")
             else:
                 self.startClientBtn.setChecked(False)
@@ -131,9 +138,9 @@ class settings(Base, Form):
                 self.client.stop()
 
             self.startClientBtn.setStyleSheet("border: 1px solid green;")
-            self.startClientBtn.setIcon(QtGui.QIcon(":/Carbon_Icons/carbon_icons/play.svg"))
+            self.startClientBtn.setIcon(QtGui.QIcon(
+                ":/Carbon_Icons/carbon_icons/play.svg"))
             self.startClientBtn.setText("Start Client")
-                
 
     def toggleSSL(self):
         """
@@ -150,7 +157,8 @@ class settings(Base, Form):
         if (self.CAN_Kuksa_toggle.isChecked()):
             # check if can0 is available
             try:
-                can_bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
+                can_bus = can.interface.Bus(
+                    channel='can0', bustype='socketcan_native')
                 can_bus.shutdown()
                 Steering_Signal_Type = "CAN"
             except:
@@ -193,13 +201,15 @@ class settings(Base, Form):
             if (self.client is None):
                 self.connectionStatus.setText('Not Connected')
                 self.connectionLogo.setStyleSheet("background-color: red")
-                self.connectionLogo.setPixmap(QtGui.QPixmap(":/Carbon_Icons/carbon_icons/connection-signal--off.svg"))
+                self.connectionLogo.setPixmap(QtGui.QPixmap(
+                    ":/Carbon_Icons/carbon_icons/connection-signal--off.svg"))
                 return None
 
             if (self.client.checkConnection() == True):
                 self.connectionStatus.setText('Connected')
                 self.connectionLogo.setStyleSheet("background-color: green")
-                self.connectionLogo.setPixmap(QtGui.QPixmap(":/Carbon_Icons/carbon_icons/connection-signal.svg"))
+                self.connectionLogo.setPixmap(QtGui.QPixmap(
+                    ":/Carbon_Icons/carbon_icons/connection-signal.svg"))
                 self.client.start()
                 return True
 
@@ -207,7 +217,8 @@ class settings(Base, Form):
                 self.client.stop()
                 self.connectionStatus.setText('Disconnected')
                 self.connectionLogo.setStyleSheet("background-color: yellow")
-                self.connectionLogo.setPixmap(QtGui.QPixmap(":/Carbon_Icons/carbon_icons/connection-signal--off.svg"))
+                self.connectionLogo.setPixmap(QtGui.QPixmap(
+                    ":/Carbon_Icons/carbon_icons/connection-signal--off.svg"))
                 return False
         except:
             pass
@@ -240,7 +251,8 @@ class settings(Base, Form):
             text = widget.text()
             if text:
                 if os.path.exists(text):
-                    widget.setStyleSheet("border: 1px solid #4BD7D6 ; /* light blue */")
+                    widget.setStyleSheet(
+                        "border: 1px solid #4BD7D6 ; /* light blue */")
                     if key:
                         self.new_config[key] = text
                     else:
@@ -248,18 +260,19 @@ class settings(Base, Form):
                 else:
                     widget.setStyleSheet("border: 1px solid red;")
                     return None
-                
+
         new_config = {}
         new_config["ip"] = self.IPAddrInput.text()
         new_config["port"] = self.PortInput.text()
         new_config["protocol"] = self.get_protocol()
         new_config["insecure"] = not self.SSL_toggle.isChecked()
-        new_config["tls_server_name"] = self.TLS_Server_Name.text() if self.Protocol_toggle.isChecked() else None
+        new_config["tls_server_name"] = self.TLS_Server_Name.text(
+        ) if self.Protocol_toggle.isChecked() else None
         validate_and_set_style(self, self.CA_File, "cacertificate")
         validate_and_set_style(self, self.Auth_Token)
 
         return new_config
-    
+
     def set_settings(self, config_name):
         """
         Reloads the parameters of settings widget.
@@ -272,10 +285,13 @@ class settings(Base, Form):
         self.IPAddrInput.setText(self.kuksa_config["ip"])
         self.PortInput.setText(self.kuksa_config["port"])
         self.SSL_toggle.setChecked(not self.kuksa_config["insecure"])
-        self.Protocol_toggle.setChecked(self.kuksa_config["protocol"] == 'grpc')
+        self.Protocol_toggle.setChecked(
+            self.kuksa_config["protocol"] == 'grpc')
         self.CA_File.setText(self.kuksa_config["cacertificate"])
-        self.TLS_Server_Name.setText(self.kuksa_config["tls_server_name"] if self.kuksa_config["tls_server_name"] is not None else "")
+        self.TLS_Server_Name.setText(
+            self.kuksa_config["tls_server_name"] if self.kuksa_config["tls_server_name"] is not None else "")
         self.Auth_Token.setText(self.kuksa_token)
+
 
 class RefreshThread(QThread):
     def __init__(self, settings):
@@ -285,6 +301,7 @@ class RefreshThread(QThread):
     def run(self):
         time.sleep(2)
         self.settings.refreshStatus()
+
 
 if __name__ == '__main__':
     import sys
