@@ -113,10 +113,7 @@ class HVACWidget(Base, Form):
         Sends the selected temperature value to the feed_kuksa object.
         """
 
-        item = self.leftTempList.currentItem()
-        self.leftTempList.scrollToItem(item, 1)
-        self.feed_kuksa.send_values(self.HVAC.leftTemp, item.text()[:-2])
-        print(item.text())
+        self.setTemperature(self.leftTempList, self.HVAC.leftTemp)
 
     def rightTempListClicked(self):
         """
@@ -124,10 +121,14 @@ class HVACWidget(Base, Form):
         Sends the selected temperature value to the feed_kuksa object.
         """
 
-        item = self.rightTempList.currentItem()
-        self.rightTempList.scrollToItem(item, 1)
-        self.feed_kuksa.send_values(self.HVAC.rightTemp, item.text()[:-2])
-        print(item.text())
+        self.setTemperature(self.rightTempList, self.HVAC.rightTemp)
+
+    def setTemperature(self, list_widget, path):
+        item = list_widget.currentItem()
+        if item is not None:
+            list_widget.scrollToItem(item, 1)
+            self.feed_kuksa.send_values(path, item.text()[:-2])
+            print(item.text())
 
     def leftFanSpeed_sliderChanged(self):
         """

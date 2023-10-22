@@ -20,33 +20,27 @@ from PyQt5.QtCore import QPropertyAnimation
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QEasingCurve
 from PyQt5.QtWidgets import QGraphicsOpacityEffect
+from PyQt5.QtCore import pyqtSignal
 import logging
 import json
 
-from . import FeedKuksa as feed_kuksa
 from . import Kuksa_Instance as kuksa_instance
 
 # Global variables
 subscribed = False
-should_execute_callback = True
 block_subscription_updates = False
 
 
 class UI_Handeler(MainWindow):
-    """
-    This class handles the UI of the AGL Demo Control Panel application.
-    """
 
-    def __init__(self):
-        self.feed_kuksa = feed_kuksa.FeedKuksa()
-        self.feed_kuksa.sending_values.connect(self.block_updates)
-        self.feed_kuksa.finished_sending_values.connect(self.unblock_updates)
+    def display_sending_message(self):
+        print("message sent")
 
-    def block_updates(self):
+    def block_updates():
         global block_subscription_updates
         block_subscription_updates = True
 
-    def unblock_updates(self):
+    def unblock_updates():
         global block_subscription_updates
         block_subscription_updates = False
 
@@ -80,21 +74,12 @@ class UI_Handeler(MainWindow):
         self.stackedWidget.setCurrentIndex(index)
 
     def toggleMaximized(self):
-        """
-        This method toggles the maximized state of the window.
-        """
         if self.isMaximized():
             self.showNormal()
         else:
             self.showMaximized()
 
     def moveWindow(self, event):
-        """
-        This method moves the window by dragging the header.
-
-        Args:
-        - event: The event object containing information about the mouse event.
-        """
         if event.buttons() == QtCore.Qt.LeftButton:
             self.move(self.pos() + event.globalPos() - self.clickPosition)
             self.clickPosition = event.globalPos()
@@ -109,12 +94,6 @@ class UI_Handeler(MainWindow):
         event.accept()
 
     def set_instance(self):
-        """
-        This method sets the instance of the Kuksa client.
-
-        Returns:
-        - True if the client is connected to Kuksa, False otherwise.
-        """
         self.kuksa = kuksa_instance.KuksaClientSingleton.instance()
         self.client = self.kuksa.get_client()
         if self.client is not None and self.client.checkConnection():
@@ -122,6 +101,10 @@ class UI_Handeler(MainWindow):
         else:
             logging.error("Kuksa client is not connected, try reconnecting")
             return False
+
+    def stop_client(self):
+        if self.client is not None and self.client.checkConnection():
+            self.client.stop()
 
     def subscribe_VSS_Signals(self):
         """

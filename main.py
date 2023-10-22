@@ -16,6 +16,7 @@
 
 from Widgets.Dashboard import Dashboard
 from extras.UI_Handeler import *
+from extras import Kuksa_Instance
 import sys
 import os
 
@@ -55,6 +56,8 @@ class MainWindow(Base, Form):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.setStyle(QtWidgets.QStyleFactory.create('Fusion'))
 
+        self.current_page = None
+
         self.headerContainer = self.findChild(QWidget, 'headerContainer')
         self.headerContainer.DoubleClickMaximize = lambda: UI_Handeler.toggleMaximized(
             self)
@@ -83,7 +86,7 @@ class MainWindow(Base, Form):
 
         # make the close button also end all threads
         closeButton.clicked.connect(
-            lambda: [self.close(), self.stop_thread_signal.emit()])
+            lambda: [UI_Handeler.stop_client(self), self.close(), self.stop_thread_signal.emit()])
         minimizeButton.clicked.connect(self.showMinimized)
         maximizeButton.clicked.connect(
             lambda: UI_Handeler.toggleMaximized(self))
@@ -112,9 +115,6 @@ class MainWindow(Base, Form):
 
         self.stackedWidget.currentChanged.connect(self.handleChangedPage)
 
-        self.stop_thread_signal.connect(
-            self.stackedWidget.widget(0).feed_kuksa.stop)
-
         self.stackedWidget.setCurrentIndex(0)
         self.dashboardButton.setChecked(True)
         UI_Handeler.Hide_Navbar(self, bool_arg=False)
@@ -127,7 +127,6 @@ class MainWindow(Base, Form):
         self.centralwidget = self.findChild(QWidget, 'centralwidget')
         self.size_grip = QtWidgets.QSizeGrip(self)
         self.size_grip.setFixedSize(20, 20)
-        # self.size_grip.setStyleSheet("QSizeGrip { background-color: transparent; }")
         self.size_grip.setStyleSheet("""
                                         QSizeGrip {
                                             background-color: transparent;
@@ -150,31 +149,23 @@ class MainWindow(Base, Form):
         """
         UI_Handeler.Hide_Navbar(self, bool_arg=False)
 
-    def handleChangedPage(self, index):
+    def handleChangedPage(self, page_index):
         """
         Handles the change of pages in the stacked widget.
         Stops the previous thread and starts the new one.
         If the index is 0, the navbar is not hidden. Otherwise, it is hidden.
         """
-        if index == 0:
-            UI_Handeler.Hide_Navbar(self, bool_arg=False)
-        else:
-            UI_Handeler.Hide_Navbar(self, bool_arg=True)
-        try:
-            self.stop_thread_signal.connect(
-                self.stackedWidget.widget(self.current_page).feed_kuksa.stop)
-            self.stop_thread_signal.emit()
-        except:
-            pass
+        hide_navbar = page_index != 0
+        UI_Handeler.Hide_Navbar(self, hide_navbar)
 
-        self.current_page = self.stackedWidget.currentIndex()
+        if self.current_page is not None:
+            if self.current_page != 0 and self.current_page != 4:
+                self.stackedWidget.widget(self.current_page).feed_kuksa.stop()
 
-        try:
-            self.start_thread_signal.connect(
-                self.stackedWidget.widget(self.current_page).feed_kuksa.start)
-            self.start_thread_signal.emit()
-        except:
-            pass
+        self.current_page = page_index
+
+        if self.current_page != 0 and self.current_page != 4:
+            self.stackedWidget.widget(self.current_page).feed_kuksa.start()
 
 
 if __name__ == '__main__':

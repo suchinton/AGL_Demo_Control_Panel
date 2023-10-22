@@ -71,7 +71,6 @@ class ICWidget(Base, Form):
         # self.vehicle_simulator = VehicleSimulator(self)
 
         self.feed_kuksa = FeedKuksa()
-        self.feed_kuksa.start()
         self.vehicle_simulator = VehicleSimulator()
 
         header_frame = self.findChild(QWidget, "header_frame")
@@ -336,32 +335,30 @@ class ICWidget(Base, Form):
 
 
 class AccelerationFns():
+    WHEEL_CIRCUMFERENCE = 0.48 * 3.14  # in meters
+    GEAR_RATIOS = [3.36, 2.10, 1.48, 1.16, 0.95, 0.75]
+
     def calculate_speed(time, acceleration) -> int:
-        # acceleration = 60 / 5 # acceleration from 0 to 60 in 5 seconds
         time = time / 1000  # convert milliseconds to seconds
         speed = acceleration * time  # calculate speed
         return int(speed)
 
     def calculate_engine_rpm(speed) -> int:
-        wheel_diameter = 0.48  # in meters
-        wheel_circumference = wheel_diameter * 3.14  # in meters
-
-        # Adjust the gear ratios to match the desired speed and rpm
-        gear_ratios = [3.36, 2.10, 1.48, 1.16, 0.95, 0.75]
         speed = speed * 1000 / 3600  # Convert speed from km/h to m/s
-        wheel_rps = speed / wheel_circumference
+        wheel_rps = speed / AccelerationFns.WHEEL_CIRCUMFERENCE
 
         current_gear = None
-        for i in range(len(gear_ratios)):
-            if wheel_rps * gear_ratios[i] < 8000 / 60:
-                current_gear = i + 1
+        for i, ratio in enumerate(AccelerationFns.GEAR_RATIOS, start=1):
+            if wheel_rps * ratio < 8000 / 60:
+                current_gear = i
                 break
 
         # If no gear is found, use the highest gear
         if current_gear is None:
-            current_gear = len(gear_ratios)
+            current_gear = len(AccelerationFns.GEAR_RATIOS)
 
-        engine_rpm = wheel_rps * gear_ratios[current_gear - 1] * 60
+        engine_rpm = wheel_rps * \
+            AccelerationFns.GEAR_RATIOS[current_gear - 1] * 60
 
         return int(engine_rpm)
 

@@ -14,8 +14,7 @@
     limitations under the License.
 """
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from extras.FeedKuksa import FeedKuksa
+from PyQt5 import QtCore, QtWidgets
 import os
 import sys
 from PyQt5 import uic
@@ -64,8 +63,6 @@ class Dashboard(Base, Form):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
 
-        self.feed_kuksa = FeedKuksa()
-
         Dashboard_tiles = (self.DB_IC_Tile,
                            self.DB_HVAC_Tile,
                            self.DB_Steering_Tile,
@@ -80,23 +77,23 @@ class Dashboard(Base, Form):
             DashboardTiles.addButton(tile)
 
     def set_icon(self, tile, icon_size):
-        try:
-            if tile == self.DB_IC_Tile:
-                file = ":/Carbon_Icons/carbon_icons/meter.svg"
-            if tile == self.DB_HVAC_Tile:
-                file = ":/Carbon_Icons/carbon_icons/windy--strong.svg"
-            if tile == self.DB_Steering_Tile:
-                file = ":/Images/Images/steering-wheel.svg"
-            if tile == self.DB_Settings_Tile:
-                file = ":/Carbon_Icons/carbon_icons/settings.svg"
-            getsize = QtSvg.QSvgRenderer(file)
-            svg_widget = QtSvg.QSvgWidget(file)
-            svg_widget.setFixedSize(getsize.defaultSize()*2)
-            svg_widget.setStyleSheet("background-color: transparent;")
-            tile.setIcon(QIcon(svg_widget.grab()))
-            tile.setIconSize(QtCore.QSize(icon_size, icon_size))
-        except Exception as e:
-            print(f"Failed to set icon: {e}")
+        icon_mapping = {
+            self.DB_IC_Tile: ":/Carbon_Icons/carbon_icons/meter.svg",
+            self.DB_HVAC_Tile: ":/Carbon_Icons/carbon_icons/windy--strong.svg",
+            self.DB_Steering_Tile: ":/Images/Images/steering-wheel.svg",
+            self.DB_Settings_Tile: ":/Carbon_Icons/carbon_icons/settings.svg"
+        }
+
+        file = icon_mapping.get(tile)
+        if file is None:
+            return
+
+        getsize = QtSvg.QSvgRenderer(file)
+        svg_widget = QtSvg.QSvgWidget(file)
+        svg_widget.setFixedSize(getsize.defaultSize()*2)
+        svg_widget.setStyleSheet("background-color: transparent;")
+        tile.setIcon(QIcon(svg_widget.grab()))
+        tile.setIconSize(QtCore.QSize(icon_size, icon_size))
 
     def tile_clicked(self, tile):
         """
