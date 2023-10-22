@@ -254,7 +254,7 @@ class settings(Base, Form):
                     widget.setStyleSheet(
                         "border: 1px solid #4BD7D6 ; /* light blue */")
                     if key:
-                        self.new_config[key] = text
+                        new_config[key] = text
                     else:
                         self.kuksa_token = text
                 else:

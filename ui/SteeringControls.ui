@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1034</width>
+    <width>1190</width>
     <height>600</height>
    </rect>
   </property>
@@ -67,8 +67,415 @@ QPushButton:checked {
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="1" rowspan="4" alignment="Qt::AlignRight|Qt::AlignVCenter">
+    <item row="2" column="3" rowspan="5" alignment="Qt::AlignVCenter">
+     <widget class="QFrame" name="RightControls">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>250</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item row="3" column="0" alignment="Qt::AlignTop">
+        <widget class="QFrame" name="BottomRightControls">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0" alignment="Qt::AlignHCenter">
+           <widget class="QPushButton" name="CruiseLimit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <italic>true</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="accessibleDescription">
+             <string/>
+            </property>
+            <property name="text">
+             <string>CRUISE LIMIT</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="CruiseDistance">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <italic>true</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/res.qrc">
+              <normaloff>:/Images/Images/cruise-distance.svg</normaloff>:/Images/Images/cruise-distance.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" alignment="Qt::AlignBottom">
+        <widget class="QFrame" name="TopRightControls">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="2" column="1" colspan="2">
+           <widget class="QPushButton" name="CruiseSet">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <italic>true</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>SET</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/res.qrc">
+              <normaloff>:/Carbon_Icons/carbon_icons/subtract--alt.svg</normaloff>:/Carbon_Icons/carbon_icons/subtract--alt.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="2">
+           <widget class="QPushButton" name="CruiseResume">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <italic>true</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>RES</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/res.qrc">
+              <normaloff>:/Carbon_Icons/carbon_icons/add--alt.svg</normaloff>:/Carbon_Icons/carbon_icons/add--alt.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="CruiseEnable">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/res.qrc">
+              <normaloff>:/Images/Images/AGL_Icons_CruiseControl_white.svg</normaloff>:/Images/Images/AGL_Icons_CruiseControl_white.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" alignment="Qt::AlignHCenter">
+           <widget class="QPushButton" name="CruiseCancel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <italic>true</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>CANCEL</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/res.qrc">
+              <normaloff>:/Carbon_Icons/carbon_icons/misuse--outline.svg</normaloff>:/Carbon_Icons/carbon_icons/misuse--outline.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>45</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="6" column="2" alignment="Qt::AlignBottom">
+     <widget class="QFrame" name="ExtraControls">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Ignored">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item alignment="Qt::AlignBottom">
+        <widget class="QPushButton" name="PhoneCall">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/Carbon_Icons/carbon_icons/phone--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/phone--filled.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignBottom">
+        <widget class="QPushButton" name="PhoneHangup">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/Carbon_Icons/carbon_icons/phone--off--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/phone--off--filled.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignBottom">
+        <widget class="QPushButton" name="Voice">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/Carbon_Icons/carbon_icons/voice.svg</normaloff>:/Carbon_Icons/carbon_icons/voice.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignBottom">
+        <widget class="QPushButton" name="LaneDeparture">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../assets/res.qrc">
+           <normaloff>:/Images/Images/AGL_Icons_LaneDeparture_white.svg</normaloff>:/Images/Images/AGL_Icons_LaneDeparture_white.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="2" column="0" rowspan="5">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="1" rowspan="5" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QFrame" name="LeftControls">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>250</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -76,8 +483,29 @@ QPushButton:checked {
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
-       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item alignment="Qt::AlignVCenter">
         <widget class="QFrame" name="TopLeftControls">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>200</width>
@@ -128,14 +556,14 @@ QPushButton:checked {
           <item row="2" column="1">
            <widget class="QPushButton" name="Mode">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>80</width>
               <height>0</height>
              </size>
             </property>
@@ -218,6 +646,12 @@ QPushButton:checked {
        </item>
        <item alignment="Qt::AlignBottom">
         <widget class="QFrame" name="BottomLeftControls">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -227,6 +661,12 @@ QPushButton:checked {
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QPushButton" name="Info">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>70</height>
+             </size>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -244,6 +684,12 @@ QPushButton:checked {
           </item>
           <item>
            <widget class="QPushButton" name="VolumeMute">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>70</height>
+             </size>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -265,7 +711,52 @@ QPushButton:checked {
       </layout>
      </widget>
     </item>
-    <item row="2" column="2" rowspan="3" alignment="Qt::AlignVCenter">
+    <item row="0" column="0" colspan="5">
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Expanding</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="4" rowspan="5">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Expanding</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="7" column="0" colspan="5">
+     <spacer name="verticalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="2" rowspan="3" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QFrame" name="frame">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -318,7 +809,7 @@ QPushButton:checked {
          </property>
          <property name="iconSize">
           <size>
-           <width>250</width>
+           <width>350</width>
            <height>250</height>
           </size>
          </property>
@@ -327,358 +818,18 @@ QPushButton:checked {
       </layout>
      </widget>
     </item>
-    <item row="2" column="3" rowspan="4" alignment="Qt::AlignVCenter">
-     <widget class="QFrame" name="RightControls">
-      <property name="minimumSize">
-       <size>
-        <width>200</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="3" column="0" alignment="Qt::AlignTop">
-        <widget class="QFrame" name="BottomRightControls">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="0">
-           <widget class="QPushButton" name="CruiseLimit">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>70</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="accessibleDescription">
-             <string/>
-            </property>
-            <property name="text">
-             <string>CRUISE LIMIT</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="CruiseDistance">
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../assets/res.qrc">
-              <normaloff>:/Images/Images/cruise-distance.svg</normaloff>:/Images/Images/cruise-distance.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>45</width>
-              <height>45</height>
-             </size>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="0" alignment="Qt::AlignBottom">
-        <widget class="QFrame" name="TopRightControls">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_5">
-          <item row="2" column="1" colspan="2">
-           <widget class="QPushButton" name="CruiseSet">
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>SET</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../assets/res.qrc">
-              <normaloff>:/Carbon_Icons/carbon_icons/subtract--alt.svg</normaloff>:/Carbon_Icons/carbon_icons/subtract--alt.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>45</width>
-              <height>45</height>
-             </size>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" colspan="2">
-           <widget class="QPushButton" name="CruiseResume">
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>RES</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../assets/res.qrc">
-              <normaloff>:/Carbon_Icons/carbon_icons/add--alt.svg</normaloff>:/Carbon_Icons/carbon_icons/add--alt.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>45</width>
-              <height>45</height>
-             </size>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="CruiseEnable">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../assets/res.qrc">
-              <normaloff>:/Images/Images/AGL_Icons_CruiseControl_white.svg</normaloff>:/Images/Images/AGL_Icons_CruiseControl_white.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>45</width>
-              <height>45</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="CruiseCancel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>CANCEL</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../assets/res.qrc">
-              <normaloff>:/Carbon_Icons/carbon_icons/misuse--outline.svg</normaloff>:/Carbon_Icons/carbon_icons/misuse--outline.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>45</width>
-              <height>45</height>
-             </size>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="4" rowspan="4">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="6" column="0" colspan="5">
-     <spacer name="verticalSpacer_4">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="5" column="2" alignment="Qt::AlignBottom">
-     <widget class="QFrame" name="ExtraControls">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item alignment="Qt::AlignBottom">
-        <widget class="QPushButton" name="PhoneCall">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../assets/res.qrc">
-           <normaloff>:/Carbon_Icons/carbon_icons/phone--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/phone--filled.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>45</width>
-           <height>45</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item alignment="Qt::AlignBottom">
-        <widget class="QPushButton" name="PhoneHangup">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../assets/res.qrc">
-           <normaloff>:/Carbon_Icons/carbon_icons/phone--off--filled.svg</normaloff>:/Carbon_Icons/carbon_icons/phone--off--filled.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>45</width>
-           <height>45</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item alignment="Qt::AlignBottom">
-        <widget class="QPushButton" name="Voice">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../assets/res.qrc">
-           <normaloff>:/Carbon_Icons/carbon_icons/voice.svg</normaloff>:/Carbon_Icons/carbon_icons/voice.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>45</width>
-           <height>45</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item alignment="Qt::AlignBottom">
-        <widget class="QPushButton" name="LaneDeparture">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../assets/res.qrc">
-           <normaloff>:/Images/Images/AGL_Icons_LaneDeparture_white.svg</normaloff>:/Images/Images/AGL_Icons_LaneDeparture_white.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>45</width>
-           <height>45</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="0" rowspan="4">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="0" colspan="5">
-     <spacer name="verticalSpacer_3">
+    <item row="5" column="2">
+     <spacer name="verticalSpacer_5">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
       <property name="sizeType">
-       <enum>QSizePolicy::Expanding</enum>
+       <enum>QSizePolicy::Fixed</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
         <width>20</width>
-        <height>40</height>
+        <height>50</height>
        </size>
       </property>
      </spacer>
