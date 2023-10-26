@@ -88,9 +88,8 @@ class Dashboard(Base, Form):
         if file is None:
             return
 
-        getsize = QtSvg.QSvgRenderer(file)
         svg_widget = QtSvg.QSvgWidget(file)
-        svg_widget.setFixedSize(getsize.defaultSize()*2)
+        svg_widget.setFixedSize(QtSvg.QSvgRenderer(file).defaultSize()*2)
         svg_widget.setStyleSheet("background-color: transparent;")
         tile.setIcon(QIcon(svg_widget.grab()))
         tile.setIconSize(QtCore.QSize(icon_size, icon_size))

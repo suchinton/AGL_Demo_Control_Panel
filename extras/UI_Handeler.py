@@ -20,7 +20,6 @@ from PyQt5.QtCore import QPropertyAnimation
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QEasingCurve
 from PyQt5.QtWidgets import QGraphicsOpacityEffect
-from PyQt5.QtCore import pyqtSignal
 import logging
 import json
 
@@ -32,6 +31,11 @@ block_subscription_updates = False
 
 
 class UI_Handeler(MainWindow):
+
+    def fullscreen(self):
+        self.headerContainer.hide()
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground, False)
+        self.showFullScreen()
 
     def display_sending_message(self):
         print("message sent")

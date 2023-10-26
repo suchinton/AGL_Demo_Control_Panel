@@ -15,6 +15,7 @@
 
 from extras import config
 import extras.Kuksa_Instance as kuksa_instance
+
 import os
 import sys
 import time
@@ -33,6 +34,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(os.path.dirname(current_dir))
 
+from extras.UI_Handeler import *
 
 Form, Base = uic.loadUiType(os.path.join(
     current_dir, "../ui/Settings_Window.ui"))
@@ -98,11 +100,20 @@ class settings(Base, Form):
         self.reconnectBtn = self.findChild(QPushButton, "reconnectBtn")
         self.startClientBtn = self.findChild(QPushButton, "startClientBtn")
         self.startClientBtn.setCheckable(True)
+        self.startClientBtn.setStyleSheet("border: 1px solid green;")
+
+        self.Hide_IC = self.findChild(QPushButton, "Hide_IC")
+        self.Hide_HVAC = self.findChild(QPushButton, "Hide_HVAC")
+        self.Hide_HUD = self.findChild(QPushButton, "Hide_HUD")
 
         self.startClientBtn.clicked.connect(self.start_stop_client)
         self.reconnectBtn.clicked.connect(self.reconnectClient)
         self.SSL_toggle.clicked.connect(self.toggleSSL)
         self.CAN_Kuksa_toggle.clicked.connect(self.toggle_CAN_Kuksa)
+
+        # self.Hide_IC.clicked.connect(lambda: self.Hide_Pages(self, 1))
+        # self.Hide_HUD.clicked.connect(lambda: self.Hide_Pages(self, 2))
+        # self.Hide_HVAC.clicked.connect(lambda: self.Hide_Pages(self, 3))
 
         Frame_GS = self.findChild(QWidget, "frame_general_settings")
         Frame_PS = self.findChild(QWidget, "frame_page_settings")
@@ -123,24 +134,12 @@ class settings(Base, Form):
 
     def start_stop_client(self):
         if self.startClientBtn.isChecked():
-            # turn button red and change icon to stop from resources
             self.set_instance()
-            if self.client is not None:
-                self.startClientBtn.setStyleSheet("border: 1px solid red;")
-                self.startClientBtn.setIcon(QtGui.QIcon(
-                    ":/Carbon_Icons/carbon_icons/stop.svg"))
-                self.startClientBtn.setText("Stop Client")
-            else:
-                self.startClientBtn.setChecked(False)
-        else:
-            # turn button green and change icon to start from resources
-            if self.client is not None:
-                self.client.stop()
+        if self.client is not None:
+            self.client.stop()
 
-            self.startClientBtn.setStyleSheet("border: 1px solid green;")
-            self.startClientBtn.setIcon(QtGui.QIcon(
-                ":/Carbon_Icons/carbon_icons/play.svg"))
-            self.startClientBtn.setText("Start Client")
+        self.refreshThread = RefreshThread(self)
+        self.refreshThread.start()
 
     def toggleSSL(self):
         """
@@ -185,14 +184,6 @@ class settings(Base, Form):
             self.kuksa.reconnect(new_config, self.kuksa_token)
             self.client = self.kuksa.get_client()
 
-        time.sleep(2)
-
-        if (self.client is None):
-            self.connectionStatus.setText('Not Connected')
-            self.connectionLogo.setStyleSheet("background-color: red")
-
-        self.refreshStatus()
-
     def refreshStatus(self):
         """
         Refreshes the connection status.
@@ -203,6 +194,12 @@ class settings(Base, Form):
                 self.connectionLogo.setStyleSheet("background-color: red")
                 self.connectionLogo.setPixmap(QtGui.QPixmap(
                     ":/Carbon_Icons/carbon_icons/connection-signal--off.svg"))
+
+                self.startClientBtn.setStyleSheet("border: 1px solid green;")
+                self.startClientBtn.setIcon(QtGui.QIcon(
+                    ":/Carbon_Icons/carbon_icons/play.svg"))
+                self.startClientBtn.setText("Start Client")
+                self.startClientBtn.setChecked(False)
                 return None
 
             if (self.client.checkConnection() == True):
@@ -210,6 +207,12 @@ class settings(Base, Form):
                 self.connectionLogo.setStyleSheet("background-color: green")
                 self.connectionLogo.setPixmap(QtGui.QPixmap(
                     ":/Carbon_Icons/carbon_icons/connection-signal.svg"))
+
+                self.startClientBtn.setStyleSheet("border: 1px solid red;")
+                self.startClientBtn.setIcon(QtGui.QIcon(
+                    ":/Carbon_Icons/carbon_icons/stop.svg"))
+                self.startClientBtn.setText("Stop Client")
+                self.startClientBtn.setChecked(True)
                 self.client.start()
                 return True
 
@@ -219,6 +222,12 @@ class settings(Base, Form):
                 self.connectionLogo.setStyleSheet("background-color: yellow")
                 self.connectionLogo.setPixmap(QtGui.QPixmap(
                     ":/Carbon_Icons/carbon_icons/connection-signal--off.svg"))
+
+                self.startClientBtn.setStyleSheet("border: 1px solid green;")
+                self.startClientBtn.setIcon(QtGui.QIcon(
+                    ":/Carbon_Icons/carbon_icons/play.svg"))
+                self.startClientBtn.setText("Start Client")
+                self.startClientBtn.setChecked(False)
                 return False
         except:
             pass
@@ -233,7 +242,6 @@ class settings(Base, Form):
                 self.client.stop()
                 self.client = self.kuksa.reconnect(config, self.kuksa_token)
                 self.client.start()
-                self.refreshStatus()
 
                 self.refreshThread = RefreshThread(self)
                 self.refreshThread.start()
@@ -241,6 +249,9 @@ class settings(Base, Form):
             except Exception as e:
                 logging.error(e)
         self.set_instance()
+
+        self.refreshThread = RefreshThread(self)
+        self.refreshThread.start()
 
     def make_new_config(self):
         """
@@ -271,6 +282,9 @@ class settings(Base, Form):
         validate_and_set_style(self, self.CA_File, "cacertificate")
         validate_and_set_style(self, self.Auth_Token)
 
+        config.save_session_config(
+            new_config, self.kuksa_token, self.CA_File.text())
+
         return new_config
 
     def set_settings(self, config_name):
@@ -291,6 +305,9 @@ class settings(Base, Form):
         self.TLS_Server_Name.setText(
             self.kuksa_config["tls_server_name"] if self.kuksa_config["tls_server_name"] is not None else "")
         self.Auth_Token.setText(self.kuksa_token)
+
+    def Hide_Pages(self):
+        pass
 
 
 class RefreshThread(QThread):

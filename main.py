@@ -16,7 +16,6 @@
 
 from Widgets.Dashboard import Dashboard
 from extras.UI_Handeler import *
-from extras import Kuksa_Instance
 import sys
 import os
 
@@ -28,6 +27,8 @@ from PyQt5.QtCore import Qt
 from PyQt5 import QtSvg
 from PyQt5.QtSvg import *
 from PyQt5.QtGui import QIcon
+
+import extras.config as config
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 Form, Base = uic.loadUiType(os.path.join(current_dir, "Main_Window.ui"))
@@ -55,6 +56,9 @@ class MainWindow(Base, Form):
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.setStyle(QtWidgets.QStyleFactory.create('Fusion'))
+
+        if config.fullscreen_mode():
+            UI_Handeler.fullscreen(self)
 
         self.current_page = None
 
@@ -99,9 +103,8 @@ class MainWindow(Base, Form):
                               self.settingsBtn)
 
         steering_icon = ":/Images/Images/steering-wheel.svg"
-        getsize = QtSvg.QSvgRenderer(steering_icon)
         svg_widget = QtSvg.QSvgWidget(steering_icon)
-        svg_widget.setFixedSize(getsize.defaultSize())
+        svg_widget.setFixedSize(QtSvg.QSvgRenderer(steering_icon).defaultSize())
         svg_widget.setStyleSheet("background-color: transparent;")
         self.steeringCtrlButton.setIcon(QIcon(svg_widget.grab()))
 

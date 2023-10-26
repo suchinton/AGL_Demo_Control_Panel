@@ -403,7 +403,7 @@ QCheckBox:indicator:disabled {
         </widget>
        </item>
        <item row="4" column="4">
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="QPushButton" name="Hide_SC">
          <property name="text">
           <string/>
          </property>
@@ -416,6 +416,9 @@ QCheckBox:indicator:disabled {
            <width>30</width>
            <height>30</height>
           </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -469,7 +472,7 @@ QCheckBox:indicator:disabled {
         </widget>
        </item>
        <item row="2" column="4">
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="Hide_IC">
          <property name="text">
           <string/>
          </property>
@@ -482,6 +485,9 @@ QCheckBox:indicator:disabled {
            <width>30</width>
            <height>30</height>
           </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -526,7 +532,7 @@ QCheckBox:indicator:disabled {
         </widget>
        </item>
        <item row="3" column="4">
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="Hide_HVAC">
          <property name="text">
           <string/>
          </property>
@@ -539,6 +545,9 @@ QCheckBox:indicator:disabled {
            <width>30</width>
            <height>30</height>
           </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
