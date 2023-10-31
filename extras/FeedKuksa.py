@@ -16,7 +16,7 @@
 
 import logging
 from PyQt5.QtCore import QThread
-from PyQt5.QtCore import pyqtSignal, QObject
+from PyQt5.QtCore import pyqtSignal
 from . import Kuksa_Instance as kuksa_instance
 from . import UI_Handeler
 import threading

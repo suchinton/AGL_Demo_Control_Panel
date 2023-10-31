@@ -13,6 +13,7 @@
 #   limitations under the License.
 
 
+from extras.UI_Handeler import *
 from extras import config
 import extras.Kuksa_Instance as kuksa_instance
 
@@ -34,7 +35,6 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(os.path.dirname(current_dir))
 
-from extras.UI_Handeler import *
 
 Form, Base = uic.loadUiType(os.path.join(
     current_dir, "../ui/Settings_Window.ui"))
@@ -72,6 +72,7 @@ class settings(Base, Form):
         """
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
+        self.client = None
 
         self.SSL_toggle = create_animated_toggle()
         self.Protocol_toggle = create_animated_toggle()
@@ -135,7 +136,7 @@ class settings(Base, Form):
     def start_stop_client(self):
         if self.startClientBtn.isChecked():
             self.set_instance()
-        if self.client is not None:
+        elif self.client is not None:
             self.client.stop()
 
         self.refreshThread = RefreshThread(self)
@@ -238,20 +239,20 @@ class settings(Base, Form):
         """
         if (self.client is not None):
             try:
-                config = self.make_new_config()
                 self.client.stop()
-                self.client = self.kuksa.reconnect(config, self.kuksa_token)
-                self.client.start()
+                self.client = self.kuksa.reconnect(
+                    self.make_new_config(), self.kuksa_token)
 
                 self.refreshThread = RefreshThread(self)
                 self.refreshThread.start()
 
             except Exception as e:
                 logging.error(e)
-        self.set_instance()
-
-        self.refreshThread = RefreshThread(self)
-        self.refreshThread.start()
+        else:
+            self.set_instance()
+    
+            self.refreshThread = RefreshThread(self)
+            self.refreshThread.start()
 
     def make_new_config(self):
         """

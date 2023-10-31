@@ -37,9 +37,6 @@ class UI_Handeler(MainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground, False)
         self.showFullScreen()
 
-    def display_sending_message(self):
-        print("message sent")
-
     def block_updates():
         global block_subscription_updates
         block_subscription_updates = True

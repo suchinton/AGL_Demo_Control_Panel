@@ -68,7 +68,6 @@ class ICWidget(Base, Form):
         self.setupUi(self)
 
         self.IC = IC_Paths()
-        # self.vehicle_simulator = VehicleSimulator(self)
 
         self.feed_kuksa = FeedKuksa()
         self.vehicle_simulator = VehicleSimulator()

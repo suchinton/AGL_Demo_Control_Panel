@@ -17,7 +17,6 @@
 from typing import Optional
 import kuksa_client as kuksa
 import threading
-import time
 
 
 class KuksaClientSingleton:
