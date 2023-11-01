@@ -376,7 +376,7 @@ class VehicleSimulator(QObject):
         self.engine_speed = self.DEFAULT_IDLE_RPM
         self.running = False
         self.lock = threading.Lock()
-        self.thread = threading.Thread(target=self.run, daemon=True)
+        self.thread = threading.Thread(target=self.run)
 
     def start(self):
         if not self.running:

@@ -18,8 +18,8 @@ import logging
 from PyQt5.QtCore import QThread
 from PyQt5.QtCore import pyqtSignal
 from . import Kuksa_Instance as kuksa_instance
-from . import UI_Handeler
 import threading
+
 
 class FeedKuksa(QThread):
     """
@@ -34,7 +34,7 @@ class FeedKuksa(QThread):
     client : kuksa_instance.KuksaClientSingleton.instance().client
         A client object to interact with the Kuksa server.
     """
-    
+
     sending_values = pyqtSignal()
     finished_sending_values = pyqtSignal()
 
@@ -49,9 +49,6 @@ class FeedKuksa(QThread):
         """
         QThread.__init__(self, parent)
         self.stop_flag = False
-
-        self.sending_values.connect(UI_Handeler.UI_Handeler.block_updates)
-        self.finished_sending_values.connect(UI_Handeler.UI_Handeler.unblock_updates)
 
     def run(self):
         """

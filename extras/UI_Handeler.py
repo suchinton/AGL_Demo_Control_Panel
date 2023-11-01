@@ -20,14 +20,11 @@ from PyQt5.QtCore import QPropertyAnimation
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QEasingCurve
 from PyQt5.QtWidgets import QGraphicsOpacityEffect
-from kuksa_client.grpc import Field
-from kuksa_client.grpc import SubscribeEntry
-from kuksa_client.grpc import View
+from kuksa_client.grpc import Field, SubscribeEntry, View
 from kuksa_client.grpc.aio import VSSClient
 from PyQt5.QtCore import pyqtSignal
 import asyncio
 from PyQt5.QtCore import QThread
-import os
 import pathlib
 import logging
 import json
@@ -37,11 +34,7 @@ from Widgets import settings
 
 # Global variables
 subscribed = False
-block_subscription_updates = False
-loop = None
 
-class UpdateSignal(QtCore.QObject):
-    updateReceived = pyqtSignal(str, str)
 
 class GrpcSubscriptionThread(QThread):
     updateReceived = pyqtSignal(str, str)
@@ -50,57 +43,48 @@ class GrpcSubscriptionThread(QThread):
         QThread.__init__(self)
         self.client = None
 
-    def run(self):
-        ca_file = "/home/suchinton/Repos/AGL_Demo_Control_Panel/assets/cert/CA.pem"
-        token = os.path.join(os.path.expanduser("~"), f"Repos/AGL_Demo_Control_Panel/assets/token/grpc/actuate-provide-all.token")
-        config = {
-            "ip": '10.42.0.95',
-            "port": "55555",
-            'protocol': 'grpc',
-            'insecure': False,
-            'cacertificate': ca_file,
-            'tls_server_name': "Server",
-        }
+    def run(self):        
+        config = kuksa_instance.KuksaClientSingleton.instance().get_config()
+        token = kuksa_instance.KuksaClientSingleton.instance().get_token()
+
+        SUBSCRIPTION_ENTRIES = [
+            SubscribeEntry('Vehicle.Speed', View.FIELDS, (Field.VALUE,)),
+            SubscribeEntry('Vehicle.Powertrain.CombustionEngine.Speed', View.FIELDS, (Field.VALUE,)),
+            SubscribeEntry('Vehicle.Body.Lights.DirectionIndicator.Left.IsSignaling', View.FIELDS, (Field.VALUE,)),
+            SubscribeEntry('Vehicle.Body.Lights.DirectionIndicator.Right.IsSignaling', View.FIELDS, (Field.VALUE,)),
+            SubscribeEntry('Vehicle.Body.Lights.Hazard.IsSignaling', View.FIELDS, (Field.VALUE,)),
+            SubscribeEntry('Vehicle.Powertrain.FuelSystem.Level', View.FIELDS, (Field.VALUE,)),
+            SubscribeEntry('Vehicle.Powertrain.CombustionEngine.ECT', View.FIELDS, (Field.VALUE,)),
+            SubscribeEntry('Vehicle.Powertrain.Transmission.SelectedGear', View.FIELDS, (Field.VALUE,)),
+            SubscribeEntry('Vehicle.Cabin.HVAC.Station.Row1.Left.Temperature', View.FIELDS, (Field.VALUE,)),
+            SubscribeEntry('Vehicle.Cabin.HVAC.Station.Row1.Left.FanSpeed', View.FIELDS, (Field.VALUE,)),
+            SubscribeEntry('Vehicle.Cabin.HVAC.Station.Row1.Right.Temperature', View.FIELDS, (Field.VALUE,)),
+            SubscribeEntry('Vehicle.Cabin.HVAC.Station.Row1.Right.FanSpeed', View.FIELDS, (Field.VALUE,)),
+        ]
 
         async def grpc_subscription(client):
             try:
                 await client.connect()
-                async for updates in client.subscribe(entries=[
-                    SubscribeEntry('Vehicle.Speed', View.FIELDS, (Field.VALUE,)),
-                    SubscribeEntry('Vehicle.Powertrain.CombustionEngine.Speed', View.FIELDS, (Field.VALUE,)),
-                    SubscribeEntry('Vehicle.Body.Lights.DirectionIndicator.Left.IsSignaling', View.FIELDS, (Field.VALUE,)),
-                    SubscribeEntry('Vehicle.Body.Lights.DirectionIndicator.Right.IsSignaling', View.FIELDS, (Field.VALUE,)),
-                    SubscribeEntry('Vehicle.Body.Lights.Hazard.IsSignaling', View.FIELDS, (Field.VALUE,)),
-                    SubscribeEntry('Vehicle.Powertrain.FuelSystem.Level', View.FIELDS, (Field.VALUE,)),
-                    SubscribeEntry('Vehicle.Powertrain.CombustionEngine.ECT', View.FIELDS, (Field.VALUE,)),
-                    SubscribeEntry('Vehicle.Powertrain.Transmission.SelectedGear', View.FIELDS, (Field.VALUE,)),
-                    SubscribeEntry('Vehicle.Cabin.HVAC.Station.Row1.Left.Temperature', View.FIELDS, (Field.VALUE,)),
-                    SubscribeEntry('Vehicle.Cabin.HVAC.Station.Row1.Left.FanSpeed', View.FIELDS, (Field.VALUE,)),
-                    SubscribeEntry('Vehicle.Cabin.HVAC.Station.Row1.Right.Temperature', View.FIELDS, (Field.VALUE,)),
-                    SubscribeEntry('Vehicle.Cabin.HVAC.Station.Row1.Right.FanSpeed', View.FIELDS, (Field.VALUE,)),
-                    ]):
+                async for updates in client.subscribe(entries=SUBSCRIPTION_ENTRIES):
                     for update in updates:
                         if update.entry.value is not None:
-                            print(f"Current value for {update.entry.path} is now: {update.entry.value}")
-                            self.updateReceived.emit(str(update.entry.path), 
+                            self.updateReceived.emit(str(update.entry.path),
                                                      str(update.entry.value.value))
                 client.disconnect()
             except Exception as e:
                 logging.error(f"Error during gRPC subscription: {e}")
 
         try:
-            client = VSSClient(host=config['ip'], port=config['port'], token=token, root_certificates=pathlib.Path(ca_file), tls_server_name='Server')
+            client = VSSClient(host=config['ip'], 
+                               port=config['port'], 
+                               token=token,
+                               root_certificates=pathlib.Path(config['cacertificate']), 
+                               tls_server_name=config['tls_server_name'])
             asyncio.set_event_loop(asyncio.new_event_loop())
             loop = asyncio.get_event_loop()
             loop.run_until_complete(grpc_subscription(client))
-            #asyncio.run(grpc_subscription(client))
         except Exception as e:
             logging.error(f"Error during gRPC subscription: {e}")
-
-
-class WebsocketSubscriptionThread(QThread):
-    UpdateSignal = QtCore.pyqtSignal(str, str)
-    
 
 
 class UI_Handeler(MainWindow):    
@@ -209,7 +193,8 @@ class UI_Handeler(MainWindow):
                             signal, lambda data: UI_Handeler.VSS_callback(self, data), 'value')
                 if settings.Protocol == "grpc":
                     self.worker = GrpcSubscriptionThread()
-                    self.worker.updateReceived.connect(lambda path, value: UI_Handeler.VSS_callback(self=self, path=path, value=value))
+                    self.worker.updateReceived.connect(
+                        lambda path, value: UI_Handeler.VSS_callback(self=self, path=path, value=value))
                     self.worker.start()
                 subscribed = True
             else:
@@ -224,9 +209,6 @@ class UI_Handeler(MainWindow):
         Args:
         - data: The data received from the signal.
         """
-        global block_subscription_updates
-        if block_subscription_updates:
-            return
 
         IC_Page = self.stackedWidget.widget(1)
         HVAC_Page = self.stackedWidget.widget(2)
@@ -236,59 +218,88 @@ class UI_Handeler(MainWindow):
             path = info.get('data', {}).get('path')
             value = info.get('data', {}).get('dp', {}).get('value')
 
-        print(f"Received subscription event: {path} {value}")
-
-        if path == "Vehicle.Speed":
+        if path == "Vehicle.Speed" and int(float(value)):
+            # block connection updates for IC_Page.Speed_slider.
+            IC_Page.Speed_slider.blockSignals(True)
+            IC_Page.Speed_slider.setValue(int(float(value)))
+            IC_Page.Speed_slider.blockSignals(False)
             IC_Page.Speed_monitor.display(int(IC_Page.Speed_slider.value()))
-            if int(value) != IC_Page.Speed_slider.value():
-                IC_Page.Speed_slider.setValue(int(value))
 
-        if path == "Vehicle.Powertrain.CombustionEngine.Speed":
-            IC_Page.RPM_slider.setValue(int(value))
-            if int(value) != IC_Page.RPM_slider.value():
-                IC_Page.RPM_monitor.display(int(IC_Page.RPM_slider.value()))
+        if path == "Vehicle.Powertrain.CombustionEngine.Speed" and int(float(value)):
+            # block connection updates for IC_Page.RPM_slider.
+            IC_Page.RPM_slider.blockSignals(True)
+            IC_Page.RPM_monitor.display(int(IC_Page.RPM_slider.value()))
+            IC_Page.RPM_slider.setValue(int(float(value)))
+            IC_Page.RPM_slider.blockSignals(False)
 
         if path == "Vehicle.Body.Lights.DirectionIndicator.Left.IsSignaling":
-            if bool(value) != IC_Page.leftIndicatorBtn.isChecked():
-                IC_Page.leftIndicatorBtn.setChecked(bool(value))
+            IC_Page.leftIndicatorBtn.blockSignals(True)
+            IC_Page.leftIndicatorBtn.setChecked(bool(value))
+            IC_Page.leftIndicatorBtn.blockSignals(False)
 
         if path == "Vehicle.Body.Lights.DirectionIndicator.Right.IsSignaling":
-            if bool(value) != IC_Page.rightIndicatorBtn.isChecked():
-                IC_Page.rightIndicatorBtn.setChecked(bool(value))
+            IC_Page.rightIndicatorBtn.blockSignals(True)
+            IC_Page.rightIndicatorBtn.setChecked(bool(value))
+            IC_Page.rightIndicatorBtn.blockSignals(False)
 
         if path == "Vehicle.Body.Lights.Hazard.IsSignaling":
-            if bool(value) != IC_Page.hazardBtn.isChecked():
-                IC_Page.hazardBtn.setChecked(bool(value))
+            IC_Page.hazardBtn.blockSignals(True)
+            IC_Page.hazardBtn.setChecked(bool(value))
+            IC_Page.hazardBtn.blockSignals(False)
 
         if path == "Vehicle.Powertrain.FuelSystem.Level":
-            if int(value) != IC_Page.fuelLevel_slider.value():
-                IC_Page.fuelLevel_slider.setValue(int(value))
+            IC_Page.fuelLevel_slider.blockSignals(True)
+            IC_Page.fuelLevel_slider.setValue(int(float(value)))
+            IC_Page.fuelLevel_slider.blockSignals(False)
 
         if path == "Vehicle.Powertrain.CombustionEngine.ECT":
-            if int(value) != IC_Page.coolantTemp_slider.value():
-                IC_Page.coolantTemp_slider.setValue(int(value))
+            IC_Page.coolantTemp_slider.blockSignals(True)
+            IC_Page.coolantTemp_slider.setValue(int(float(value)))
+            IC_Page.coolantTemp_slider.blockSignals(False)
 
         if path == "Vehicle.Powertrain.Transmission.SelectedGear":
-            if int(value) == 127 and IC_Page.driveBtn.isChecked() == False:
+            if int(float(value)) == 127:
+                IC_Page.driveBtn.blockSignals(True)
                 IC_Page.driveBtn.setChecked(True)
-            elif int(value) == 126 and IC_Page.reverseBtn.isChecked() == False:
+                IC_Page.driveBtn.blockSignals(False)
+            elif int(float(value)) == 126:
+                IC_Page.parkBtn.blockSignals(True)
                 IC_Page.parkBtn.setChecked(True)
-            elif int(value) == -1 and IC_Page.neutralBtn.isChecked() == False:
+                IC_Page.parkBtn.blockSignals(False)
+            elif int(float(value)) == -1:
+                IC_Page.reverseBtn.blockSignals(True)
                 IC_Page.reverseBtn.setChecked(True)
-            elif int(value) == 0 and IC_Page.parkBtn.isChecked() == False:
+                IC_Page.reverseBtn.blockSignals(False)
+            elif int(float(value)) == 0:
+                IC_Page.neutralBtn.blockSignals(True)
                 IC_Page.neutralBtn.setChecked(True)
+                IC_Page.neutralBtn.blockSignals(False)
 
-        if path == "Vehicle.Cabin.HVAC.Station.Row1.Left.Temperature" and int(value) != HVAC_Page.left_temp.value():
-            HVAC_Page.left_temp.setValue(int(value))
+        if path == "Vehicle.Cabin.HVAC.Station.Row1.Left.Temperature":
+            HVAC_Page.leftTempList.blockSignals(True)
+            item = HVAC_Page.leftTempList.findItems(
+                str(int(float(value))) + "°C", QtCore.Qt.MatchExactly)[0]
+            HVAC_Page.leftTempList.setCurrentItem(item)
+            HVAC_Page.leftTempList.scrollToItem(item, 1)
+            HVAC_Page.leftTempList.blockSignals(False)
 
-        if path == "Vehicle.Cabin.HVAC.Station.Row1.Left.FanSpeed" and int(value) != HVAC_Page.left_fan.value():
-            HVAC_Page.left_fan.setValue(int(value))
+        if path == "Vehicle.Cabin.HVAC.Station.Row1.Left.FanSpeed":
+            HVAC_Page.leftFanSpeed_slider.blockSignals(True)
+            HVAC_Page.leftFanSpeed_slider.setValue(int(float(value)))
+            HVAC_Page.leftFanSpeed_slider.blockSignals(False)
 
-        if path == "Vehicle.Cabin.HVAC.Station.Row1.Right.Temperature" and int(value) != HVAC_Page.right_temp.value():
-            HVAC_Page.right_temp.setValue(int(value))
+        if path == "Vehicle.Cabin.HVAC.Station.Row1.Right.Temperature":
+            HVAC_Page.rightTempList.blockSignals(True)
+            item = HVAC_Page.leftTempList.findItems(
+                str(int(float(value))) + "°C", QtCore.Qt.MatchExactly)[0]
+            HVAC_Page.leftTempList.setCurrentItem(item)
+            HVAC_Page.rightTempList.scrollToItem(item, 1)
+            HVAC_Page.rightTempList.blockSignals(False)
 
-        if path == "Vehicle.Cabin.HVAC.Station.Row1.Right.FanSpeed" and int(value) != HVAC_Page.right_fan.value():
-            HVAC_Page.right_fan.setValue(int(value))
+        if path == "Vehicle.Cabin.HVAC.Station.Row1.Right.FanSpeed":
+            HVAC_Page.rightFanSpeed_slider.blockSignals(True)
+            HVAC_Page.rightFanSpeed_slider.setValue(int(float(value)))
+            HVAC_Page.rightFanSpeed_slider.blockSignals(False)
 
 
 class FaderWidget(QWidget):

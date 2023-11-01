@@ -111,10 +111,6 @@ class settings(Base, Form):
         self.SSL_toggle.clicked.connect(self.toggleSSL)
         self.CAN_Kuksa_toggle.clicked.connect(self.toggle_CAN_Kuksa)
 
-        # self.Hide_IC.clicked.connect(lambda: self.Hide_Pages(self, 1))
-        # self.Hide_HUD.clicked.connect(lambda: self.Hide_Pages(self, 2))
-        # self.Hide_HVAC.clicked.connect(lambda: self.Hide_Pages(self, 3))
-
         Frame_GS = self.findChild(QWidget, "frame_general_settings")
         Frame_PS = self.findChild(QWidget, "frame_page_settings")
         GS_layout = Frame_GS.layout()
