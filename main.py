@@ -77,8 +77,7 @@ class MainWindow(Base, Form):
         self.dashboardButton = self.findChild(QPushButton, 'dashboardButton')
         UI_Handeler.Hide_Navbar(self, bool_arg=True)
 
-        self.stackedWidget.currentChanged.connect(lambda: UI_Handeler.subscribe_VSS_Signals(
-            self) if UI_Handeler.set_instance(self) else None)
+        self.stackedWidget.currentChanged.connect(lambda: UI_Handeler.subscribe_VSS_Signals(self) if UI_Handeler.set_instance(self) else None)
 
         self.notificationContent = self.findChild(
             QWidget, 'notificationContent')

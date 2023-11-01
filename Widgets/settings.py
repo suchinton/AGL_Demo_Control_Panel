@@ -12,8 +12,6 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-
-from extras.UI_Handeler import *
 from extras import config
 import extras.Kuksa_Instance as kuksa_instance
 
@@ -41,8 +39,9 @@ Form, Base = uic.loadUiType(os.path.join(
 
 # ========================================
 
+# Global Variables
 Steering_Signal_Type = "Kuksa"
-
+Protocol = None
 
 def create_animated_toggle():
     return AnimatedToggle(
@@ -168,9 +167,12 @@ class settings(Base, Form):
             Steering_Signal_Type = "Kuksa"
 
     def get_protocol(self):
+        global Protocol
         if (not self.Protocol_toggle.isChecked()):
+            Protocol = "ws"
             return "ws"
         else:
+            Protocol = "grpc"
             return "grpc"
 
     def set_instance(self):

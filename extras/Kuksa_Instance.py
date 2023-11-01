@@ -72,6 +72,7 @@ class KuksaClientSingleton:
             raise Exception("This class is a singleton!")
 
         self.client = None
+        self.kuksa_config = None
 
         KuksaClientSingleton._instance = self
 
@@ -88,9 +89,10 @@ class KuksaClientSingleton:
         """
         if self.client:
             self.client.stop()
-
-        self.client = kuksa.KuksaClientThread(config)
-        self.client.authorize(token)
+        self.kuksa_config = config
+        self.token = token
+        self.client = kuksa.KuksaClientThread(self.kuksa_config)
+        self.client.authorize(self.token)
         self.client.start()
 
     def get_client(self):
@@ -113,6 +115,15 @@ class KuksaClientSingleton:
             dict: The configuration for KuksaClientThread.
         """
         return self.kuksa_config
+    
+    def get_token(self):
+        """
+        Returns the path to the token file.
+
+        Returns:
+            str: The path to the token file.
+        """
+        return self.token
 
     def status(self):
         """
