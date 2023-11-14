@@ -382,7 +382,8 @@ class VehicleSimulator(QObject):
         if not self.running:
             self.reset()
             self.running = True
-            self.thread.start()
+            if not self.thread.is_alive():
+                self.thread.start()
 
     def stop(self):
         self.running = False

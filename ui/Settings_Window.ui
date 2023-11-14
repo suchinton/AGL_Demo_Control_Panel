@@ -629,15 +629,75 @@ QCheckBox:indicator:disabled {
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="3" colspan="6">
-        <widget class="QLineEdit" name="IPAddrInput">
+       <item row="2" column="3" colspan="6">
+        <widget class="QLineEdit" name="PortInput">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <pointsize>14</pointsize>
           </font>
          </property>
-         <property name="placeholderText">
-          <string/>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <widget class="QLabel" name="IPAddr">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>IP Address</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QLabel" name="label_11">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Default: WS</string>
+         </property>
+         <property name="text">
+          <string>Protocol</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3" colspan="6">
+        <widget class="QLineEdit" name="Auth_Token">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3" colspan="6">
+        <widget class="QLineEdit" name="TLS_Server_Name">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
          </property>
         </widget>
        </item>
@@ -653,18 +713,74 @@ QCheckBox:indicator:disabled {
          </property>
         </widget>
        </item>
-       <item row="4" column="4" colspan="3" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="place_holder_toggle_2">
-         <property name="toolTip">
-          <string>Default: WS</string>
+       <item row="1" column="3" colspan="6">
+        <widget class="QLineEdit" name="IPAddrInput">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
          </property>
-         <property name="text">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="placeholderText">
           <string/>
          </property>
         </widget>
        </item>
-       <item row="5" column="3" colspan="6">
-        <widget class="QLineEdit" name="TLS_Server_Name">
+       <item row="7" column="3" colspan="6">
+        <widget class="QLineEdit" name="CA_File">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_20">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>TLS Server Name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3" alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="label_12">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+           <weight>75</weight>
+           <italic>true</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>WS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3" colspan="6">
+        <widget class="QComboBox" name="List_Configs_ComboBox">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <pointsize>14</pointsize>
@@ -684,15 +800,15 @@ QCheckBox:indicator:disabled {
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="3">
-        <widget class="QLabel" name="IPAddr">
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_17">
          <property name="font">
           <font>
            <pointsize>14</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>IP Address</string>
+          <string>CA.pem File</string>
          </property>
         </widget>
        </item>
@@ -711,110 +827,6 @@ QCheckBox:indicator:disabled {
          </property>
         </widget>
        </item>
-       <item row="2" column="3" colspan="6">
-        <widget class="QLineEdit" name="PortInput">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_21">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Auth Token</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="3" colspan="6">
-        <widget class="QLineEdit" name="Auth_Token">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="3" alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="label_12">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-           <weight>75</weight>
-           <italic>true</italic>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>WS</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_20">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>TLS Server Name</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="5" colspan="4" alignment="Qt::AlignLeft">
-        <widget class="QCheckBox" name="place_holder_toggle_1">
-         <property name="toolTip">
-          <string>Default: Secure</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="QLabel" name="label_11">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Default: WS</string>
-         </property>
-         <property name="text">
-          <string>Protocol</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3" colspan="6">
-        <widget class="QComboBox" name="List_Configs_ComboBox">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3" alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon_icons/security-services.svg</pixmap>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="7" colspan="2" alignment="Qt::AlignHCenter">
         <widget class="QLabel" name="label_13">
          <property name="font">
@@ -830,24 +842,55 @@ QCheckBox:indicator:disabled {
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_17">
+       <item row="3" column="3" alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../assets/res.qrc">:/Carbon_Icons/carbon_icons/security-services.svg</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_21">
          <property name="font">
           <font>
            <pointsize>14</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>CA.pem File</string>
+          <string>Auth Token</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="3" colspan="6">
-        <widget class="QLineEdit" name="CA_File">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-          </font>
+       <item row="3" column="7" colspan="2" alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="label_22">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4" colspan="3" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="place_holder_toggle_2">
+         <property name="toolTip">
+          <string>Default: WS</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="4" colspan="3" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="place_holder_toggle_1">
+         <property name="toolTip">
+          <string>Default: Secure</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
          </property>
         </widget>
        </item>

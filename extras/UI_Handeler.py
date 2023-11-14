@@ -87,7 +87,9 @@ class GrpcSubscriptionThread(QThread):
             logging.error(f"Error during gRPC subscription: {e}")
 
 
-class UI_Handeler(MainWindow):    
+class UI_Handeler(MainWindow):
+    def __init__(self):
+        settings.settings.hide_page.connect(self.Hide_Navbar)
 
     def fullscreen(self):
         self.headerContainer.hide()

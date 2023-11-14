@@ -14,12 +14,14 @@
 
 from extras import config
 import extras.Kuksa_Instance as kuksa_instance
+from extras.UI_Handeler import *
 
 import os
 import sys
 import time
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton, QLabel, QComboBox, QStyledItemDelegate
+from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton,\
+     QLabel, QComboBox, QStyledItemDelegate
 from qtwidgets import AnimatedToggle
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QThread
@@ -47,6 +49,7 @@ def create_animated_toggle():
     return AnimatedToggle(
         checked_color="#4BD7D6",
         pulse_checked_color="#00ffff",
+        pulse_unchecked_color= "#4BD7D6",
     )
 
 
@@ -64,6 +67,7 @@ class settings(Base, Form):
     - refreshBtn: A QPushButton object representing the refresh button.
     - startClientBtn: A QPushButton object representing the start client button.
     """
+    hide_page = pyqtSignal(int,bool)
 
     def __init__(self, parent=None):
         """
@@ -142,7 +146,6 @@ class settings(Base, Form):
         Toggles the SSL connection.
         """
         self.kuksa_config["insecure"] = not self.SSL_toggle.isChecked()
-        print(self.kuksa_config)
 
     def toggle_CAN_Kuksa(self):
         """
@@ -153,12 +156,12 @@ class settings(Base, Form):
             # check if can0 is available
             try:
                 can_bus = can.interface.Bus(
-                    channel='can0', bustype='socketcan_native')
+                    channel='can0', bustype='socketcan')
                 can_bus.shutdown()
                 Steering_Signal_Type = "CAN"
-            except:
+            except OSError as e:
                 self.CAN_Kuksa_toggle.setChecked(False)
-                logging.error("CAN Bus not available")
+                logging.error(f"CAN0 is not available{e}")
         else:
             Steering_Signal_Type = "Kuksa"
 
@@ -306,7 +309,19 @@ class settings(Base, Form):
         self.Auth_Token.setText(self.kuksa_token)
 
     def Hide_Pages(self):
-        pass
+        if self.Hide_IC.isChecked():
+            self.hide_page.emit(1,True)
+        else:
+            self.hide_page.emit(1,False)
+
+        if self.Hide_HVAC.isChecked():
+            self.hide_page.emit(2,True)
+        else:
+            self.hide_page.emit(2,False)
+
+        if self.Hide_SC.isChecked():
+            self.hide_page.emit(2,True)
+
 
 
 class RefreshThread(QThread):
